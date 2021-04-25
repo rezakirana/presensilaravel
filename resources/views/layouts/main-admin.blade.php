@@ -43,7 +43,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item {{ \Str::is('dashboard.*', Route::currentRouteName()) ? 'active' : '' }}">
-        <a class="nav-link" href="{{ url('/admin/dashboard') }}">
+        <a class="nav-link" href="{{ url('/dashboard') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>&nbsp; Dashboard</span>
         </a>
