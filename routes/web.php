@@ -29,4 +29,7 @@ Route::group(['middleware' => 'auth'], function()
     Route::resource('bobot-kriteria', 'BobotKriteriaController');
     Route::resource('account', 'AccountController');
     Route::get('hasil-perhitungan', 'HasilController@hasil_perhitungan')->name('hasil.perhitungan');
+    Route::resource('bobot-kriteria', 'BobotKriteriaController');
+    Route::get('edit-bobot-kriteria', 'BobotKriteriaController@editBobotKriteria')->name('bobot-kriteria.ubah');
+    Route::put('update-bobot-kriteria', 'BobotKriteriaController@updateBobotKriteria')->name('bobot-kriteria.simpanUpdate');
 });

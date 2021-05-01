@@ -30,7 +30,9 @@
                     <th>NAMA</th>
                     <th>THUMBNAIL</th>
                     <th width="240">NILAI ALTERNATIF</th>
-                    <th width="80">AKSI</th>
+                    @if (Auth::user()->is_admin == 1)
+                        <th width="80">AKSI</th>
+                    @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -50,18 +52,18 @@
                             <span class="badge badge-secondary" data-toggle="tooltip" data-placement="top" title="Ubah">Lihat Nilai Alternatif</span>
                             </a>
                         </td>
-                        <td class="text-center">
-                            <a href="/alternatif/{{$alt->id}}/edit">
-                            <button class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-edit"></i></button>
-                            </a>
-                            <form id="delete-alternatif-{{$alt->id}}" action="/alternatif/{{$alt->id}}" method="post" style="display: inline;">
-                                @method('DELETE')
-                                @csrf
-                                <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fa fa-trash"></i></button>
-                            </form>
-
-                        </td>
-
+                        @if (Auth::user()->is_admin == 1)
+                            <td class="text-center">
+                                <a href="/alternatif/{{$alt->id}}/edit">
+                                <button class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-edit"></i></button>
+                                </a>
+                                <form id="delete-alternatif-{{$alt->id}}" action="/alternatif/{{$alt->id}}" method="post" style="display: inline;">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fa fa-trash"></i></button>
+                                </form>
+                            </td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>

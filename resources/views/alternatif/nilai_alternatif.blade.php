@@ -35,9 +35,9 @@
                                 <td style="width: 30%;">Image</td>
                                 <td style="width: 70%;">
                                     @if (is_null($data->gambar))
-                                        <img src="{{ asset('/img/default-image.png') }}" width="70px" height="70px" style="text-align: center;" alt="{{ $data->nama }}" />
+                                        <img src="{{ asset('/img/default-image.png') }}" width="200px" height="200px" style="text-align: center;" alt="{{ $data->nama }}" />
                                     @else
-                                        <img src="{{ asset('/img/image/alternatif/'.$data->gambar) }}" width="70px" height="70px" style="text-align: center;" alt="{{ $data->nama }}" />
+                                        <img src="{{ asset('/img/image/alternatif/'.$data->gambar) }}" width="200px" height="200px" style="text-align: center;" alt="{{ $data->nama }}" />
                                     @endif
                                 </td>
                             </tr>
@@ -69,9 +69,11 @@
     </div>
 </section>
 @include ('includes.scripts')
-<script type="text/javascript">
-    $(document).ready(function(){
-        $("#data-admin_length").append('<a  href="/alternatif/{{$data->id}}/edit"> <button type="button" class="btn btn-outline-primary ml-3">UBAH</button></a>');
-    });
+@if (Auth::user()->is_admin == 1)
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#data-admin_length").append('<a  href="/alternatif/{{$data->id}}/edit"> <button type="button" class="btn btn-outline-primary ml-3">UBAH</button></a>');
+        });
     </script>
+@endif
 @endsection

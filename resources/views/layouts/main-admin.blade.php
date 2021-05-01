@@ -58,33 +58,42 @@
       </li>    
 
       <!-- Nav Item - Manajemen Kriteria -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKriteria" aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fas fa-tasks"></i>
-            <span>&nbsp; Manajemen Kriteria <i class="fas fa-angle-right" 
-            style="margin-top: 5px;
-            width: 1rem;
-            text-align: center;
-            float: right;
-            vertical-align: 0;
-            border: 0;
-            font-weight: 900;"></i>
-            </span>
-        </a>
-        <div id="collapseKriteria" class="collapse {{ \Str::is('kriteria.*', Route::currentRouteName()) ? 'show' : '' }} {{ \Str::is('sub-kriteria.*', Route::currentRouteName()) ? 'show' : '' }}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Manajemen Kriteria :</h6>
-            <a class="collapse-item {{ \Str::is('kriteria.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('kriteria.index') }}">Kriteria</a>
-            <a class="collapse-item {{ \Str::is('sub-kriteria.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('sub-kriteria.index') }}">Sub Kriteria</a>
-            </div>
-        </div>
-      </li>
+      @if (Auth::user()->is_admin == 1)
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKriteria" aria-expanded="true" aria-controls="collapseUtilities">
+              <i class="fas fa-tasks"></i>
+              <span>&nbsp; Manajemen Kriteria <i class="fas fa-angle-right" 
+              style="margin-top: 5px;
+              width: 1rem;
+              text-align: center;
+              float: right;
+              vertical-align: 0;
+              border: 0;
+              font-weight: 900;"></i>
+              </span>
+          </a>
+          <div id="collapseKriteria" class="collapse {{ \Str::is('kriteria.*', Route::currentRouteName()) ? 'show' : '' }} {{ \Str::is('sub-kriteria.*', Route::currentRouteName()) ? 'show' : '' }}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+              <div class="bg-white py-2 collapse-inner rounded">
+              <h6 class="collapse-header">Manajemen Kriteria :</h6>
+              <a class="collapse-item {{ \Str::is('kriteria.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('kriteria.index') }}">Kriteria</a>
+              <a class="collapse-item {{ \Str::is('sub-kriteria.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('sub-kriteria.index') }}">Sub Kriteria</a>
+              </div>
+          </div>
+        </li>
+      @endif
 
       <!-- Nav Item - Manajemen Alternatif -->
       <li class="nav-item  {{ \Str::is('alternatif.*', Route::currentRouteName()) ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('alternatif.index') }}">
           <i class="fa fa-location-arrow"></i>
           <span>&nbsp; Alternatif</span>
+        </a>
+      </li>
+
+      <li class="nav-item  {{ \Str::is('bobot-kriteria.*', Route::currentRouteName()) ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('bobot-kriteria.index') }}">
+          <i class="fa fa-greater-than-equal"></i>
+          <span>&nbsp; Bobot Kriteria</span>
         </a>
       </li>
 

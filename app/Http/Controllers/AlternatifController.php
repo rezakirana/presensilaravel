@@ -9,6 +9,10 @@ use App\Model\NilaiAlternatif;
 
 class AlternatifController extends Controller
 {
+    public function __construct() {
+
+        $this->middleware('isAdmin', ['only' => ['create','store','edit','update','destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
