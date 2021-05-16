@@ -68,7 +68,7 @@
                 <div class="clearfix"></div>
               </div>
               <div class="x_title">
-                <h2>Data Kriteria</h2>
+                <h3>Data Kriteria</h3>
                 <div class="clearfix"></div>
               </div>
               <div class="x_content">
@@ -94,7 +94,7 @@
             {{-- content 2 --}}
             <div class="x_panel">
               <div class="x_title">
-                <h2>Data</h2>
+                <h3>Data</h3>
                 <div class="clearfix"></div>
               </div>
               <div class="x_content">
@@ -120,7 +120,7 @@
             </div>
             <div class="x_panel">
               <div class="x_title">
-                <h2>Data Rating Kecocokan</h2>
+                <h3>Data Rating Kecocokan</h3>
                 <div class="clearfix"></div>
               </div>
               <div class="x_content">
@@ -148,7 +148,7 @@
             {{-- content 3 --}}
             <div class="x_panel">
               <div class="x_title">
-                <h2>Normalisasi bobot kriteria</h2>
+                <h3>Normalisasi bobot kriteria</h3>
                 <div class="clearfix"></div>
               </div>
               <div class="x_content">
@@ -184,7 +184,7 @@
             {{-- content 4 --}}
             <div class="x_panel">
               <div class="x_title">
-                <h2>Nilai Vector S pada setiap alternatif</h2>
+                <h3>Nilai Vector S pada setiap alternatif</h3>
                 <div class="clearfix"></div>
               </div>
               <div class="x_content">
@@ -216,7 +216,7 @@
             {{-- content 5 --}}
             <div class="x_panel">
               <div class="x_title">
-                <h2>Nilai Vector V pada setiap alternatif</h2>
+                <h3>Nilai Vector V pada setiap alternatif</h3>
                 <div class="clearfix"></div>
               </div>
               <div class="x_content">
@@ -244,7 +244,7 @@
             {{-- content 6 --}}
             <div class="x_panel">
               <div class="x_title">
-                <h2>Perangkingan dan menurutkan nilai Vector V dari yang terbesar ke terkecil</h2>
+                <h3>Perangkingan dan menurutkan nilai Vector V dari yang terbesar ke terkecil</h3>
                 <div class="clearfix"></div>
               </div>
               <div class="x_content">
@@ -270,7 +270,7 @@
             {{-- content 7 --}}
             <div class="x_panel">
               <div class="x_title">
-                <h2>Grafik Hasil Penilaian</h2>
+                <h3>Grafik Hasil Penilaian</h3>
                 <div class="clearfix"></div>
               </div>
               <div class="x_content">

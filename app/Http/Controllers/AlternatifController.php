@@ -21,7 +21,7 @@ class AlternatifController extends Controller
     public function index()
     {
         $alternatif = Alternatif::all();
-        $destination_path = public_path('/image/alternatif/');
+        $destination_path = public_path('/img/image/alternatif/');
         foreach ($alternatif as $key => $value) {
             $alternatifImage = $destination_path.$value->image;
             if (is_null($value->gambar) || !file_exists($alternatifImage)) {

@@ -104,6 +104,12 @@
           <span>&nbsp; Hasil Perhitungan</span>
         </a>
       </li>
+      <li class="nav-item  {{ \Str::is('unduh.hasil-perhitungan.*', Route::currentRouteName()) ? 'active' : '' }}">
+        <a class="nav-link" href="{{ url('/unduh-hasil-perhitungan') }}">
+          <i class="fa fa-download"></i>
+          <span>&nbsp; Export Hasil Perhitungan</span>
+        </a>
+      </li>
     </ul>
     <!-- Sidebar -->
 
