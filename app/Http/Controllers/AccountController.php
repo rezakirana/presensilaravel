@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
 {
@@ -13,7 +15,7 @@ class AccountController extends Controller
      */
     public function index()
     {
-        //
+        return view('account.index');
     }
 
     /**
@@ -34,7 +36,19 @@ class AccountController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'currentPassword' => 'required|string',
+            'password' => 'required|string|min:6|confirmed'
+        ]);
+        $user = Auth::user();
+        $cekPassword = Hash::check($request->currentPassword, $user->password);
+        if (!$cekPassword) {
+            return redirect()->route('account.index')->with('danger','Current password does not match!');
+        }
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return redirect()->route('account.index')->with('success', 'Your password changed successfully!');
     }
 
     /**

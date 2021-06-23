@@ -72,9 +72,11 @@
     </div>
 </section>
 @include ('includes.scripts')
-<script type="text/javascript">
-$(document).ready(function(){
-    $("#data-admin_length").append('<a  href="{{ route('alternatif.create') }}"> <button type="button" class="btn btn-outline-primary ml-3">Tambah</button></a>');
-});
-</script>
+@if (auth()->user()->is_admin)
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#data-admin_length").append('<a  href="{{ route('alternatif.create') }}"> <button type="button" class="btn btn-outline-primary ml-3">Tambah</button></a>');
+        });
+    </script>
+@endif
 @endsection

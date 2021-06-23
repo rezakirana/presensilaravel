@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\Alternatif;
 use App\Model\Kriteria;
 use App\Model\NilaiAlternatif;
+use Illuminate\Support\Facades\Auth;
 
 class AlternatifController extends Controller
 {
