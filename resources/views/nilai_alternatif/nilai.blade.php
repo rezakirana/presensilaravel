@@ -82,7 +82,19 @@
                       @foreach ($kriteria as $key => $s)
                         <tr>
                             <td>{{ $s->nama }}</td>
-                            <td style="text-align: center;">{{ $s->bobot }}</td>
+                            <td style="text-align: center;">
+                              @if ($s->bobot == '1')
+                                  Sangat Tidak Penting
+                              @elseif($s->bobot == '2')
+                                  Kurang Penting
+                              @elseif($s->bobot == '3')
+                                  Sedang
+                              @elseif($s->bobot == '4')
+                                  Penting
+                              @else
+                                  Sangat Penting
+                              @endif
+                            </td>
                             <td style="text-align: center;">{{$s->jenis}}</td>
                         </tr>
                       @endforeach

@@ -42,7 +42,13 @@
                                             <input type="text" class="form-control" name="kriteriaNama[]" id="kriteraNama" value="{{ $d->nama }}" readonly>
                                         </td>
                                         <td>
-                                            <input type="number" name="bobot[]" id="bobot" class="form-control" required>
+                                            <select id="bobot" name="bobot[]" class="form-control" required>
+                                                <option value="5">Sangat Penting</option>
+                                                <option value="4">Penting</option>
+                                                <option value="3">Sedang</option>
+                                                <option value="2">Kurang Penting</option>
+                                                <option value="1">Sangat Tidak Penting</option>
+                                            </select>
                                         </td>
                                     </tr>
                                 @endforeach

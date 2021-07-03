@@ -36,7 +36,19 @@
                     <tr>
                         <td class="text-center">{{$loop->iteration}}</td>
                         <td>{{$alt->nama}}</td>
-                        <td>{{$alt->bobot}}</td>
+                        <td>
+                            @if ($alt->bobot == '1')
+                                Sangat Tidak Penting
+                            @elseif($alt->bobot == '2')
+                                Kurang Penting
+                            @elseif($alt->bobot == '3')
+                                Sedang
+                            @elseif($alt->bobot == '4')
+                                Penting
+                            @else
+                                Sangat Penting
+                            @endif
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
