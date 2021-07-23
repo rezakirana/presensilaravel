@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>SPK Wisata</title>
+        <title>DISEASE DIAGNOSIS EXPERT SYSTEM</title>
 
         <!-- Font Awesome -->
         <script defer src="{{ asset('js/all.js') }}"></script>
@@ -27,7 +27,7 @@
                 <div class="col-sm-12">
                     <nav class="navbar navbar-expand-md navbar-light bg-light oswaldregular">
                         <a class="navbar-brand animate__animated animate__slideInLeft" href="#">
-                            <h1 class="header-title">SPK WISATA</h1>
+                            <h1 class="header-title">EXPERT SYSTEM</h1>
                         </a>
                         {{-- @include('sweetalert::alert') --}}
                         @if (Route::has('login'))
@@ -52,11 +52,11 @@
         <div class="container m-container">
             <div class="row align-items-center">
                 <div class="col-md-6 animate__animated animate__slideInLeft">
-                    <h1 class="header-title">Management Vacation</h1>
-                    <p class="header-text">Manage your vacation with just one application</p>
+                    <h1 class="header-title">Recognize your illness early</h1>
+                    <p class="header-text">Easy to know the disease earlier than the symptoms</p>
                 </div>
                 <div class="col-md-6 animate__animated animate__fadeIn">
-                    <img src="img/landing.png" alt="" class="header-img">
+                    <img src="img/landing.svg" alt="" class="header-img">
                 </div>
             </div>
         </div>

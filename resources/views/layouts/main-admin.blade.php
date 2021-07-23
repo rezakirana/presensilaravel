@@ -36,7 +36,7 @@
           <div class="sidebar-brand-icon">
               <img src="{{ asset('img/icon-logo.png') }}" alt="" width="50">
           </div>
-          <div class="sidebar-brand-text mx-2">SPK Wisata</div>
+          <div class="sidebar-brand-text mx-2">Expert System</div>
       </a>
 
       <hr class="sidebar-divider my-0">
@@ -49,7 +49,7 @@
         </a>
       </li>
 
-      <!-- Nav Item - Manajemen User -->
+      <!-- Nav Item - Manajemen Account -->
       <li class="nav-item  {{ \Str::is('account.*', Route::currentRouteName()) ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('account.index') }}">
           <i class="far fa-user"></i>
@@ -57,23 +57,35 @@
         </a>
       </li>    
 
-      <!-- Nav Item - Manajemen Kriteria -->
-      @if (Auth::user()->is_admin == 1)
-        <li class="nav-item  {{ \Str::is('kriteria.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('kriteria.index') }}">
-          <a class="nav-link" href="{{ route('kriteria.index') }}">
-            <i class="fa fa-tasks"></i>
-            <span>&nbsp; Kriteria</span>
+      <!-- Nav Item - Manajemen User -->
+      @if (Auth::user()->role->role == 'admin')
+        <li class="nav-item  {{ \Str::is('users.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('users.index') }}">
+          <a class="nav-link" href="{{ route('users.index') }}">
+            <i class="fa fa-users"></i>
+            <span>&nbsp; Users</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKriteria" aria-expanded="true" aria-controls="collapseUtilities">
+              <i class="fas fa-tasks"></i>
+              <span>&nbsp; Master Data <i class="fas fa-angle-right" 
+              style="margin-top: 5px;
+              width: 1rem;
+              text-align: center;
+              float: right;
+              vertical-align: 0;
+              border: 0;
+              font-weight: 900;"></i>
+              </span>
+          <div id="collapseKriteria" class="collapse {{ \Str::is('gejala.*', Route::currentRouteName()) ? 'show' : '' }} {{ \Str::is('penyakit.*', Route::currentRouteName()) ? 'show' : '' }}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+              <div class="bg-white py-2 collapse-inner rounded">
+              <h6 class="collapse-header">Manajemen Data :</h6>
+              <a class="collapse-item {{ \Str::is('gejala.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('gejala.index') }}">Gejala</a>
+              <a class="collapse-item {{ \Str::is('penyakit.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('penyakit.index') }}">Penyakit</a>
+              </div>
+          </div>
+        </li>
       @endif
-
-      <!-- Nav Item - Manajemen Alternatif -->
-      <li class="nav-item  {{ \Str::is('alternatif.*', Route::currentRouteName()) ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('alternatif.index') }}">
-          <i class="fa fa-location-arrow"></i>
-          <span>&nbsp; Alternatif</span>
-        </a>
-      </li>
 
       <li class="nav-item  {{ \Str::is('bobot-kriteria.*', Route::currentRouteName()) ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('bobot-kriteria.index') }}">

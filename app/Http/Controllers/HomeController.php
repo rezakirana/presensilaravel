@@ -33,4 +33,9 @@ class HomeController extends Controller
     {
         return view('dashboard');
     }
+
+    public function not_found()
+    {
+        return view('not_found');
+    }
 }

@@ -13,7 +13,7 @@
                 <div class="text-center">
                     <h1 class="h2 text-gray-900 mb-4 font-weight-bold animate__animated animate__fadeInDown animate__delay-1s">Welcome Back!</h1>
                   </div>
-                <img src="img/deliveries.svg" class="bg-login-image animate__animated animate__backInLeft" alt="">
+                <img src="img/landing.svg" class="bg-login-image animate__animated animate__backInLeft" alt="">
               </div>
               <div class="col-lg-6">
                 <div class="p-5">
@@ -25,7 +25,7 @@
                         </button>
                     </div>
                   @endif
-                  <h5 class="header-title" style="text-align: center;margin-bottom:10px;padding-bottom:10px;">SPK WISATA</h5>
+                  <h5 class="header-title" style="text-align: center;margin-bottom:10px;padding-bottom:10px;">EXPERT SYSTEM</h5>
                   <form class="user" method="POST" action="{{ route('login') }}">
                     @csrf
                     <div class="form-group">
@@ -54,7 +54,7 @@
                             @endif
                         </label>
                         <label for="">
-                             tes
+                             &nbsp;
                         </label>
                         <label style="float:right;">
                             @if (Route::has('register'))
@@ -69,7 +69,7 @@
                     <hr>
                   </form>
                   <div class="text-center">
-                    <span class="small">Copyright &copy; SPK Wisata 2021</span>
+                    <span class="small">Copyright &copy; Expert System 2021</span>
                   </div>
                 </div>
               </div>

@@ -20,10 +20,16 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/not-found', 'HomeController@not_found')->name('notFound');
 Route::group(['middleware' => 'auth'], function()
 {
     Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
     Route::resource('kriteria', 'KriteriaController');
+    Route::resource('users', 'UserController');
+    Route::resource('gejala', 'GejalaController');
+    Route::resource('penyakit', 'PenyakitController');
+    Route::resource('rules', 'RuleController');
+    Route::resource('konsultasi', 'KonsultasiController');
     Route::resource('sub-kriteria', 'SubKriteriaController');
     Route::resource('alternatif', 'AlternatifController');
     Route::resource('bobot-kriteria', 'BobotKriteriaController');

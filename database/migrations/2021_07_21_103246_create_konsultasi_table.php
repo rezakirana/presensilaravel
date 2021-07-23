@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableAlternatif extends Migration
+class CreateKonsultasiTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateTableAlternatif extends Migration
      */
     public function up()
     {
-        Schema::create('alternatif', function (Blueprint $table) {
+        Schema::create('konsultasi', function (Blueprint $table) {
             $table->id();
-            $table->string('nama',50);
-            $table->string('gambar', 200)->nullable();
+            $table->foreignId('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('periode_konsultasi')->default(1);
+            $table->text('gejala');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateTableAlternatif extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('alternatif');
+        Schema::dropIfExists('konsultasi');
     }
 }
