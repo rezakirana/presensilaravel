@@ -38,5 +38,6 @@ Route::group(['middleware' => 'auth'], function()
     Route::get('unduh-hasil-perhitungan', 'HasilController@unduh_hasil_perhitungan')->name('unduh.hasil-perhitungan');
     Route::resource('bobot-kriteria', 'BobotKriteriaController');
     Route::get('edit-bobot-kriteria', 'BobotKriteriaController@editBobotKriteria')->name('bobot-kriteria.ubah');
+    Route::get('get-gejala', 'GejalaController@get_gejala')->name('getGejala');
     Route::put('update-bobot-kriteria', 'BobotKriteriaController@updateBobotKriteria')->name('bobot-kriteria.simpanUpdate');
 });

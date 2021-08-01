@@ -86,7 +86,14 @@
           </div>
         </li>
       @endif
-
+      @if (Auth::user()->role->role == 'admin' || Auth::user()->role->role == 'pakar')
+        <li class="nav-item  {{ \Str::is('rules.*', Route::currentRouteName()) ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('rules.index') }}">
+            <i class="far fa-user"></i>
+            <span>&nbsp; Manajemen Rules</span>
+          </a>
+        </li> 
+      @endif
       <li class="nav-item  {{ \Str::is('bobot-kriteria.*', Route::currentRouteName()) ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('bobot-kriteria.index') }}">
           <i class="fa fa-greater-than-equal"></i>

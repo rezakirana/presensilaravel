@@ -136,4 +136,24 @@ class GejalaController extends Controller
 
         return redirect()->route('gejala.index')->with('success', 'Berhasil menghapus data');
     }
+
+    public function get_gejala(Request $request)
+    {
+        $gejala = Gejala::all(['id', 'kode', 'gejala']);
+        $dataGejala = '<tr>
+        <td style="width: 85%">
+            <select name="gejala_id[]" id="penyakit_id[]" class="form-control" required>
+                <option value="">Pilih Gejala</option>';
+        foreach ($gejala as $key => $value) {
+            $dataGejala = $dataGejala.'<option value="'.$value->id.'">'.$value->kode.' - '.$value->gejala.'</option>';
+        }
+        $dataGejala = $dataGejala.'</select>
+                                        </td>
+                                        <td style="text-align: right">
+                                            <button type="button" id="deleteGejala" class="btn btn-round btn-sm btn-danger"><i class="fa fa-minus"></i> Remove</button>
+                                        </td>
+                                    </tr>';
+        
+        return json_encode(array('dataGejala' => $dataGejala));
+    }
 }
