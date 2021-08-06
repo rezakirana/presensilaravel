@@ -63,7 +63,7 @@ class GejalaController extends Controller
             return redirect()->route('gejala.index')->with('success', 'Gejala berhasil ditambahkan');
         }
 
-        return redirect()->route('gejala.create')->with('error', 'Gejala gagal ditambahkan');
+        return redirect()->route('gejala.create')->with('danger', 'Gejala gagal ditambahkan');
     }
 
     /**
@@ -111,7 +111,7 @@ class GejalaController extends Controller
 
         $gejala = Gejala::find($id);
         if (!$gejala) {
-            return back()->with('error', 'Gejala tidak ditemukan');
+            return back()->with('danger', 'Gejala tidak ditemukan');
         }
         $gejala->kode = $request->kode;
         $gejala->gejala = $request->gejala;
@@ -121,7 +121,7 @@ class GejalaController extends Controller
             return redirect()->route('gejala.index')->with('success', 'Gejala berhasil diupdate');
         }
 
-        return redirect()->route('gejala.edit',$id)->with('error', 'Gejala gagal diupdate');
+        return redirect()->route('gejala.edit',$id)->with('danger', 'Gejala gagal diupdate');
     }
 
     /**
@@ -141,13 +141,16 @@ class GejalaController extends Controller
     {
         $gejala = Gejala::all(['id', 'kode', 'gejala']);
         $dataGejala = '<tr>
-        <td style="width: 85%">
+        <td style="width: 70%">
             <select name="gejala_id[]" id="penyakit_id[]" class="form-control" required>
                 <option value="">Pilih Gejala</option>';
         foreach ($gejala as $key => $value) {
             $dataGejala = $dataGejala.'<option value="'.$value->id.'">'.$value->kode.' - '.$value->gejala.'</option>';
         }
         $dataGejala = $dataGejala.'</select>
+                                        </td>
+                                        <td style="width: 18%">
+                                            <input type="text" class="form-control" name="bobot[]" id="bobot" required placeholder="bobot">
                                         </td>
                                         <td style="text-align: right">
                                             <button type="button" id="deleteGejala" class="btn btn-round btn-sm btn-danger"><i class="fa fa-minus"></i> Remove</button>

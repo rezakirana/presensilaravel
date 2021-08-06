@@ -76,7 +76,7 @@ class PenyakitController extends Controller
         if ($savePenyakit) {
             return redirect()->route('penyakit.index')->with('success', 'Penyakit berhasil ditambahkan');
         }
-        return back()->with('error', 'Penyakit gagal ditambahkan');
+        return back()->with('danger', 'Penyakit gagal ditambahkan');
     }
 
     /**
@@ -89,7 +89,7 @@ class PenyakitController extends Controller
     {
         $penyakit = Penyakit::find($id);
         if (!$penyakit) {
-            return redirect()->route('penyakit.index')->with('error', 'Penyakit tidak ditemukan');
+            return redirect()->route('penyakit.index')->with('danger', 'Penyakit tidak ditemukan');
         }
 
         $this->data['penyakit'] = $penyakit;
@@ -112,7 +112,7 @@ class PenyakitController extends Controller
             return view('penyakit.edit',$this->data);
         }
 
-        return redirect()->route('penyakit.index')->with('error', 'Penyakit tidak ditemukan');
+        return redirect()->route('penyakit.index')->with('danger', 'Penyakit tidak ditemukan');
     }
 
     /**
@@ -134,7 +134,7 @@ class PenyakitController extends Controller
         ]);
         $penyakit = Penyakit::find($id);
         if (!$penyakit) {
-            return redirect()->route('penyakit.edit',$id)->with('error', 'Penyakit tidak ditemukan');
+            return redirect()->route('penyakit.edit',$id)->with('danger', 'Penyakit tidak ditemukan');
         }
         if ($request->image) {
             $fileGambar = $request->file('image');
@@ -157,7 +157,7 @@ class PenyakitController extends Controller
         if ($savePenyakit) {
             return redirect()->route('penyakit.index')->with('success', 'Penyakit berhasil diupdate');
         }
-        return redirect()->route('penyakit.edit',$id)->with('error', 'Penyakit gagal diupdate');
+        return redirect()->route('penyakit.edit',$id)->with('danger', 'Penyakit gagal diupdate');
     }
 
     /**
@@ -170,7 +170,7 @@ class PenyakitController extends Controller
     {
         $penyakit = Penyakit::where('id', $id)->first();
         if (!$penyakit) {
-            return redirect()->route('penyakit.index')->with('error', 'Penyakit tidak ditemukan');
+            return redirect()->route('penyakit.index')->with('danger', 'Penyakit tidak ditemukan');
         }
         if ($penyakit->image) {
             $destination_path = public_path('/img/penyakit/');

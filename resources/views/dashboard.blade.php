@@ -14,7 +14,7 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Kriteria</div>
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Gejala</div>
                     <div class="h5 mb-0 font-weight-bold text-gray-800">12</div>
                 </div>
                 <div class="col-auto">
@@ -31,7 +31,7 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Alternatif</div>
+                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Penyakit</div>
                     <div class="h5 mb-0 font-weight-bold text-gray-800">2</div>
                 </div>
                 <div class="col-auto">
@@ -48,7 +48,7 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Users</div>
+                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Diagnosa</div>
                     <div class="row no-gutters align-items-center">
                     <div class="col-auto">
                         <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">2</div>

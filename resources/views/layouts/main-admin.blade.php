@@ -94,24 +94,10 @@
           </a>
         </li> 
       @endif
-      <li class="nav-item  {{ \Str::is('bobot-kriteria.*', Route::currentRouteName()) ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('bobot-kriteria.index') }}">
-          <i class="fa fa-greater-than-equal"></i>
-          <span>&nbsp; Bobot Kriteria</span>
-        </a>
-      </li>
-
-      <!-- Nav Item - Hasil Perhitungan -->
-      <li class="nav-item  {{ \Str::is('hasil-perhitungan.*', Route::currentRouteName()) ? 'active' : '' }}">
-        <a class="nav-link" href="{{ url('/hasil-perhitungan') }}">
-          <i class="fa fa-calculator"></i>
-          <span>&nbsp; Hasil Perhitungan</span>
-        </a>
-      </li>
-      <li class="nav-item  {{ \Str::is('unduh.hasil-perhitungan.*', Route::currentRouteName()) ? 'active' : '' }}">
-        <a class="nav-link" href="{{ url('/unduh-hasil-perhitungan') }}">
-          <i class="fa fa-download"></i>
-          <span>&nbsp; Export Hasil Perhitungan</span>
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <i class="fa fa-user-check"></i>
+          <span>&nbsp; Konsultasi Penyakit</span>
         </a>
       </li>
     </ul>
@@ -163,7 +149,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; SPK Wisata 2021</span>
+            <span>Copyright &copy; Sistem Pakar 2021</span>
           </div>
         </div>
       </footer>

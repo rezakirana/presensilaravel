@@ -51,13 +51,16 @@
                     <div class="form-group">
                         <table class="table" id="gejalaData">
                             <tr>
-                                <td style="width: 85%">
+                                <td style="width: 70%">
                                     <select name="gejala_id[]" id="penyakit_id[]" class="form-control" required>
                                         <option value="">Pilih Gejala</option>
                                         @foreach ($gejala as $g)
                                             <option value="{{ $g->id }}">{{ $g->kode }} - {{ $g->gejala }}</option>
                                         @endforeach
                                     </select>
+                                </td>
+                                <td style="width: 18%">
+                                    <input type="text" class="form-control" name="bobot[]" id="bobot" required placeholder="bobot">
                                 </td>
                                 <td style="text-align: right">
                                     <button type="button" id="deleteGejala" class="btn btn-round btn-sm btn-danger" disabled><i class="fa fa-minus"></i> Remove</button>
@@ -78,7 +81,12 @@
 @section('script')
 <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
 <script>
-    
+    $('#bobot').on('change, keyup', function() {
+        var currentInput = $(this).val();
+        var fixedInput = currentInput.replace(/[A-Za-z!,@#$%^&*()]/g, '');
+        $(this).val(fixedInput);
+    });
+
     $(document).ready(function(){
         $(document).on('click', '#addGejala', function() {
             $.ajax({

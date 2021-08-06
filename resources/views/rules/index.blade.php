@@ -37,8 +37,8 @@
                     @foreach($rules as $rule)
                     <tr>
                         <td class="text-center">{{$loop->iteration}}</td>
-                        <td>{{ $rule->gejala }}</td>
                         <td>{{ $rule->penyakit }}</td>
+                        <td>{{ $rule->gejala }}</td>
                         <td>{{ $rule->bobot }}</td>
                         <td class="text-center">
                             <a href="{{ route('rules.edit', $rule->id) }}">
