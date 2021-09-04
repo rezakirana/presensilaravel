@@ -14,8 +14,8 @@ class Konsultasi extends Model
         'gejala'
     ];
 
-    public function belongsTo()
+    public function user()
     {
-        return $this->hasMany('App\User', 'user_id');
+        return $this->belongsTo('App\User', 'user_id');
     }
 }

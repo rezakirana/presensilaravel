@@ -15,10 +15,10 @@
                 <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Gejala</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">12</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $gejala }}</div>
                 </div>
                 <div class="col-auto">
-                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                    <i class="fa fa-clipboard-list fa-2x text-gray-300"></i>
                 </div>
                 </div>
             </div>
@@ -32,10 +32,10 @@
                 <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Penyakit</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">2</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $penyakit }}</div>
                 </div>
                 <div class="col-auto">
-                    <i class="fas fa-exchange-alt fa-2x text-gray-300"></i>
+                    <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
                 </div>
                 </div>
             </div>
@@ -51,12 +51,12 @@
                     <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Diagnosa</div>
                     <div class="row no-gutters align-items-center">
                     <div class="col-auto">
-                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">2</div>
+                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $konsultasi }}</div>
                     </div>
                     </div>
                 </div>
                 <div class="col-auto">
-                    <i class="fas fa-user-cog fa-2x text-gray-300"></i>
+                    <i class="fas fa-stethoscope fa-2x text-gray-300"></i>
                 </div>
                 </div>
             </div>

@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\Gejala;
+use App\Model\Penyakit;
+use App\Model\Rule;
+use App\Model\Konsultasi;
+use Illuminate\Support\Facades\Auth;
 
 class KonsultasiController extends Controller
 {
@@ -13,7 +18,9 @@ class KonsultasiController extends Controller
      */
     public function index()
     {
-        //
+        $this->data['konsultasi'] = Konsultasi::where('user_id', Auth::id())->get();
+
+        return view('konsultasi.index', $this->data);
     }
 
     /**

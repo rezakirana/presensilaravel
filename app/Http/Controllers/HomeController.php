@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Model\Gejala;
+use App\Model\Penyakit;
+use App\Model\Konsultasi;
 
 class HomeController extends Controller
 {
@@ -31,7 +34,11 @@ class HomeController extends Controller
 
     public function dashboard()
     {
-        return view('dashboard');
+        $this->data['gejala'] = Gejala::count();
+        $this->data['penyakit'] = Penyakit::count();
+        $this->data['konsultasi'] = Konsultasi::count();
+
+        return view('dashboard', $this->data);
     }
 
     public function not_found()
