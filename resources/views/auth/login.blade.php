@@ -1,6 +1,6 @@
 @extends('layouts/main-auth')
 
-@section('title', 'Login - Sistem Inventory')
+@section('title', 'Login - Expert System')
 
 @section('container')
 <div class="container">

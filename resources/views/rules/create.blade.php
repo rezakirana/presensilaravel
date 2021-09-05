@@ -35,7 +35,6 @@
                             @endforeach
                         </select>
                     </div>
-                    <hr>
                     <div class="form-group">
                         <table class="table">
                             <tr>
