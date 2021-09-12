@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Model\Gejala;
 use App\Model\Penyakit;
 use App\Model\Rule;
+use App\User;
 use App\Model\Konsultasi;
 use Illuminate\Support\Facades\Auth;
+use DB;
 
 class KonsultasiController extends Controller
 {
@@ -18,9 +20,38 @@ class KonsultasiController extends Controller
      */
     public function index()
     {
-        $this->data['konsultasi'] = Konsultasi::where('user_id', Auth::id())->get();
+        if (Auth::user()->role->role != 'user') {
+            $this->data['konsultasi'] = Konsultasi::join('users', 'users.id', '=', 'konsultasi.user_id')
+                                                    ->select([
+                                                        'users.id',
+                                                        'users.name',
+                                                        'konsultasi.id as idKonsultasi',
+                                                        DB::raw("COUNT(konsultasi.id) as jumlahKonsultasi")
+                                                    ])
+                                                    ->groupBy('users.id')
+                                                    ->orderBy('konsultasi.id', 'DESC')
+                                                    ->get();
+        }else {
+            $this->data['konsultasi'] = Konsultasi::where('user_id', Auth::id())->get();
+        }
+        
+        $this->data['role'] = Auth::user()->role->role;
 
         return view('konsultasi.index', $this->data);
+    }
+
+    public function konsultasi_pengguna($id)
+    {
+        if (Auth::user()->role->role == 'user' && Auth::id() != $id) {
+
+            return redirect()->route('konsultasi.index');
+
+        }
+        $this->data['konsultasi'] = Konsultasi::where('user_id', $id)->get();
+        
+        $this->data['user'] = User::find($id);
+
+        return view('konsultasi.pengguna', $this->data);
     }
 
     /**
@@ -193,10 +224,12 @@ class KonsultasiController extends Controller
                         })
                         ->values()
                         ->first();
-
+        // dd(gettype($hasil));
+        // dd($hasil['kode_penyakit']);
         return view('konsultasi.show', [
             'hasilSemua' => $dataLangkahDua,
-            'hasilTerpilih' => $hasil
+            'hasilTerpilih' => $hasil,
+            'gejala' => json_decode($konsultasi->gejala)
         ]);
     }
     

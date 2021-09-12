@@ -97,7 +97,7 @@
           </a>
         </li> 
       @endif
-      <li class="nav-item">
+      <li class="nav-item {{ \Str::is('konsultasi.*', Route::currentRouteName()) ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('konsultasi.index') }}">
           <i class="fa fa-user-check"></i>
           <span>&nbsp; Konsultasi Penyakit</span>
