@@ -88,7 +88,11 @@ class KonsultasiController extends Controller
         $jmlRule = Rule::groupBy('penyakit_id')->get(['penyakit_id'])->count();
         
         $jmlPenyakit = $penyakits->count();
-        
+        if (!$jmlPenyakit) {
+            session()->flash('danger', 'Maaf, terjadi kesalahan. Data penyakit belum ditambahkan, silakan hubungi administrator!');
+
+            return redirect()->route('konsultasi.index');
+        }
         if ($jmlPenyakit != $jmlRule) {
             session()->flash('danger', 'Maaf, terjadi kesalahan. Terdapat penyakit yang belum memiliki rule dengan gejala yang dipilih!');
 
