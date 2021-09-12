@@ -66,35 +66,75 @@
                     <hr>
                     <h4 style="font-weight: bold">Kemungkinan Hasil Diagnosa yang lain:</h4>
                     @if (count($hasilSemua) > 1)
-                        @for ($i = 1; $i < count($hasilSemua); $i++)
-                            <div class="form-group">
-                                <table class="table-bordered">
-                                    <tr>
-                                        <td style="width: 20%;padding: 15px;font-weight:bold;">Penyakit</td>
-                                        <td style="width: 40%;padding: 15px;">{{ $hasilSemua[$i]['kode_penyakit'] }} - {{ $hasilSemua[$i]['nama_penyakit'] }}</td>
-                                        <td rowspan="4" style="padding: 15px;">
-                                            @if ($hasilSemua[$i]['image'])
-                                                <center><img src="{{ asset('img/penyakit/'.$hasilSemua[$i]['image']) }}" style="width: 75%;text-align:center" alt="{{ $hasilSemua[$i]['nama_penyakit'] }}" /></center>
-                                            @else
-                                                <center><img src="{{ asset('img/default-image.png') }}" style="width: 75%" alt="{{ $hasilSemua[$i]['nama_penyakit'] }}" /></center>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 20%;padding: 15px;font-weight:bold;">Persentase</td>
-                                        <td style="width: 40%;padding: 15px;">{{ $hasilSemua[$i]['persen'] }} %</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 20%;padding: 15px;font-weight:bold;">Keterangan Penyakit</td>
-                                        <td style="width: 40%;padding: 15px;">{!! $hasilSemua[$i]['keterangan'] !!}</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 20%;padding: 15px;font-weight:bold;">Penanganan Penyakit</td>
-                                        <td style="width: 40%;padding: 15px;">{!! $hasilSemua[$i]['penanganan'] !!}</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        @endfor
+                        @if (count($hasilSemua) > 3)
+                            @for ($i = 1; $i < 4; $i++)
+                                @if ($hasilSemua[$i]['persen'] > 0)
+                                    <div class="form-group">
+                                        <table class="table-bordered">
+                                            <tr>
+                                                <td style="width: 20%;padding: 15px;font-weight:bold;">Penyakit</td>
+                                                <td style="width: 40%;padding: 15px;">{{ $hasilSemua[$i]['kode_penyakit'] }} - {{ $hasilSemua[$i]['nama_penyakit'] }}</td>
+                                                <td rowspan="4" style="padding: 15px;">
+                                                    @if ($hasilSemua[$i]['image'])
+                                                        <center><img src="{{ asset('img/penyakit/'.$hasilSemua[$i]['image']) }}" style="width: 75%;text-align:center" alt="{{ $hasilSemua[$i]['nama_penyakit'] }}" /></center>
+                                                    @else
+                                                        <center><img src="{{ asset('img/default-image.png') }}" style="width: 75%" alt="{{ $hasilSemua[$i]['nama_penyakit'] }}" /></center>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 20%;padding: 15px;font-weight:bold;">Persentase</td>
+                                                <td style="width: 40%;padding: 15px;">{{ $hasilSemua[$i]['persen'] }} %</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 20%;padding: 15px;font-weight:bold;">Keterangan Penyakit</td>
+                                                <td style="width: 40%;padding: 15px;">{!! $hasilSemua[$i]['keterangan'] !!}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 20%;padding: 15px;font-weight:bold;">Penanganan Penyakit</td>
+                                                <td style="width: 40%;padding: 15px;">{!! $hasilSemua[$i]['penanganan'] !!}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                @else
+                                    -
+                                @endif    
+                            @endfor
+                        @else
+                            @for ($i = 1; $i < count($hasilSemua); $i++)
+                                @if ($hasilSemua[$i]['persen'])
+                                    <div class="form-group">
+                                        <table class="table-bordered">
+                                            <tr>
+                                                <td style="width: 20%;padding: 15px;font-weight:bold;">Penyakit</td>
+                                                <td style="width: 40%;padding: 15px;">{{ $hasilSemua[$i]['kode_penyakit'] }} - {{ $hasilSemua[$i]['nama_penyakit'] }}</td>
+                                                <td rowspan="4" style="padding: 15px;">
+                                                    @if ($hasilSemua[$i]['image'])
+                                                        <center><img src="{{ asset('img/penyakit/'.$hasilSemua[$i]['image']) }}" style="width: 75%;text-align:center" alt="{{ $hasilSemua[$i]['nama_penyakit'] }}" /></center>
+                                                    @else
+                                                        <center><img src="{{ asset('img/default-image.png') }}" style="width: 75%" alt="{{ $hasilSemua[$i]['nama_penyakit'] }}" /></center>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 20%;padding: 15px;font-weight:bold;">Persentase</td>
+                                                <td style="width: 40%;padding: 15px;">{{ $hasilSemua[$i]['persen'] }} %</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 20%;padding: 15px;font-weight:bold;">Keterangan Penyakit</td>
+                                                <td style="width: 40%;padding: 15px;">{!! $hasilSemua[$i]['keterangan'] !!}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 20%;padding: 15px;font-weight:bold;">Penanganan Penyakit</td>
+                                                <td style="width: 40%;padding: 15px;">{!! $hasilSemua[$i]['penanganan'] !!}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                @else
+                                    -
+                                @endif
+                            @endfor
+                        @endif
                     @else
                         -
                     @endif

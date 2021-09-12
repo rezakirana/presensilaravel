@@ -93,10 +93,10 @@ class KonsultasiController extends Controller
             session()->flash('danger', 'Maaf, terjadi kesalahan. Terdapat penyakit yang belum memiliki rule dengan gejala yang dipilih!');
 
             return redirect()->route('konsultasi.index');
-        }        
+        }
         $jmlKonsultasi = Konsultasi::where('user_id',Auth::id())->count();
         if ($jmlKonsultasi) {
-            $periode = (int)$konsultasi + 1;
+            $periode = (int)$jmlKonsultasi + 1;
         }else {
             $periode = 1;
         }
@@ -157,7 +157,6 @@ class KonsultasiController extends Controller
                                                 'dibagi' => null
                                                 ];
             }
-
             $no++;
         }
 
@@ -171,18 +170,18 @@ class KonsultasiController extends Controller
                                     ->sort()
                                     ->values()
                                     ->all();
-
             for ($j=0; $j < count($gejalaTerpilih); $j++) {
                 $dataLangkahSatu[$i]['gejala'][$j]['atas'] = $dataLangkahSatu[$i]['gejala'][$j]['bobot'] * $dataLangkahSatu[$i]['probabilitas'];
-
                 for ($k=0; $k < count($dataLangkahSatu); $k++) {
                     $bawah[] = $dataLangkahSatu[$k]['gejala'][$j]['bobot'] * $dataLangkahSatu[$k]['probabilitas'];
                 }
 
                 $dataLangkahSatu[$i]['gejala'][$j]['bawah'] = array_sum($bawah);
                 unset($bawah);
-
-                $dibagi = $dataLangkahSatu[$i]['gejala'][$j]['atas'] / $dataLangkahSatu[$i]['gejala'][$j]['bawah'];
+                $dibagi = 0;
+                if ($dataLangkahSatu[$i]['gejala'][$j]['bawah']) {
+                    $dibagi = $dataLangkahSatu[$i]['gejala'][$j]['atas'] / $dataLangkahSatu[$i]['gejala'][$j]['bawah'];
+                }
                 $dataLangkahSatu[$i]['gejala'][$j]['dibagi'] = round($dibagi, 6);
                 $arrDibagi[] = $dataLangkahSatu[$i]['gejala'][$j]['dibagi'];
             }
@@ -224,8 +223,7 @@ class KonsultasiController extends Controller
                         })
                         ->values()
                         ->first();
-        // dd(gettype($hasil));
-        // dd($hasil['kode_penyakit']);
+        
         return view('konsultasi.show', [
             'hasilSemua' => $dataLangkahDua,
             'hasilTerpilih' => $hasil,
@@ -241,7 +239,24 @@ class KonsultasiController extends Controller
      */
     public function edit($id)
     {
-        //
+        $konsultasi = Konsultasi::where([
+                                            'id' => $id,
+                                            'user_id' => Auth::id()
+                                        ])->first();
+        $konsultasi->gejala = json_decode($konsultasi->gejala);
+        $gejalas = Gejala::all(['id', 'kode', 'gejala']);
+        foreach ($gejalas as $key => $gejala) {
+            $gejala->attr = null;
+            foreach ($konsultasi->gejala as $key2 => $oldGejala) {
+                if ($gejala->id == $oldGejala->id) {
+                    $gejala->attr = 'checked';
+                }
+            }
+        }
+        $this->data['gejalas'] = $gejalas;
+        $this->data['konsultasi'] = $konsultasi;
+
+        return view('konsultasi.edit', $this->data);
     }
 
     /**
@@ -253,7 +268,31 @@ class KonsultasiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,
+        [
+            'gejala' => 'required|min:2'
+        ],
+        [
+            'gejala.min' => 'Gejala yang di pilih minimal 2',
+            'gejala.required' => 'Gejala wajib dipilih'
+        ]);
+
+        $gejalas = Gejala::whereIn('id', $request->gejala)->get(['id', 'kode', 'gejala']);
+        $penyakits = Penyakit::orderBy('id')->get();
+        $jmlRule = Rule::groupBy('penyakit_id')->get(['penyakit_id'])->count();
+        
+        $jmlPenyakit = $penyakits->count();
+        
+        if ($jmlPenyakit != $jmlRule) {
+            session()->flash('danger', 'Maaf, terjadi kesalahan. Terdapat penyakit yang belum memiliki rule dengan gejala yang dipilih!');
+
+            return redirect()->route('konsultasi.edit', $id);
+        }        
+        $konsultasi = Konsultasi::find($id);
+        $konsultasi->gejala = json_encode($gejalas);
+        $konsultasi->save();
+
+    	return redirect()->route('konsultasi.show', $konsultasi->id);
     }
 
     /**
@@ -264,6 +303,8 @@ class KonsultasiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Konsultasi::where('id', $id)->delete();
+
+        return redirect()->route('konsultasi.index')->with('success', 'Berhasil menghapus data');
     }
 }
