@@ -23,14 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/not-found', 'HomeController@not_found')->name('notFound');
 Route::group(['middleware' => 'auth'], function()
 {
-    Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
-    Route::get('/konsultasi/{id}/pengguna', 'KonsultasiController@konsultasi_pengguna')->name('konsultasi.user');
-    Route::resource('kriteria', 'KriteriaController');
+    Route::get('/dashboard', 'HomeController@ini_dashboard_lho')->name('dashboard');
     Route::resource('users', 'UserController');
-    Route::resource('gejala', 'GejalaController');
-    Route::resource('penyakit', 'PenyakitController');
-    Route::resource('rules', 'RuleController');
-    Route::resource('konsultasi', 'KonsultasiController');
     Route::resource('account', 'AccountController');
-    Route::get('get-gejala', 'GejalaController@get_gejala')->name('getGejala');
 });

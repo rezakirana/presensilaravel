@@ -40,11 +40,13 @@ class AccountController extends Controller
             'currentPassword' => 'required|string',
             'password' => 'required|string|min:6|confirmed'
         ]);
+
         $user = Auth::user();
         $cekPassword = Hash::check($request->currentPassword, $user->password);
         if (!$cekPassword) {
             return redirect()->route('account.index')->with('danger','Current password does not match!');
         }
+        
         $user->password = Hash::make($request->password);
         $user->save();
 

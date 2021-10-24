@@ -56,7 +56,7 @@
       <li class="nav-item  {{ \Str::is('account.*', Route::currentRouteName()) ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('account.index') }}">
           <i class="far fa-user"></i>
-          <span>&nbsp; Manajemen Account</span>
+          <span>&nbsp; Manajemen Akun</span>
         </a>
       </li>    
 
