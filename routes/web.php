@@ -23,12 +23,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/not-found', 'HomeController@not_found')->name('notFound');
 Route::group(['middleware' => 'auth'], function()
 {
-    Route::get('/dashboard', 'HomeController@ini_dashboard_lho')->name('dashboard');
+    Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
     Route::resource('users', 'UserController');
     Route::resource('account', 'AccountController');
     Route::resource('poli', 'PoliController');
     Route::resource('dokter', 'DokterController');
     Route::resource('pasien', 'PasienController');
     Route::resource('jadwal', 'JadwalController');
-    Route::resource('antria', 'AntrianController');
+    Route::resource('antrian', 'AntrianController');
+    Route::get('/laporan', 'AntrianController@laporan')->name('laporan');
 });

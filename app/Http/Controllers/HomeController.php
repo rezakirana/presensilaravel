@@ -34,17 +34,17 @@ class HomeController extends Controller
 
     public function dashboard()
     {
-        if (Auth::user()->role->role != 'user') {
-            $this->data['gejala'] = Gejala::count();
-            $this->data['penyakit'] = Penyakit::count();
-            $this->data['konsultasi'] = Konsultasi::count();
-        }else {
-            $this->data['gejala'] = Gejala::count();
-            $this->data['penyakit'] = Penyakit::count();
-            $this->data['konsultasi'] = Konsultasi::where('user_id', Auth::id())->count();
-        }
-
-        return view('dashboard', $this->data);
+        // if (Auth::user()->role->role != 'user') {
+        //     $this->data['gejala'] = Gejala::count();
+        //     $this->data['penyakit'] = Penyakit::count();
+        //     $this->data['konsultasi'] = Konsultasi::count();
+        // }else {
+        //     $this->data['gejala'] = Gejala::count();
+        //     $this->data['penyakit'] = Penyakit::count();
+        //     $this->data['konsultasi'] = Konsultasi::where('user_id', Auth::id())->count();
+        // }
+        
+        return view('admin.dashboard');
     }
 
     public function not_found()

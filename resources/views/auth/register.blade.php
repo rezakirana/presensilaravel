@@ -1,6 +1,6 @@
 @extends('layouts/main-auth')
 
-@section('title', 'Register - Expert System')
+@section('title', 'Register - Sistem Antrian Puskesmas')
 
 @section('container')
 <div class="container">

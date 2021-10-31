@@ -1,6 +1,6 @@
 @extends('layouts/main-auth')
 
-@section('title', 'Login - Expert System')
+@section('title', 'Login - Sistem Antrian Puskesmas')
 
 @section('container')
 <div class="container">
@@ -11,6 +11,7 @@
             <div class="row align-items-center">
               <div class="col-lg-6 d-none d-lg-block" style="padding-left: 50px;">
                 <div class="text-center">
+                  <br>
                     <h1 class="h2 text-gray-900 mb-4 font-weight-bold animate__animated animate__fadeInDown animate__delay-1s">Welcome Back!</h1>
                   </div>
                 <img src="img/landing.svg" class="bg-login-image animate__animated animate__backInLeft" alt="">
@@ -25,12 +26,12 @@
                         </button>
                     </div>
                   @endif
-                  <h5 class="header-title" style="text-align: center;margin-bottom:10px;padding-bottom:10px;">EXPERT SYSTEM</h5>
+                  <h5 class="header-title" style="text-align: center;margin-bottom:10px;padding-bottom:10px;">ADMIN/DOKTER</h5>
                   <form class="user" method="POST" action="{{ route('login') }}">
                     @csrf
                     <div class="form-group">
-                    <input id="email" type="email" class="form-control form-control-user @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Enter Email" required autocomplete="email" autofocus>
-                    @error('email')
+                    <input id="username" type="text" class="form-control form-control-user @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" placeholder="Enter Username" required autocomplete="username" autofocus>
+                    @error('username')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -56,11 +57,11 @@
                         <label for="">
                              &nbsp;
                         </label>
-                        <label style="float:right;">
+                        {{-- <label style="float:right;">
                             @if (Route::has('register'))
                                 <a href="{{ route('register') }}">Don't have an account ?</a>
                             @endif
-                        </label>
+                        </label> --}}
                       </div>
                     </div>
                     <button class="btn btn-primary btn-user btn-block" type="submit">
@@ -69,7 +70,7 @@
                     <hr>
                   </form>
                   <div class="text-center">
-                    <span class="small">Copyright &copy; Expert System 2021</span>
+                    <span class="small">Copyright &copy; Sistem Antrian Puskesmas 2021</span>
                   </div>
                 </div>
               </div>
