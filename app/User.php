@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'role_id', 'is_active','name', 'is_admin','email', 'password',
+        'nama', 'username','password', 'role'
     ];
 
     /**
@@ -33,17 +33,15 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
 
-    public function role()
+    public function dokter()
     {
-        return $this->belongsTo('App\Model\Role', 'role_id');
+        return $this->hasOne('App\Model\Dokter', 'user_id');
     }
 
-    public function konsultasi()
+    public function pasien()
     {
-        return $this->hasMany('App\Model\Konsultasi', 'user_id');
+        return $this->hasOne('App\Model\Pasien', 'user_id');
     }
+
 }

@@ -26,4 +26,9 @@ Route::group(['middleware' => 'auth'], function()
     Route::get('/dashboard', 'HomeController@ini_dashboard_lho')->name('dashboard');
     Route::resource('users', 'UserController');
     Route::resource('account', 'AccountController');
+    Route::resource('poli', 'PoliController');
+    Route::resource('dokter', 'DokterController');
+    Route::resource('pasien', 'PasienController');
+    Route::resource('jadwal', 'JadwalController');
+    Route::resource('antria', 'AntrianController');
 });
