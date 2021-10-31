@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreatePoliTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('poli', function (Blueprint $table) {
             $table->id();
+            $table->string('kode')->unique();
             $table->string('nama');
-            $table->enum('type', ['admin','dokter','pasien']);
-            $table->string('username')->unique();
-            $table->string('password');
-            $table->softDeletes('deleted_at', 0)->nullable();
-            $table->rememberToken();
+            $table->string('gambar')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('poli');
     }
 }
