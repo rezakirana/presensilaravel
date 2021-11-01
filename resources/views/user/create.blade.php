@@ -28,19 +28,16 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="exampleInputPassword1">Role User</label>
-                        <select name="role_id" id="role_id" class="form-control" required>
-                            @foreach ($roles as $role)
-                                <option value="{{ $role->id }}">{{ $role->role }}</option>
-                            @endforeach                            
+                        <select name="type" id="type" class="form-control" required>
+                           <option value="">--Pilih Role--</option>
+                           <option value="admin">Admin</option>
+                           <option value="dokter">Dokter</option>
+                           <option value="pasien">Pasien</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Nama User</label>
-                        <input type="text" class="form-control" name="name" id="name" placeholder="nama" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Email</label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="email" required>
+                        <label for="exampleInputPassword1">Username</label>
+                        <input type="text" class="form-control" name="username" id="username" placeholder="username" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>

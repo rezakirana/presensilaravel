@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\User;
+use App\Model\Pasien;
+use App\Model\Dokter;
 
 class AccountController extends Controller
 {
@@ -15,6 +18,13 @@ class AccountController extends Controller
      */
     public function index()
     {
+        if (Auth::user()->type == 'pasien') {
+            $tgl = Auth::user()->pasien->ttl;
+            $tgl = explode('-',$tgl);
+            $this->data['ttl'] = $tgl[1].'/'.$tgl[2].'/'.$tgl[0];
+
+            return view('account.index', $this->data);
+        }
         return view('account.index');
     }
 
@@ -53,6 +63,26 @@ class AccountController extends Controller
         return redirect()->route('account.index')->with('success', 'Your password changed successfully!');
     }
 
+    public function account_profile(Request $request)
+    {
+        if (Auth::user()->type == 'dokter') {
+            $dokter = Dokter::where('user_id',Auth::id())->first();
+            $dokter->nama_dokter = $request->nama_dokter;
+            $dokter->jk = $request->jk;
+            $dokter->pendidikan_terakhir = $request->pendidikan_terakhir;
+            $dokter->save();
+        } else {
+            $pasien = Pasien::where('user_id',Auth::id())->first();
+            $pasien->nama = $request->nama;
+            $pasien->jk = $request->jk;
+            $pasien->nik = $request->nik;
+            $pasien->alamat = $request->alamat;
+            $ttl = explode('/',$request->ttl);
+            $pasien->ttl = $ttl[2].'-'.$ttl[1].'-'.$ttl[0];
+            $pasien->save();
+        }
+        return redirect()->route('account.index')->with('success', 'Your profile changed successfully!');
+    }
     /**
      * Display the specified resource.
      *

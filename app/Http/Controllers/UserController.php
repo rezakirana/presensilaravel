@@ -12,8 +12,7 @@ class UserController extends Controller
 {
     function __construct() {
         $this->middleware(function ($request, $next) {
-            $cekUser = Auth::user()->role->role;
-            if ($cekUser != 'admin') {
+            if (Auth::user()->type != 'admin') {
                 return redirect()->route('notFound');
             }
             return $next($request);
@@ -39,9 +38,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $this->data['roles'] = Role::where('role', '!=', 'admin')->get(['id', 'role']);
-
-        return view('user.create', $this->data);
+        return view('user.create');
     }
 
     /**
@@ -53,19 +50,21 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'role_id' => 'required|integer|exists:roles,id',
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string'
+            'type' => 'required|in:admin,dokter,pasien',
+            'username' => 'required|string|unique:users,username',
+            'password' => 'required|min:6'
         ]);
 
         $user = new User();
-        $user->role_id = $request->role_id;
-        $user->name = $request->name;
-        $user->email = $request->email;
+        $user->type = $request->type;
+        $user->username = $request->username;
         $user->password = Hash::make($request->password);
         $user->save();
-
+        if ($request->type == 'dokter') {
+            return redirect()->route('dokter.create')->with('success', 'User berhasil ditambahkan, lengkapi data dokter!');
+        }elseif ($request->type == 'pasien') {
+            return redirect()->route('pasien.create')->with('success', 'User berhasil ditambahkan, lengkapi data pasien!');
+        }
         return redirect()->route('users.index')->with('success', 'User berhasil ditambahkan');
     }
 
@@ -109,7 +108,6 @@ class UserController extends Controller
     {
         $this->validate($request,[
             'role_id' => 'required|integer|exists:roles,id',
-            'name' => 'required|string',
             'email' => 'required|email|unique:users,email,'.$id
         ]);
 
@@ -119,7 +117,6 @@ class UserController extends Controller
         }
 
         $user->role_id = $request->role_id;
-        $user->name = $request->name;
         $user->email = $request->email;
         $user->is_active = $request->is_active;
         $user->save();;

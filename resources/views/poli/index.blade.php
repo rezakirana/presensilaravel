@@ -1,18 +1,18 @@
 @extends('layouts/main-admin')
 
-@section('title', 'Users')
+@section('title', 'Poli')
 
 @section('container')
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h2 class="m-0 text-dark">USERS</h2>
+                <h2 class="m-0 text-dark">POLI</h2>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item active">Users</li>
+                <li class="breadcrumb-item active">POLI</li>
                 </ol>
             </div>
         </div>
@@ -27,22 +27,30 @@
                 <thead>
                     <tr>
                     <th width="40">NO</th>
-                    <th>USERNAME</th>
-                    <th>ROLE</th>
+                    <th>KODE</th>
+                    <th>POLI</th>
+                    <th>ICON</th>
                     <th width="80">AKSI</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($users as $user)
+                    @foreach($poli as $item)
                     <tr>
                         <td class="text-center">{{$loop->iteration}}</td>
-                        <td>{{ $user->username }}</td>
-                        <td>{{ ucwords($user->type) }}</td>
+                        <td>{{ $item->kode }}</td>
+                        <td>{{ $item->nama }}</td>
+                        <td>
+                            @if ($item->gambar)
+                            <img src="{{ asset('/img/poli/'.$item->gambar) }}" width="70px" height="70px" style="text-align: center;" alt="{{ $item->nama }}" />
+                            @else
+                                <img src="{{ asset('/img/default-image.png') }}" width="70px" height="70px" style="text-align: center;" alt="{{ $item->nama }}" />
+                            @endif    
+                        </td>
                         <td class="text-center">
-                            <a href="{{ route('users.edit', $user->id) }}">
+                            <a href="{{ route('poli.edit', $item->id) }}">
                                 <button class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-edit"></i></button>
                             </a>
-                            <form id="delete-user-{{$user->id}}" action="/users/{{$user->id}}" method="post" style="display: inline;">
+                            <form id="delete-user-{{$item->id}}" action="/poli/{{$item->id}}" method="post" style="display: inline;">
                                 @method('DELETE')
                                 @csrf
                                 <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fa fa-trash"></i></button>
@@ -58,7 +66,7 @@
 @include ('includes.scripts')
     <script type="text/javascript">
         $(document).ready(function(){
-            $("#data-admin_length").append('<a  href="{{ route('users.create') }}"> <button type="button" class="btn btn-outline-primary ml-3">Tambah</button></a>');
+            $("#data-admin_length").append('<a  href="{{ route('poli.create') }}"> <button type="button" class="btn btn-outline-primary ml-3">Tambah</button></a>');
         });
     </script>
 @endsection

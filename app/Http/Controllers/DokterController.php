@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Dokter;
+use App\Model\Poli;
+use App\User;
 
 class DokterController extends Controller
 {
@@ -14,7 +16,9 @@ class DokterController extends Controller
      */
     public function index()
     {
-        //
+        $this->data['dokter'] = Dokter::all();
+
+        return view('dokter.index',$this->data);
     }
 
     /**
@@ -24,7 +28,12 @@ class DokterController extends Controller
      */
     public function create()
     {
-        //
+        $users = User::where('type','dokter')->whereNotIn('id',function($query) {
+            $query->select('user_id')->from('dokter');
+         })->get();
+        $this->data['users'] = $users;
+
+        return view('dokter.create',$this->data);
     }
 
     /**
@@ -35,7 +44,22 @@ class DokterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'user_id' => 'required',
+            'nama_dokter' => 'required',
+            'jk' => 'required',
+            'pendidikan_terakhir' => 'required',
+            'poli_id' => 'required|integer|exists:poli,id'
+        ]);
+        $dokter = new Dokter();
+        $dokter->user_id = $request->user_id;
+        $dokter->nama_dokter = $request->nama_dokter;
+        $dokter->jk = $request->jk;
+        $dokter->pendidikan_terakhir = $request->pendidikan_terakhir;
+        $dokter->poli_id = $request->poli_id;
+        $dokter->save();
+
+        return redirect()->route('dokter.index')->with('success', 'Dokter berhasil ditambahkan!');
     }
 
     /**
@@ -57,7 +81,10 @@ class DokterController extends Controller
      */
     public function edit($id)
     {
-        //
+        $this->data['dokter'] = Dokter::find($id);
+        $this->data['poli'] = Poli::all();
+
+        return view('dokter.edit',$this->data);
     }
 
     /**
@@ -69,7 +96,20 @@ class DokterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'nama_dokter' => 'required',
+            'jk' => 'required',
+            'pendidikan_terakhir' => 'required',
+            'poli_id' => 'required|integer|exists:poli,id'
+        ]);
+        $dokter = Dokter::find($id);
+        $dokter->nama_dokter = $request->nama_dokter;
+        $dokter->jk = $request->jk;
+        $dokter->pendidikan_terakhir = $request->pendidikan_terakhir;
+        $dokter->poli_id = $request->poli_id;
+        $dokter->save();
+
+        return redirect()->route('dokter.index')->with('success', 'Dokter berhasil diupdate!');
     }
 
     /**
@@ -80,6 +120,8 @@ class DokterController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Dokter::where('id', $id)->delete();
+
+        return redirect()->route('dokter.index')->with('success', 'Berhasil menghapus data');
     }
 }

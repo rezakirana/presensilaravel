@@ -38,10 +38,6 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Nama User</label>
-                        <input type="text" class="form-control" name="name" id="name" placeholder="nama" required value="{{ $user->name }}">
-                    </div>
-                    <div class="form-group">
                         <label for="exampleInputPassword1">Email</label>
                         <input type="email" class="form-control" name="email" id="email" placeholder="email" required value="{{ $user->email }}">
                     </div>

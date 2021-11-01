@@ -206,7 +206,7 @@
                                                         </ul>
                                                     </li>
                                                     <li><a href="#"><span>Jadwal Praktik</span></a></li>
-                                                    <li><a href="#"><span style="color:#3385ff;">Login</span></a></li>
+                                                    <li><a href="{{ route('login') }}"><span style="color:#3385ff;">Login</span></a></li>
                                                 </ul>
                                             </nav>
                                         </div>
