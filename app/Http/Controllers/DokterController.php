@@ -81,7 +81,7 @@ class DokterController extends Controller
      */
     public function edit($id)
     {
-        $this->data['dokter'] = Dokter::find($id);
+        $this->data['dokter'] = Dokter::findOrFail($id);
         $this->data['poli'] = Poli::all();
 
         return view('dokter.edit',$this->data);
@@ -102,7 +102,7 @@ class DokterController extends Controller
             'pendidikan_terakhir' => 'required',
             'poli_id' => 'required|integer|exists:poli,id'
         ]);
-        $dokter = Dokter::find($id);
+        $dokter = Dokter::findOrFail($id);
         $dokter->nama_dokter = $request->nama_dokter;
         $dokter->jk = $request->jk;
         $dokter->pendidikan_terakhir = $request->pendidikan_terakhir;

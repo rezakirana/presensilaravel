@@ -86,7 +86,7 @@ class PasienController extends Controller
      */
     public function edit($id)
     {
-        $pasien = Pasien::find($id);
+        $pasien = Pasien::findOrFail($id);
         $tgl = explode('-',$pasien->ttl);
         $this->data['pasien'] = $pasien;
         $this->data['ttl'] = $tgl[1].'/'.$tgl[2].'/'.$tgl[0];
@@ -111,7 +111,7 @@ class PasienController extends Controller
             'nik' => 'required|unique:pasien,nik,'.$id,
         ]);
 
-        $pasien = Pasien::find($id);
+        $pasien = Pasien::findOrFail($id);
         $pasien->nama = $request->nama;
         $pasien->jk = $request->jk;
         $pasien->alamat = $request->alamat;

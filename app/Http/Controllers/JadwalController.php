@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Jadwal;
+use App\Model\Dokter;
 
 class JadwalController extends Controller
 {
@@ -14,7 +15,9 @@ class JadwalController extends Controller
      */
     public function index()
     {
-        //
+        $this->data['jadwals'] = Jadwal::all();
+
+        return view('jadwal.index',$this->data);
     }
 
     /**
@@ -24,7 +27,9 @@ class JadwalController extends Controller
      */
     public function create()
     {
-        //
+        $this->data['dokters'] = Dokter::all();
+
+        return view('jadwal.create',$this->data);
     }
 
     /**
@@ -35,7 +40,20 @@ class JadwalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'dokter_id' => 'required|integer|exists:dokter,id',
+            'hari' => 'required|in:senin,selasa,rabu,kamis,jumat,sabtu,minggu',
+            'mulai' => 'required',
+            'selesai' => 'required'
+        ]);
+        
+        $jadwal = new Jadwal();
+        $jadwal->dokter_id = $request->dokter_id;
+        $jadwal->hari = $request->hari;
+        $jadwal->jam_praktik = $request->mulai.'-'.$request->selesai;
+        $jadwal->save();
+
+        return redirect()->route('jadwal.index')->with('success', 'Jadwal berhasil ditambahkan!');
     }
 
     /**
@@ -57,7 +75,14 @@ class JadwalController extends Controller
      */
     public function edit($id)
     {
-        //
+        $jadwal = Jadwal::findOrFail($id);
+        $tmp = explode('-',$jadwal->jam_praktik);
+        $jadwal->mulai = $tmp[0];
+        $jadwal->selesai = $tmp[1];
+        $this->data['jadwal'] = $jadwal;
+        $this->data['dokters'] = Dokter::all();
+
+        return view('jadwal.edit',$this->data);
     }
 
     /**
@@ -69,7 +94,20 @@ class JadwalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'dokter_id' => 'required|integer|exists:dokter,id',
+            'hari' => 'required|in:senin,selasa,rabu,kamis,jumat,sabtu,minggu',
+            'mulai' => 'required',
+            'selesai' => 'required'
+        ]);
+        
+        $jadwal = Jadwal::findOrFail($id);
+        $jadwal->dokter_id = $request->dokter_id;
+        $jadwal->hari = $request->hari;
+        $jadwal->jam_praktik = $request->mulai.'-'.$request->selesai;
+        $jadwal->save();
+
+        return redirect()->route('jadwal.index')->with('success', 'Jadwal berhasil diupdate!');
     }
 
     /**
@@ -80,6 +118,8 @@ class JadwalController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Jadwal::where('id', $id)->delete();
+
+        return redirect()->route('jadwal.index')->with('success', 'Berhasil menghapus data');
     }
 }

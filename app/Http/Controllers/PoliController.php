@@ -76,7 +76,7 @@ class PoliController extends Controller
      */
     public function edit($id)
     {
-        $this->data['poli'] = Poli::find($id);
+        $this->data['poli'] = Poli::findOrFail($id);
 
         return view('poli.edit', $this->data);
     }
@@ -95,7 +95,7 @@ class PoliController extends Controller
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'kode' => 'required|unique:poli,kode,'.$id
         ]);
-        $poli = Poli::find($id);
+        $poli = Poli::findOrFail($id);
         $poli->kode = $request->kode;
         $poli->nama = $request->nama;
         if ($request->gambar) {

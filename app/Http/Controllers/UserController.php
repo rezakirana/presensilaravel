@@ -87,7 +87,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         if (!$user) {
             return redirect()->route('')->with('danger', 'User tidak ditemukan!');
         }
@@ -111,7 +111,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email,'.$id
         ]);
 
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         if (!$user) {
             return redirect()->back('danger', 'User tidak ditemukan!');
         }

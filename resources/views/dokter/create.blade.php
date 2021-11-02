@@ -29,7 +29,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="exampleInputJK">User</label>
-                        <select class="form-control" name="user_id" id="user_id">
+                        <select class="form-control" name="user_id" id="user_id" required>
                             <option value="">--Pilih User--</option>
                             @foreach ($users as $user)
                                 <option value="{{ $user->id }}">{{ $user->username }}</option>
