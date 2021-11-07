@@ -26,14 +26,16 @@
             <table id="data-admin" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                    <th width="40">NO</th>
-                    <th>USERNAME</th>
-                    <th>NAMA</th>
-                    <th>NIK</th>
-                    <th>JENIS KELAMIN</th>
-                    <th>TANGGAL LAHIR</th>
-                    <th>ALAMAT</th>
-                    <th width="80">AKSI</th>
+                        <th width="40">NO</th>
+                        <th>USERNAME</th>
+                        <th>NAMA</th>
+                        <th>NIK</th>
+                        <th>JENIS KELAMIN</th>
+                        <th>TANGGAL LAHIR</th>
+                        <th>ALAMAT</th>
+                        @if (Auth::user()->type == 'admin')
+                            <th width="80">AKSI</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -46,16 +48,18 @@
                         <td>{{ ucwords($pasien->jk) }}</td>
                         <td>{{  date('d F Y', strtotime($pasien->ttl)) }}</td>
                         <td>{{ $pasien->alamat }}</td>
-                        <td class="text-center">
-                            <a href="{{ route('pasien.edit', $pasien->id) }}">
-                                <button class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-edit"></i></button>
-                            </a>
-                            <form id="delete-user-{{$pasien->id}}" action="/pasien/{{$pasien->id}}" method="post" style="display: inline;">
-                                @method('DELETE')
-                                @csrf
-                                <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fa fa-trash"></i></button>
-                            </form>
-                        </td>
+                        @if (Auth::user()->type == 'admin')
+                            <td class="text-center">
+                                <a href="{{ route('pasien.edit', $pasien->id) }}">
+                                    <button class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-edit"></i></button>
+                                </a>
+                                <form id="delete-user-{{$pasien->id}}" action="/pasien/{{$pasien->id}}" method="post" style="display: inline;">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fa fa-trash"></i></button>
+                                </form>
+                            </td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>
@@ -64,9 +68,11 @@
     </div>
 </section>
 @include ('includes.scripts')
+@if (Auth::user()->type == 'admin')
     <script type="text/javascript">
         $(document).ready(function(){
             $("#data-admin_length").append('<a  href="{{ route('pasien.create') }}"> <button type="button" class="btn btn-outline-primary ml-3">Tambah</button></a>');
         });
     </script>
+@endif
 @endsection

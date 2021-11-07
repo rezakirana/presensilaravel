@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\Jadwal;
 use App\Model\Dokter;
+use Illuminate\Support\Facades\Auth;
 
 class JadwalController extends Controller
 {
@@ -15,8 +16,11 @@ class JadwalController extends Controller
      */
     public function index()
     {
-        $this->data['jadwals'] = Jadwal::all();
-
+        if (Auth::user()->type == 'admin' || Auth::user()->type == 'pasien') {
+            $this->data['jadwals'] = Jadwal::all();
+        }elseif (Auth::user()->type == 'dokter') {
+            $this->data['jadwals'] = Jadwal::where('dokter_id',Auth::user()->dokter->id)->get();
+        }
         return view('jadwal.index',$this->data);
     }
 

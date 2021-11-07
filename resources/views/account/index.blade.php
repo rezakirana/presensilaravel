@@ -87,7 +87,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="exampleInputNama">Nama</label>
-                        <input type="text" class="form-control" name="nama_dokter" id="nama_dokter" value="{{ Auth::user()->nama }}" required>
+                        <input type="text" class="form-control" name="nama_dokter" id="nama_dokter" value="{{ Auth::user()->dokter->nama_dokter }}" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputJK">Jenis Kelamin</label>
@@ -156,7 +156,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="exampleInputNama">Nama</label>
-                        <input type="text" class="form-control" name="nama" id="nama" value="{{ Auth::user()->nama }}" required>
+                        <input type="text" class="form-control" name="nama" id="nama" value="{{ Auth::user()->pasien->nama }}" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputJK">Jenis Kelamin</label>

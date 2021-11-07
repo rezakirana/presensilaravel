@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\Pasien;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class PasienController extends Controller
 {
@@ -15,7 +16,26 @@ class PasienController extends Controller
      */
     public function index()
     {
-        $this->data['pasiens'] = Pasien::all();
+        if (Auth::user()->type == 'admin') {
+            $this->data['pasiens'] = Pasien::all();
+        }elseif (Auth::user()->type == 'dokter') {
+            $this->data['pasiens'] = Pasien::join('users','users.id','=','pasien.user_id')
+                                            ->join('antrian','antrian.pasien_id','=','pasien.id')
+                                            ->join('jadwal','jadwal.id','=','antrian.jadwal_id')
+                                            ->join('dokter','dokter.id','=','jadwal.dokter_id')
+                                            ->where('dokter.id',Auth::user()->dokter->id)
+                                            ->select([
+                                                'pasien.id',
+                                                'pasien.nama',
+                                                'pasien.alamat',
+                                                'pasien.nik',
+                                                'pasien.jk',
+                                                'pasien.ttl',
+                                                'users.username'
+                                            ])->get();
+        }else {
+            return redirect()->route('notFound');
+        }
         
         return view('pasien.index', $this->data);
     }

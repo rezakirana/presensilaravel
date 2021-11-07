@@ -32,6 +32,7 @@ class DokterController extends Controller
             $query->select('user_id')->from('dokter');
          })->get();
         $this->data['users'] = $users;
+        $this->data['poli'] = Poli::all();
 
         return view('dokter.create',$this->data);
     }

@@ -26,13 +26,15 @@
             <table id="data-admin" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                    <th width="40">NO</th>
-                    <th>USERNAME</th>
-                    <th>NAMA</th>
-                    <th>JENIS KELAMIN</th>
-                    <th>PENDIDIKAN TERAKHIR</th>
-                    <th>POLI</th>
-                    <th width="80">AKSI</th>
+                        <th width="40">NO</th>
+                        <th>USERNAME</th>
+                        <th>NAMA</th>
+                        <th>JENIS KELAMIN</th>
+                        <th>PENDIDIKAN TERAKHIR</th>
+                        <th>POLI</th>
+                        @if (Auth::user()->type == 'admin')
+                        <th width="80">AKSI</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -44,16 +46,18 @@
                         <td>{{ ucwords($item->jk) }}</td>
                         <td>{{ $item->pendidikan_terakhir }}</td>
                         <td>{{ $item->poli->nama }}</td>
-                        <td class="text-center">
-                            <a href="{{ route('dokter.edit', $item->id) }}">
-                                <button class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-edit"></i></button>
-                            </a>
-                            <form id="delete-user-{{$item->id}}" action="/dokter/{{$item->id}}" method="post" style="display: inline;">
-                                @method('DELETE')
-                                @csrf
-                                <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fa fa-trash"></i></button>
-                            </form>
-                        </td>
+                        @if (Auth::user()->type == 'admin')
+                            <td class="text-center">
+                                <a href="{{ route('dokter.edit', $item->id) }}">
+                                    <button class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-edit"></i></button>
+                                </a>
+                                <form id="delete-user-{{$item->id}}" action="/dokter/{{$item->id}}" method="post" style="display: inline;">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fa fa-trash"></i></button>
+                                </form>
+                            </td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>
@@ -62,9 +66,11 @@
     </div>
 </section>
 @include ('includes.scripts')
+@if (Auth::user()->type == 'admin')
     <script type="text/javascript">
         $(document).ready(function(){
             $("#data-admin_length").append('<a  href="{{ route('dokter.create') }}"> <button type="button" class="btn btn-outline-primary ml-3">Tambah</button></a>');
         });
     </script>
+@endif
 @endsection
