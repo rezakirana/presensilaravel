@@ -34,3 +34,4 @@ Route::group(['middleware' => 'auth'], function()
     Route::get('/laporan', 'AntrianController@laporan')->name('laporan');
     Route::post('/account-profile', 'AccountController@account_profile')->name('accountProfile.store');
 });
+Route::get('/pendaftaran', 'ClientPageController@pendaftaran')->name('pendaftaran');
