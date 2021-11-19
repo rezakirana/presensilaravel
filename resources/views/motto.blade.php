@@ -5,8 +5,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title">
-                        <img src="https://faktapers.id/wp-content/uploads/2020/05/amikom.jpg"  alt="Selamat Datang Di Website Puskesmas Kecamatan Senen">
-                        <h2>SELAMAT DATANG DI WEBSITE RESMI PUSKESMAS KECAMATAN AMIKOM</h2>
+                        <h2>MOTTO PUSKESMAS KECAMATAN AMIKOM</h2>
                         <!-- <img src="img/section-img.png" alt="#"> -->
                         <p class="tengah" style="color:#000;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.
                             Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.
