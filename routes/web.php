@@ -35,6 +35,7 @@ Route::group(['middleware' => 'auth'], function()
     Route::post('/account-profile', 'AccountController@account_profile')->name('accountProfile.store');
 });
 Route::get('/pendaftaran', 'ClientPageController@pendaftaran')->name('pendaftaran');
+Route::get('/pendaftaran/{id}', 'ClientPageController@pendaftaran_detail')->name('pendaftaran.detail');
 Route::get('/profile', 'ClientPageController@profil')->name('profil');
 Route::get('/motto', 'ClientPageController@motto')->name('motto');
 Route::get('/visi-misi', 'ClientPageController@visi_misi')->name('visiMisi');

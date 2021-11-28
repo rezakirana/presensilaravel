@@ -8,6 +8,8 @@ use App\Model\Jadwal;
 use App\Model\Poli;
 use App\Model\Antrian;
 use DB;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 
 class ClientPageController extends Controller
 {
@@ -26,8 +28,45 @@ class ClientPageController extends Controller
                     ->count();
             $value->jmlAntrian = $data;
         }
-        dd($value);
-        return view('pendaftaran');
+        $this->data['poli'] = $poli;
+
+        return view('pendaftaran',$this->data);
+    }
+
+    public function pendaftaran_detail($id)
+    {
+        $poli = Poli::findOrFail($id);
+        $NewDate=Date('Y-m-d', strtotime('+30 days'));
+        $dt = Carbon::now();
+        $periods = CarbonPeriod::create($dt->toDateString(), $NewDate);
+        $arr = [];
+        foreach($periods as $nil)
+        {
+            $tmp['day'] = $nil->format('d');
+            if ($nil->format('l') == 'Sunday') {
+                $hari = 'Minggu';
+            }elseif ($nil->format('l') == 'Monday') {
+                $hari = 'Senin';
+            }elseif ($nil->format('l') == 'Tuesday') {
+                $hari = 'Selasa';
+            }elseif ($nil->format('l') == 'Wednesday') {
+                $hari = 'Rabu';
+            }elseif ($nil->format('l') == 'Thursday') {
+                $hari = 'Kamis';
+            }elseif ($nil->format('l') == 'Friday') {
+                $hari = 'Jumat';
+            }elseif ($nil->format('l') == 'Saturday') {
+                $hari = 'Sabtu';
+            }
+            $tmp['labelDay'] = $hari;
+            $tmp['month'] = $nil->format('F');
+            $tmp['year'] = $nil->format('Y');
+            array_push($arr,$tmp);
+        }
+        $this->data['poli'] = $poli;
+        $this->data['backdate'] = $arr;
+
+        return view('pendaftaran_detail',$this->data);
     }
 
     public function profil()
