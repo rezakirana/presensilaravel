@@ -10,6 +10,7 @@ use App\Model\Antrian;
 use DB;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Illuminate\Support\Facades\Auth;
 
 class ClientPageController extends Controller
 {
@@ -24,7 +25,7 @@ class ClientPageController extends Controller
                     ->whereDate('antrian.tanggal_daftar',\Carbon\Carbon::today())
                     ->select([
                         'antrian.id as jmlAntrian'
-                    ])
+                        ])
                     ->count();
             $value->jmlAntrian = $data;
         }
@@ -35,6 +36,12 @@ class ClientPageController extends Controller
 
     public function pendaftaran_detail($id)
     {
+        if (!Auth::check()) {
+            $url = '/pendaftaran/'.$id;
+            session()->put('lastUrl',$url);
+            
+            return redirect()->route('login');
+        }
         $poli = Poli::findOrFail($id);
         $NewDate=Date('Y-m-d', strtotime('+30 days'));
         $dt = Carbon::now();

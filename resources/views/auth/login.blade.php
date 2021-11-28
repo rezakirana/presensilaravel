@@ -26,7 +26,7 @@
                         </button>
                     </div>
                   @endif
-                  <h5 class="header-title" style="text-align: center;margin-bottom:10px;padding-bottom:10px;">ADMIN/DOKTER</h5>
+                  <h5 class="header-title" style="text-align: center;margin-bottom:10px;padding-bottom:10px;">Login Panel</h5>
                   <form class="user" method="POST" action="{{ route('login') }}">
                     @csrf
                     <div class="form-group">
@@ -49,19 +49,19 @@
                       <div class="custom-control custom-checkbox small">
                         <input type="checkbox" class="custom-control-input" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                         <label class="custom-control-label" for="remember">Remember Me</label>
-                        <label style="float:right;">
+                        {{-- <label style="float:right;">
                             @if (Route::has('password.update'))
                                 <a href="{{ route('password.update') }}">Forgot Password?</a>
                             @endif
-                        </label>
+                        </label> --}}
                         <label for="">
                              &nbsp;
                         </label>
-                        {{-- <label style="float:right;">
+                        <label style="float:right;">
                             @if (Route::has('register'))
                                 <a href="{{ route('register') }}">Don't have an account ?</a>
                             @endif
-                        </label> --}}
+                        </label>
                       </div>
                     </div>
                     <button class="btn btn-primary btn-user btn-block" type="submit">

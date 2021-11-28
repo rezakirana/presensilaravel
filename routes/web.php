@@ -16,9 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::post('/register-pasien', 'Auth\RegisterController@store_pasien')->name('store.pasien');
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/not-found', 'HomeController@not_found')->name('notFound');
 Route::group(['middleware' => 'auth'], function()
