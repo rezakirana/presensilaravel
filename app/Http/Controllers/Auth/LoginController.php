@@ -51,7 +51,7 @@ class LoginController extends Controller
         ]);
   
         $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-        $checkUser = User::where('username',$request->username)->first();
+        $checkUser = User::where('username',$request->username)->first(); 
         if (!$checkUser) {
             return redirect()->route('login')
                 ->with('error','Username and Password are wrong!');

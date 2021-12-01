@@ -108,7 +108,7 @@ class RegisterController extends Controller
 
         $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
         if (auth()->attempt(array($fieldType => $request->username, 'password' => $request->password))){
-            return redirect()->url(session()->get('lastUrl'));
+            return redirect('/pendaftaran');
         }else{
             return redirect()->route('login')
                 ->with('error','Username and Password are wrong!');

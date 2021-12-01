@@ -39,3 +39,5 @@ Route::get('/profile', 'ClientPageController@profil')->name('profil');
 Route::get('/motto', 'ClientPageController@motto')->name('motto');
 Route::get('/visi-misi', 'ClientPageController@visi_misi')->name('visiMisi');
 Route::get('/jadwal-layanan', 'ClientPageController@jadwal_layanan')->name('jadwalLayanan');
+Route::get('/ambil-jadwal', 'ClientPageController@ambil_jadwal')->name('ambil.jadwal');
+Route::get('/download-antrian/{id}', 'ClientPageController@download_antrian')->name('download.antrian');

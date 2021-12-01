@@ -194,7 +194,11 @@
                                         </li>
                                         <li><a href="{{ route('pendaftaran') }}">Pendaftaran</a></li>
                                         <li><a href="{{ route('jadwalLayanan') }}"><span>Jadwal Praktik</span></a></li>
-                                        <li><a href="{{ route('login') }}"><span style="color:#3385ff;">Login</span></a></li>
+                                        @if (auth()->check())
+                                            <li><a href="{{ route('home') }}"><span style="color:#3385ff;">Dashboard</span></a></li>
+                                        @else
+                                            <li><a href="{{ route('login') }}"><span style="color:#3385ff;">Login</span></a></li>
+                                        @endif
                                     </ul>
                                 </nav>
                             </div>
@@ -202,7 +206,6 @@
                         </div>
                         <div class="col-lg-2 col-12">
                             <div class="get-quote">
-                                <!-- <a href="appointment.html" class="btn">Book Appointment</a> -->
                             </div>
                         </div>
                     </div>

@@ -6,6 +6,8 @@
             <div class="row">
                 <div class="col-md-12 tiles" style="margin-top:10px;height: 231px;overflow: auto;padding-right: 5px;padding-left: 5px;margin-right: 0 !important;position: relative;min-height: 1px;border-radius: 0 !important;box-sizing: border-box;display: block;direction: ltr;">
                     <center>
+                        <div id="pesan">
+                        </div>
                         @foreach ($backdate as $item)
                             @if ($item['labelDay'] == 'Minggu')
                                 <div class="tile bg-green-turquoise bg-red-sunglo" style="width:120px;height:120px;display: block;letter-spacing: 0.02em;float: left;height: 135px;width: 135px;cursor: pointer;text-decoration: none;color: #ffffff;position: relative;font-weight: 300;font-size: 12px;letter-spacing: 0.02em;line-height: 20px;overflow: hidden;border: 4px solid transparent;margin: 0 10px 10px 0;border-color: #e26a6a !important;background-image: none !important;background-color: #e26a6a !important;color: white !important;border-radius: 0 !important;box-sizing: border-box;">
@@ -22,7 +24,7 @@
                                     </div>
                                 </div>    
                             @else
-                                <div class="tile bg-green-turquoise bg-red-sunglo" style="width:120px;height:120px;display: block;letter-spacing: 0.02em;float: left;height: 135px;width: 135px;cursor: pointer;text-decoration: none;color: #ffffff;position: relative;font-weight: 300;font-size: 12px;letter-spacing: 0.02em;line-height: 20px;overflow: hidden;border: 4px solid transparent;margin: 0 10px 10px 0;border-color: #36d7b7 !important;background-image: none !important;background-color: #36d7b7 !important;color: white !important;border-radius: 0 !important;box-sizing: border-box;">
+                                <div class="tile bg-green-turquoise bg-red-sunglo ambilAntrian" style="width:120px;height:120px;display: block;letter-spacing: 0.02em;float: left;height: 135px;width: 135px;cursor: pointer;text-decoration: none;color: #ffffff;position: relative;font-weight: 300;font-size: 12px;letter-spacing: 0.02em;line-height: 20px;overflow: hidden;border: 4px solid transparent;margin: 0 10px 10px 0;border-color: #36d7b7 !important;background-image: none !important;background-color: #36d7b7 !important;color: white !important;border-radius: 0 !important;box-sizing: border-box;" data-antrian="{{ $item['completeDate'] }}" data-hari="{{ $item['labelDay'] }}" data-angkahari="{{ $item['day'] }}" data-bulan="{{ $item['month'] }}" data-tahun="{{ $item['year'] }}">
                                     <div class="corner" style="float: left; font-weight: bold;padding: 0 5px;border-radius: 0 !important;">
                                         <span>{{ $item['labelDay'] }}</span>
                                     </div>
@@ -42,4 +44,44 @@
             </div>
         </div>
     </section>
+    <script>
+        let poli = "{{ $poli->id }}";
+        $(document).on('click','.ambilAntrian',function(){
+            event.preventDefault();
+            let tglAntrian = $(this).data('antrian');
+            let hari = $(this).data('hari');
+            let hariangka = $(this).data('hariangka');
+            let bln = $(this).data('bulan');
+            let thn = $(this).data('tahun');
+            $.ajax({
+                url:"{{route('ambil.jadwal')}}",
+                type: "GET",
+                data: {
+                    _token: '{{ csrf_token() }}', 
+                    tglAntrian: tglAntrian,
+                    labelHari: hari,
+                    poliId: poli,
+                    hariAngka: hariangka,
+                    bulan: bln,
+                    tahun: thn
+                },
+                cache: false,
+                dataType: 'json',
+                success: function(data){
+                    let pesan = '';
+                    if (data['data']['type'] == 'success') {
+                        pesan = `<div class="alert alert-${data['data']['type']}">${data['data']['message']}, <a href="${data['data']['antrianId']}">download antrian</a></div>
+                            <hr>
+                            <br>`;
+                    } else {
+                        pesan = `<div class="alert alert-${data['data']['type']}">${data['data']['message']}</div>
+                            <hr>
+                            <br>`;
+                    }
+                    $('#pesan').empty();
+                    $('#pesan').append(pesan);
+                }
+            });
+        });
+    </script>
 @endsection
