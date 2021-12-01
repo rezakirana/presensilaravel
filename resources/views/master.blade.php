@@ -228,7 +228,7 @@
                     <div class="col-lg-3 col-md-6 col-12">												
                     <div class="single-footer">
                         <ul>
-                            <li><p><h2>Minggu, 2021/10/24</h2></p></li>
+                            <li><p><h2>PUSKESMAS KARANGNONGKO</h2></p></li>
                             <p>Terdepan</p>
                             <p>Semangat</p>
                             <p>Melayani Dengan Hati</p>
@@ -258,9 +258,9 @@
                     <div class="col-lg-3 col-md-6 col-12">
                         <div class="single-footer">
                             <h2>Tentang Kami</h2>
-                            <p class="tengah">Saat ini Puskesmas Kecamatan Senen dikepalai oleh drg. Lindawati, M.Kes. 
-                                Beliau menjabat sejak Maret 2019 sampai dengan saat ini. Dibawah kepemimpinan 
-                                beliau Puskesmas Kecamatan Senen banyak melakukan inovasi pelayanan guna 
+                            <p class="tengah">Saat ini Puskesmas Kecamatan AMIKOM dikepalai oleh Prof Yanto. 
+                                Beliau menjabat sejak Maret 2021 sampai dengan saat ini. Dibawah kepemimpinan 
+                                beliau Puskesmas Kecamatan AMIKOM banyak melakukan inovasi pelayanan guna 
                                 terpenuhinya kebutuhan kesehatan pasien.</p>
                         </div>
                     </div>

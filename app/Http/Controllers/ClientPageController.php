@@ -11,6 +11,7 @@ use DB;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\Auth;
+use PDF;
 
 class ClientPageController extends Controller
 {
@@ -114,14 +115,6 @@ class ClientPageController extends Controller
     {
         $hari = strtolower($request->labelHari);
         $dt = Carbon::now()->format('Y-m-d');
-        // $checkAntrian = Antrian::join('pasien','pasien.id','=','antrian.pasien_id')
-        //                         ->join('jadwal','jadwal.id','=','antrian.pasien_id')
-        //                         ->join('dokter','dokter.id','=','jadwal.dokter_id')
-        //                         ->join('poli','poli.id','=','dokter.poli_id')
-        //                         ->where('antrian.pasien_id','!=',Auth::user()->pasien->id)
-        //                         ->where('antrian.tanggal_daftar',$request->tglAntrian)
-        //                         ->where('poli.')
-        // $poli = Poli::findOrFail($request->poliId);
         $dokters = Dokter::where('poli_id',$request->poliId)->get();
         $scheduleId = null;
         foreach ($dokters as $key => $value) {
@@ -137,7 +130,7 @@ class ClientPageController extends Controller
         if (!$scheduleId) {
             $data['type'] = 'warning';
             $data['message'] = 'maaf, tidak ada jadwal praktik pada hari '.$request->labelHari.', '.$request->hariAngka.' '.$request->bulan.' '.$request->tahun;
-            
+
             return json_encode(array('data' => $data));
         }
         $pasienId = Auth::user()->pasien->id;
@@ -146,42 +139,134 @@ class ClientPageController extends Controller
                                     'jadwal_id' => $scheduleId
                                 ])->count();
         $antrian = new Antrian();
-        if ($checkAntrian) {
-            $checkAntrian2 = Antrian::where([
-                                            'tanggal_daftar' => $request->tglAntrian,
-                                            'jadwal_id' => $scheduleId,
-                                            'pasien_id' => $pasienId
-                                        ])->count();
-            if ($checkAntrian2) {
-                $data['type'] = 'warning';
-                $data['message'] = 'maaf, anda sudah terdaftar periksa pada hari '.$request->labelHari.', '.$request->hariAngka.' '.$request->bulan.' '.$request->tahun;
-
-                return json_encode(array('data' => $data));
-            }
-            $antrian->jadwal_id = $scheduleId;
-            $antrian->pasien_id = $pasienId;
-            $antrian->no_antrian = ($checkAntrian + 1);
-            $jamDaftar = ($checkAntrian+1)*15;
-            $jam = intdiv($jamDaftar,60);
-            $sisa = fmod($jamDaftar,60);
-            $jamAntrian = null;
-            if ($jam > 0) {
+        if ($dt == $request->tglAntrian) {
+            if ($checkAntrian) {
+                $checkAntrian2 = Antrian::where([
+                                                'tanggal_daftar' => $request->tglAntrian,
+                                                'jadwal_id' => $scheduleId,
+                                                'pasien_id' => $pasienId
+                                            ])->count();
+                if ($checkAntrian2) {
+                    $data['type'] = 'warning';
+                    $data['message'] = 'maaf, anda sudah terdaftar periksa pada hari '.$request->labelHari.', '.$request->hariAngka.' '.$request->bulan.' '.$request->tahun;
+    
+                    return json_encode(array('data' => $data));
+                }
+                $antrian->jadwal_id = $scheduleId;
+                $antrian->pasien_id = $pasienId;
+                $antrian->no_antrian = ($checkAntrian + 1);
+                $jamDaftar = $checkAntrian*15;
+                $jamDatangAwal = ($checkAntrian-1)*15;
+                $jamDatangAkhir = $checkAntrian*15;
+                $jam = intdiv($jamDaftar,60);
                 $sisa = fmod($jamDaftar,60);
-                $tmp = 8+$jam;
-                $jamAntrian = '0'.$tmp.'.'.$sisa;
+                $jamAntrian = null;
+                if ($jam > 0) {
+                    $sisa = fmod($jamDaftar,60);
+                    $tmp = 8+$jam;
+                    $jamAntrian = '0'.$tmp.':'.$sisa;
+                }else {
+                    $sisa = fmod($jamDaftar,60);
+                    $jamAntrian = '08'.':'.$sisa;
+                }
+                $tmpJamDaftar = Carbon::now()->format('H:i');
+                $harusnya = strtotime($jamAntrian);
+                $tapiDaftarnya = strtotime($tmpJamDaftar);
+                
+                if ($tapiDaftarnya > $harusnya) {
+                    $tmp = strtotime($tmpJamDaftar);
+                    $tmp2 = $tmp + 900;
+                    $tmpJamPulang = date('H:i',$tmp2);
+                    $jamDatang = $tmpJamDaftar.'-'.$tmpJamPulang; 
+                }else {
+                    $sec = $jamDaftar*60;
+                    $jamAwal = strtotime('08:00') + ($jamDatangAwal*60);
+                    $jamAkhir = strtotime('08:00') + ($jamDatangAkhir*60);
+                    $jamDatang = date('H:i',$jamAwal).'-'.date('H:i',$jamAkhir);
+                }
             }else {
-                $sisa = fmod($jamDaftar,60);
-                $jamAntrian = '08'.'.'.$sisa;
+                $antrian->jadwal_id = $scheduleId;
+                $antrian->pasien_id = $pasienId;
+                $antrian->no_antrian = 1;
+                $tmpJamDaftar = Carbon::now()->format('H:i');
+                // $jamDaftar = explode(':',$tmpJamDaftar);
+                // $tmpMenit = (int)$jamDaftar[1] + 15;
+                // if ($tmpMenit >= 60) {
+                //     $tmpJam = intdiv($tmpMenit,60);
+                //     $tmpMenitSisa = fmod($tmpMenit,60);
+                //     if ($tmpMenitSisa == 0) {
+                //         $tmpMenitSisa = '00';   
+                //     }
+                // }else {
+                //     $tmpJam = 0;
+                //     $tmpMenitSisa = $tmpMenit;
+                // }
+                // $jamSelesai = (int)$jamDaftar[0] + $tmpJam;
+                // if ($jamSelesai < 10) {
+                //     $jamSelesai2 = '0'.$jamSelesai;
+                // }else {
+                //     $jamSelesai2 = $jamSelesai;
+                // }
+                $tmp = strtotime($tmpJamDaftar);
+                $tmp2 = $tmp + 900;
+                $tmpJamPulang = date('H:i',$tmp2);
+                // $jamDatang = $tmpJamDaftar.'-'.$jamSelesai2.':'.$tmpMenitSisa; 
+                $jamDatang = $tmpJamDaftar.'-'.$tmpJamPulang; 
             }
-            $antrian->tanggal_daftar = $request->tglAntrian;
-            $antrian->jam_daftar = $jamAntrian;
-        }else {
-            $antrian->jadwal_id = $scheduleId;
-            $antrian->pasien_id = $pasienId;
-            $antrian->no_antrian = 1;
-            $antrian->tanggal_daftar = $request->tglAntrian;
-            $antrian->jam_daftar = '08.15';
+        } else {
+            if ($checkAntrian) {
+                $checkAntrian2 = Antrian::where([
+                                                'tanggal_daftar' => $request->tglAntrian,
+                                                'jadwal_id' => $scheduleId,
+                                                'pasien_id' => $pasienId
+                                            ])->count();
+                if ($checkAntrian2) {
+                    $data['type'] = 'warning';
+                    $data['message'] = 'maaf, anda sudah terdaftar periksa pada hari '.$request->labelHari.', '.$request->hariAngka.' '.$request->bulan.' '.$request->tahun;
+    
+                    return json_encode(array('data' => $data));
+                }
+                $antrian->jadwal_id = $scheduleId;
+                $antrian->pasien_id = $pasienId;
+                $antrian->no_antrian = ($checkAntrian + 1);
+                $jamDaftar = $checkAntrian*15;
+                $jamDatangAwal = ($checkAntrian-1)*15;
+                $jamDatangAkhir = $checkAntrian*15;
+                $jam = intdiv($jamDaftar,60);
+                $sisa = fmod($jamDaftar,60);
+                $jamAntrian = null;
+                if ($jam > 0) {
+                    $sisa = fmod($jamDaftar,60);
+                    $tmp = 8+$jam;
+                    $jamAntrian = '0'.$tmp.':'.$sisa;
+                }else {
+                    $sisa = fmod($jamDaftar,60);
+                    $jamAntrian = '08'.':'.$sisa;
+                }
+                $tmpJamDaftar = Carbon::now()->format('H:i');
+                $harusnya = strtotime($jamAntrian);
+                $tapiDaftarnya = strtotime($tmpJamDaftar);
+                
+                if ($tapiDaftarnya > $harusnya) {
+                    $tmp = strtotime($tmpJamDaftar);
+                    $tmp2 = $tmp + 900;
+                    $tmpJamPulang = date('H:i',$tmp2);
+                    $jamDatang = $tmpJamDaftar.'-'.$tmpJamPulang; 
+                }else {
+                    $sec = $jamDaftar*60;
+                    $jamAwal = strtotime('08:00') + ($jamDatangAwal*60);
+                    $jamAkhir = strtotime('08:00') + ($jamDatangAkhir*60);
+                    $jamDatang = date('H:i',$jamAwal).'-'.date('H:i',$jamAkhir);
+                }
+            }else {
+                $antrian->jadwal_id = $scheduleId;
+                $antrian->pasien_id = $pasienId;
+                $antrian->no_antrian = 1;
+                $jamDatang = '08:00-08:15';
+            }
         }
+        $antrian->jam_daftar = $jamDatang;
+        $antrian->tanggal_daftar = $request->tglAntrian;
         $antrian->save();
         $data['type'] = 'success';
         $data['message'] = 'Selamat pendaftaran antrian periksa berhasil';
@@ -193,6 +278,37 @@ class ClientPageController extends Controller
     public function download_antrian($id)
     {
         $antrian = Antrian::findOrFail($id);
-        dd($antrian);
+        $hari = date('l',strtotime($antrian->tanggal_daftar));
+        $labelHari = null;
+        if ($hari == 'Sunday') {
+            $labelHari = 'Minggu';
+        }elseif ($hari == 'Monday') {
+            $labelHari = 'Senin';
+        }elseif ($hari == 'Tuesday') {
+            $labelHari = 'Selasa';
+        }elseif ($hari == 'Wednesday') {
+            $labelHari = 'Rabu';
+        }elseif ($hari == 'Thursday') {
+            $labelHari = 'Kamis';
+        }elseif ($hari == 'Friday') {
+            $labelHari = 'Jumat';
+        }elseif ($hari == 'Saturday') {
+            $labelHari = 'Sabtu';
+        }
+        $lastNotDay = date('d F Y',strtotime($antrian->tanggal_daftar));
+        $data['labelHari'] = $labelHari.', '.$lastNotDay;
+        $data['noAntrian'] = $antrian->no_antrian;
+        $data['jamDatang'] = $antrian->jam_daftar;
+        $jadwal = Jadwal::findOrFail($antrian->jadwal_id);
+        $data['namaPasien'] = $antrian->pasien->nama;
+        $data['nikPasien'] = $antrian->pasien->nik;
+        $data['alamatPasien'] = $antrian->pasien->alamat;
+        $data['jenisKelaminPasien'] = $antrian->pasien->jk;
+        $data['poli'] = $jadwal->dokter->poli->nama;
+        $data['kodeAntrian'] = $jadwal->dokter->poli->kode.$antrian->no_antrian;
+        $customPaper = array(0,0,380,350);
+        $pdf = PDF::loadView('antrian_pdf', $data)->setPaper($customPaper, 'potrait');
+
+        return $pdf->download('antrian.pdf');
     }
 }
