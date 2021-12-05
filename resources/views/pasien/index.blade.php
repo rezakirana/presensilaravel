@@ -42,7 +42,7 @@
                     @foreach($pasiens as $pasien)
                     <tr>
                         <td class="text-center">{{$loop->iteration}}</td>
-                        <td>{{ $pasien->user->username }}</td>
+                        <td>{{ $pasien->username }}</td>
                         <td>{{ $pasien->nama }}</td>
                         <td>{{ $pasien->nik }}</td>
                         <td>{{ ucwords($pasien->jk) }}</td>

@@ -44,7 +44,7 @@ class ClientPageController extends Controller
             return redirect()->route('login');
         }
         $poli = Poli::findOrFail($id);
-        $NewDate=Date('Y-m-d', strtotime('+30 days'));
+        $NewDate = Date('Y-m-d', strtotime('+30 days'));
         $dt = Carbon::now();
         $periods = CarbonPeriod::create($dt->toDateString(), $NewDate);
         $arr = [];
