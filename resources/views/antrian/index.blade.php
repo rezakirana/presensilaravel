@@ -55,11 +55,13 @@
                                 <tr>
                                     <td>{{ ($key+1) }}</td>
                                     <td>{{ $item->nama }} ({{ $item->kode }})</td>
-                                    @if ($item->gambar)
-                                        <img src="{{ asset('/img/poli/'.$item->gambar) }}" width="70px" height="70px" style="text-align: center;" alt="{{ $item->nama }}" />
-                                    @else
-                                        <img src="{{ asset('/img/default-image.png') }}" width="70px" height="70px" style="text-align: center;" alt="{{ $item->nama }}" />
-                                    @endif
+                                    <td>
+                                        @if ($item->gambar)
+                                            <img src="{{ asset('/img/poli/'.$item->gambar) }}" width="70px" height="70px" style="text-align: center;" alt="{{ $item->nama }}" />
+                                        @else
+                                            <img src="{{ asset('/img/default-image.png') }}" width="70px" height="70px" style="text-align: center;" alt="{{ $item->nama }}" />
+                                        @endif
+                                    </td>
                                     <td>{{ $item->jmlAntrian }}</td>
                                 </tr>
                             @endforeach
@@ -68,11 +70,13 @@
                                 <tr>
                                     <td>{{ ($key+1) }}</td>
                                     <td>{{ $item->namaPoli }} ({{ $item->kode }})</td>
-                                    @if ($item->gambar)
-                                        <img src="{{ asset('/img/poli/'.$item->gambar) }}" width="70px" height="70px" style="text-align: center;" alt="{{ $item->nama }}" />
-                                    @else
-                                        <img src="{{ asset('/img/default-image.png') }}" width="70px" height="70px" style="text-align: center;" alt="{{ $item->nama }}" />
-                                    @endif
+                                    <td>
+                                        @if ($item->gambar)
+                                            <img src="{{ asset('/img/poli/'.$item->gambar) }}" width="70px" height="70px" style="text-align: center;" alt="{{ $item->nama }}" />
+                                        @else
+                                            <img src="{{ asset('/img/default-image.png') }}" width="70px" height="70px" style="text-align: center;" alt="{{ $item->nama }}" />
+                                        @endif
+                                    </td>
                                     <td>{{ $item->jmlAntrian }}</td>
                                 </tr>
                             @endforeach

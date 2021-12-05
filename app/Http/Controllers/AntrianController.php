@@ -7,7 +7,9 @@ use App\Model\Antrian;
 use App\Model\Poli;
 use App\Model\Dokter;
 use App\Model\Pasien;
-use DB;use Illuminate\Support\Facades\Auth;
+use DB;
+use Illuminate\Support\Facades\Auth;
+use PDF;
 
 class AntrianController extends Controller
 {
@@ -23,7 +25,7 @@ class AntrianController extends Controller
         if ($user->type == 'admin') {
             $data = Poli::all();
             foreach ($data as $key => $value) {
-                $data = Antrian::join('jadwal','jadwal.id','=','antrian.jadwal_id')
+                $data2 = Antrian::join('jadwal','jadwal.id','=','antrian.jadwal_id')
                         ->join('dokter','dokter.id','=','jadwal.dokter_id')
                         ->join('poli','poli.id','=','dokter.poli_id')
                         ->where('poli.id',$value->id)
@@ -32,7 +34,7 @@ class AntrianController extends Controller
                             'antrian.id as jmlAntrian'
                             ])
                         ->count();
-                $value->jmlAntrian = $data;
+                $value->jmlAntrian = $data2;
             }
         }elseif ($user->type == 'dokter') {           
             $dt = \Carbon\Carbon::now();
@@ -68,7 +70,7 @@ class AntrianController extends Controller
                         ->get();
             if (count($data)) {
                 foreach ($data as $key => $value) {
-                    $data = Antrian::join('jadwal','jadwal.id','=','antrian.jadwal_id')
+                    $data2 = Antrian::join('jadwal','jadwal.id','=','antrian.jadwal_id')
                             ->join('dokter','dokter.id','=','jadwal.dokter_id')
                             ->join('poli','poli.id','=','dokter.poli_id')
                             ->where('poli.id',$value->id)
@@ -77,7 +79,7 @@ class AntrianController extends Controller
                                 'antrian.id as jmlAntrian'
                                 ])
                             ->count();
-                    $value->jmlAntrian = $data;
+                    $value->jmlAntrian = $data2;
                 }
             }
         }else {
@@ -102,6 +104,37 @@ class AntrianController extends Controller
         return view ('antrian.index',$this->data);
     }
 
+    public function laporan()
+    {
+        return view('antrian.laporan');
+    }
+
+    public function download_laporan()
+    {
+        $today = \Carbon\Carbon::today();
+        $data = Poli::all();
+        $dataArray = [];
+        foreach ($data as $key => $value) {
+            $data2 = Antrian::join('jadwal','jadwal.id','=','antrian.jadwal_id')
+                    ->join('dokter','dokter.id','=','jadwal.dokter_id')
+                    ->join('poli','poli.id','=','dokter.poli_id')
+                    ->where('poli.id',$value->id)
+                    ->whereDate('antrian.tanggal_daftar',$today)
+                    ->select([
+                        'antrian.id as jmlAntrian'
+                        ])
+                    ->count();
+            $tmp['nama'] = $value->nama;
+            $tmp['kode'] = $value->kode;
+            $tmp['jmlAntrian'] = $data2;
+            array_push($dataArray,$tmp);
+        }
+        $dataKirim = ['data' => $dataArray];
+
+        $pdf = PDF::loadView('antrian.pdf', $dataKirim);
+
+        return $pdf->download('laporan.pdf');
+    }
     /**
      * Show the form for creating a new resource.
      *

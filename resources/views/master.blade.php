@@ -9,8 +9,8 @@
     <meta name="description" content="">
     <meta name='copyright' content=''>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta property="og:site_name" content="Puskesmas Kecamatan Amikom"/>
-    <meta property="og:title" content="Puskesmas Kec. Amikom"/>
+    <meta property="og:site_name" content="Puskesmas Karangnongko"/>
+    <meta property="og:title" content="Puskesmas Karangnongko"/>
     <meta property="og:description" content="Kami Siap Melayani Dengan Hati, Ramah, dan Profesional."/>
     <meta property="og:image" itemprop="image" content="#">
     <meta property="og:image:width" content="300" />
@@ -26,7 +26,7 @@
     <link rel="manifest" href="/site.webmanifest">
     
     <!-- Title -->
-    <title>Puskesmas Kecamatan AMIKOM</title>
+    <title>Puskesmas Kecamatan KARANGNONGKO</title>
     
     <!-- Favicon -->
     <link rel="icon" href="images/logo.ico">
@@ -147,7 +147,7 @@
                     <div class="col-lg-6 col-md-5 col-12">
                         <!-- Contact -->
                         <ul class="top-link">
-                            <li><strong style="color:#000;font-size:1.500em;">PUSKESMAS KECAMATAN AMIKOM</strong></li>
+                            <li><strong style="color:#000;font-size:1.500em;">PUSKESMAS KECAMATAN KARANGNONGKO</strong></li>
                             <li><span style="color:#000;">Kami Siap Melayani Dengan Hati, Ramah, dan Profesional</span></li>
                             
                         </ul>
@@ -156,7 +156,7 @@
                     <div class="col-lg-6 col-md-7 col-12">
                         <!-- Top Contact -->
                         <ul class="top-contact">
-                            <li><a href="/"><img src="https://faktapers.id/wp-content/uploads/2020/05/amikom.jpg"  alt="PUSKESMAS KECAMATAN AMIKOM" height="350px" width="350px"></a></li>
+                            <li><a href="/"><img src="https://faktapers.id/wp-content/uploads/2020/05/amikom.jpg"  alt="PUSKESMAS KECAMATAN KARANGNONGKO" height="350px" width="350px"></a></li>
                         </ul>
                         <!-- End Top Contact -->
                     </div>
@@ -258,9 +258,9 @@
                     <div class="col-lg-3 col-md-6 col-12">
                         <div class="single-footer">
                             <h2>Tentang Kami</h2>
-                            <p class="tengah">Saat ini Puskesmas Kecamatan AMIKOM dikepalai oleh Prof Yanto. 
+                            <p class="tengah">Saat ini Puskesmas Kecamatan KARANGNONGKO dikepalai oleh Prof Yanto. 
                                 Beliau menjabat sejak Maret 2021 sampai dengan saat ini. Dibawah kepemimpinan 
-                                beliau Puskesmas Kecamatan AMIKOM banyak melakukan inovasi pelayanan guna 
+                                beliau Puskesmas Kecamatan KARANGNONGKO banyak melakukan inovasi pelayanan guna 
                                 terpenuhinya kebutuhan kesehatan pasien.</p>
                         </div>
                     </div>

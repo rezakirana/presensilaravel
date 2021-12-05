@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth'], function()
     Route::resource('jadwal', 'JadwalController');
     Route::resource('antrian', 'AntrianController');
     Route::get('/laporan', 'AntrianController@laporan')->name('laporan');
+    Route::get('/download-laporan', 'AntrianController@download_laporan')->name('download.laporan');
     Route::post('/account-profile', 'AccountController@account_profile')->name('accountProfile.store');
 });
 Route::get('/pendaftaran', 'ClientPageController@pendaftaran')->name('pendaftaran');
