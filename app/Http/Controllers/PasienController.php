@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Pasien;
+use App\Model\Antrian;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,14 +17,15 @@ class PasienController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->type == 'admin') {
+        $user = Auth::user();
+        if ($user->type == 'admin') {
             $this->data['pasiens'] = Pasien::all();
-        }elseif (Auth::user()->type == 'dokter') {
-            $this->data['pasiens'] = Pasien::join('users','users.id','=','pasien.user_id')
-                                            ->join('antrian','antrian.pasien_id','=','pasien.id')
-                                            ->join('jadwal','jadwal.id','=','antrian.jadwal_id')
+        }elseif ($user->type == 'dokter') {
+            $this->data['pasiens'] = Antrian::join('jadwal','jadwal.id','=','antrian.jadwal_id')                        
+                                            ->join('pasien','pasien.id','=','antrian.pasien_id')
                                             ->join('dokter','dokter.id','=','jadwal.dokter_id')
-                                            ->where('dokter.id',Auth::user()->dokter->id)
+                                            ->join('users','users.id','=','pasien.user_id')
+                                            ->where('dokter.id',$user->dokter->id)
                                             ->select([
                                                 'pasien.id',
                                                 'pasien.nama',
@@ -32,7 +34,7 @@ class PasienController extends Controller
                                                 'pasien.jk',
                                                 'pasien.ttl',
                                                 'users.username'
-                                            ])->get();
+                                            ])->groupBy('antrian.pasien_id')->get();                    
         }else {
             return redirect()->route('notFound');
         }

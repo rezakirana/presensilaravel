@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\Model\Pasien;
 use App\Model\Dokter;
+use App\Model\Poli;
+use App\Model\Antrian;
 
 class AccountController extends Controller
 {

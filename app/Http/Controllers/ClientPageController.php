@@ -113,6 +113,12 @@ class ClientPageController extends Controller
 
     public function ambil_jadwal(Request $request)
     {
+        if (Auth::user()->type != 'pasien') {
+            $data['type'] = 'warning';
+            $data['message'] = 'maaf, anda bukan pasien yang terdaftar!';
+
+            return json_encode(array('data' => $data));   
+        }
         $hari = strtolower($request->labelHari);
         $dt = Carbon::now()->format('Y-m-d');
         $dokters = Dokter::where('poli_id',$request->poliId)->get();

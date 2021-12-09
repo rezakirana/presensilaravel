@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Model\Gejala;
-use App\Model\Penyakit;
-use App\Model\Konsultasi;
+use App\Model\Pasien;
+use App\Model\Dokter;
+use App\Model\Poli;
+use App\Model\Antrian;
 
 class HomeController extends Controller
 {
@@ -23,7 +24,7 @@ class HomeController extends Controller
      * Show the application dashboard.
      *
      * @return \Illuminate\Contracts\Support\Renderable
-     */
+     */    
     public function index()
     {
         if (Auth::check()) {
@@ -34,17 +35,36 @@ class HomeController extends Controller
 
     public function dashboard()
     {
-        // if (Auth::user()->role->role != 'user') {
-        //     $this->data['gejala'] = Gejala::count();
-        //     $this->data['penyakit'] = Penyakit::count();
-        //     $this->data['konsultasi'] = Konsultasi::count();
-        // }else {
-        //     $this->data['gejala'] = Gejala::count();
-        //     $this->data['penyakit'] = Penyakit::count();
-        //     $this->data['konsultasi'] = Konsultasi::where('user_id', Auth::id())->count();
-        // }
-        
-        return view('admin.dashboard');
+        $user = Auth::user();
+        $poli = Poli::count();        
+        if ($user->type == 'admin') {
+            $pasien = Pasien::count();
+            $dokter = Dokter::count();
+            $this->data['dokter'] = $dokter;
+            $this->data['pasien'] = $pasien;
+        }elseif ($user->type == 'dokter') {
+            $pasien = Antrian::join('jadwal','jadwal.id','=','antrian.jadwal_id')                        
+                                ->join('pasien','pasien.id','=','antrian.pasien_id')
+                                ->join('dokter','dokter.id','=','jadwal.dokter_id')
+                                ->where('dokter.id',$user->dokter->id)
+                                ->select([
+                                    'pasien.id',
+                                    'pasien.nama',
+                                    'pasien.alamat',
+                                    'pasien.nik',
+                                    'pasien.jk',
+                                    'pasien.ttl',
+                                ])->groupBy('antrian.pasien_id')
+                                ->get();
+            $this->data['pasien'] = count($pasien);
+        }else {
+            $dokter = Dokter::count();
+            $this->data['dokter'] = $dokter;
+        }
+        $this->data['poli'] = $poli;
+        $this->data['user'] = $user;
+
+        return view('admin.dashboard',$this->data);
     }
 
     public function not_found()
