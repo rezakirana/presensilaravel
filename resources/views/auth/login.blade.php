@@ -26,6 +26,18 @@
                         </button>
                     </div>
                   @endif
+                  @if ($errors->any())
+                  <div class="alert alert-danger">
+                      @foreach ($errors->all() as $error)
+                          <ul>
+                              <li>{{ $error }}</li>
+                          </ul>
+                      @endforeach
+                  </div>
+                  @endif
+                  @if ($message = Session::get('danger'))
+                    <div class="alert alert-danger">{{$message }}</div>
+                  @endif
                   <h5 class="header-title" style="text-align: center;margin-bottom:10px;padding-bottom:10px;">Login Panel</h5>
                   <form class="user" method="POST" action="{{ route('login') }}">
                     @csrf

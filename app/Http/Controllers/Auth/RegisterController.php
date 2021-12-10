@@ -85,11 +85,14 @@ class RegisterController extends Controller
             'jk' => 'required|string',
             'ttl' => 'required',
             'alamat' => 'required|string',
-            'nik' => 'required|string|max:255|unique:pasien,nik',
+            'nik' => 'required|numeric|min:16|unique:pasien,nik',
             'username' => 'required|string|max:255|unique:users,username',
             'password' => 'required|string|min:6',
         ]);
-        
+        if (strlen($request->nik) != 16) {
+            return back()
+                ->with('danger','NIK minimal 16 digit!');
+        }
         $user = new User();
         $user->type = 'pasien';
         $user->username = $request->username;

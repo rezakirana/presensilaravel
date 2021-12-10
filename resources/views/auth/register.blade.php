@@ -25,12 +25,24 @@
                         </button>
                     </div>
                   @endif
+                  @if ($errors->any())
+                  <div class="alert alert-danger">
+                      @foreach ($errors->all() as $error)
+                          <ul>
+                              <li>{{ $error }}</li>
+                          </ul>
+                      @endforeach
+                  </div>
+                  @endif
+                  @if ($message = Session::get('danger'))
+                    <div class="alert alert-danger">{{$message }}</div>
+                  @endif
                   <h5 class="header-title" style="text-align: center;margin-bottom:10px;padding-bottom:10px;">Sistem Antrian Puskesmas</h5>
                   <form class="user" method="POST" action="{{ route('store.pasien') }}">
                     @csrf
                     <div class="form-group">
                       <label for="exampleInputPendidikanTerakhir">NIK</label>
-                      <input id="nik" type="text" class="form-control form-control-user @error('nik') is-invalid @enderror" name="nik" value="{{ old('nik') }}" placeholder="NIK anda" required autocomplete="nik" autofocus>
+                      <input id="nik" type="number" class="form-control form-control-user @error('nik') is-invalid @enderror" name="nik" id="nikValidation" value="{{ old('nik') }}" placeholder="NIK anda" required autocomplete="nik" autofocus style="-webkit-appearance: none;margin: 0;">
                       @error('nik')
                           <span class="invalid-feedback" role="alert">
                               <strong>{{ $message }}</strong>
@@ -119,12 +131,34 @@
   </div>
   @include ('includes.scripts')
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script> --}}
+  <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
   <script>
       $(function () {
-          //Date picker
           $('#datepicker').datepicker({
           autoclose: true
           })
       });
+
+      // $(document).ready(function(){
+      //     $( '.nikValidation' ).mask('000.000.000', {reverse: true});
+      // })
+      // $(".nikValidation").validate({
+      //   rules: {
+      //     amount: {
+      //       required: true,
+      //       digits: true
+      //     }
+      //   }
+      // });
+      //bind to the `keyup` event for all `input` element(s)
+$('#nikValidation').on('keyup', function () {
+
+//replace the value of this input by only the digits in it's value
+//note that this method works even if the user pastes a block of text into the input
+this.value = this.value.replace(/[^0-9]/gi, '');
+});​
   </script>
   @endsection
