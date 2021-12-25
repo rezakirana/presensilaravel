@@ -109,6 +109,11 @@ class AntrianController extends Controller
         return view('antrian.laporan');
     }
 
+    public function laporan_pertanggal()
+    {
+        return view('antrian.laporan_pertanggal');
+    }
+
     public function download_laporan()
     {
         $today = \Carbon\Carbon::today();
@@ -134,6 +139,63 @@ class AntrianController extends Controller
         $pdf = PDF::loadView('antrian.pdf', $dataKirim);
 
         return $pdf->download('laporan.pdf');
+    }
+
+    public function download_laporan_pertanggal(Request $request)
+    {
+        $tglAwal = explode('/',$request->date_awal);
+        $tglAkhir = explode('/',$request->date_akhir);
+        $tanggalAwal = date($tglAwal[2].'-'.$tglAwal[0].'-'.$tglAwal[1]);
+        $tanggalAkhir = date($tglAkhir[2].'-'.$tglAkhir[0].'-'.$tglAkhir[1]);
+
+        $data = Poli::all();
+        $dataArray = [];
+        foreach ($data as $key => $value) {
+            $data2 = Antrian::join('jadwal','jadwal.id','=','antrian.jadwal_id')
+                    ->join('dokter','dokter.id','=','jadwal.dokter_id')
+                    ->join('poli','poli.id','=','dokter.poli_id')
+                    ->where('poli.id',$value->id)
+                    ->whereBetween('antrian.tanggal_daftar',[$tanggalAwal, $tanggalAkhir])
+                    ->select([
+                        'antrian.id as jmlAntrian'
+                        ])
+                    ->count();
+            $tmp['nama'] = $value->nama;
+            $tmp['kode'] = $value->kode;
+            $tmp['jmlAntrian'] = $data2;
+            array_push($dataArray,$tmp);
+        }
+        $dataKirim = [
+            'data' => $dataArray,
+            'tglAwal' => $request->date_awal,
+            'tglAkhir' => $request->date_akhir
+        ];
+
+        $pdf = PDF::loadView('antrian.laporan_pertanggal_pdf', $dataKirim);
+
+        return $pdf->download('laporan.pdf');
+    }
+
+    public function antrian_pasien()
+    {
+        $data = Antrian::join('pasien', 'pasien.id', '=', 'antrian.pasien_id')
+                        ->join('jadwal', 'jadwal.id', '=', 'antrian.jadwal_id')
+                        ->join('dokter', 'dokter.id', '=', 'jadwal.dokter_id')
+                        ->join('poli', 'poli.id', '=', 'dokter.poli_id')
+                        ->where('antrian.pasien_id', Auth::user()->pasien->id)
+                        ->select([
+                            'poli.kode as kodePoli',
+                            'poli.nama as namaPoli',
+                            'dokter.nama_dokter',
+                            'jadwal.hari',
+                            'antrian.id',
+                            'antrian.no_antrian',
+                            'antrian.tanggal_daftar',
+                            'antrian.jam_daftar',
+                        ])->get();
+        $this->data['data'] = $data;
+
+        return view('antrian.pasien', $this->data);
     }
     /**
      * Show the form for creating a new resource.

@@ -30,7 +30,9 @@
                     <th>KODE</th>
                     <th>POLI</th>
                     <th>ICON</th>
-                    <th width="80">AKSI</th>
+                    @if (auth()->user()->type == 'admin')
+                        <th width="80">AKSI</th>
+                    @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -46,16 +48,18 @@
                                 <img src="{{ asset('/img/default-image.png') }}" width="70px" height="70px" style="text-align: center;" alt="{{ $item->nama }}" />
                             @endif    
                         </td>
-                        <td class="text-center">
-                            <a href="{{ route('poli.edit', $item->id) }}">
-                                <button class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-edit"></i></button>
-                            </a>
-                            <form id="delete-user-{{$item->id}}" action="/poli/{{$item->id}}" method="post" style="display: inline;">
-                                @method('DELETE')
-                                @csrf
-                                <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fa fa-trash"></i></button>
-                            </form>
-                        </td>
+                        @if (auth()->user()->type == 'admin')
+                            <td class="text-center">
+                                <a href="{{ route('poli.edit', $item->id) }}">
+                                    <button class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-edit"></i></button>
+                                </a>
+                                <form id="delete-user-{{$item->id}}" action="/poli/{{$item->id}}" method="post" style="display: inline;">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fa fa-trash"></i></button>
+                                </form>
+                            </td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>
@@ -63,10 +67,12 @@
         </div>
     </div>
 </section>
-@include ('includes.scripts')
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $("#data-admin_length").append('<a  href="{{ route('poli.create') }}"> <button type="button" class="btn btn-outline-primary ml-3">Tambah</button></a>');
-        });
-    </script>
+    @include ('includes.scripts')
+    @if (auth()->user()->type == 'admin')
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#data-admin_length").append('<a  href="{{ route('poli.create') }}"> <button type="button" class="btn btn-outline-primary ml-3">Tambah</button></a>');
+            });
+        </script>
+    @endif
 @endsection

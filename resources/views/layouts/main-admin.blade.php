@@ -104,7 +104,13 @@
         <li class="nav-item  {{ \Str::is('laporan.*', Route::currentRouteName()) ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('laporan') }}">
             <i class="fa fa-file-pdf"></i>
-            <span>&nbsp; Laporan</span>
+            <span>&nbsp; Laporan Harian</span>
+          </a>
+        </li> 
+        <li class="nav-item  {{ \Str::is('laporan-pertanggal.*', Route::currentRouteName()) ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('laporan-pertanggal') }}">
+            <i class="fa fa-file-pdf"></i>
+            <span>&nbsp; Laporan Per Tanggal</span>
           </a>
         </li> 
       @elseif (Auth::user()->type == 'dokter')
@@ -137,6 +143,12 @@
         <a class="nav-link" href="{{ route('jadwal.index') }}">
           <i class="far fa-calendar-alt"></i>
           <span>&nbsp; Jadwal Praktik</span>
+        </a>
+      </li>
+      <li class="nav-item  {{ \Str::is('antrian-pasien.*', Route::currentRouteName()) ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('antrian-pasien.index') }}">
+          <i class="far fa-calendar-alt"></i>
+          <span>&nbsp; Antrian</span>
         </a>
       </li>
       @endif

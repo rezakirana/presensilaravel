@@ -31,7 +31,10 @@ Route::group(['middleware' => 'auth'], function()
     Route::resource('jadwal', 'JadwalController');
     Route::resource('antrian', 'AntrianController');
     Route::get('/laporan', 'AntrianController@laporan')->name('laporan');
+    Route::get('/laporan-pertanggal', 'AntrianController@laporan_pertanggal')->name('laporan-pertanggal');
     Route::get('/download-laporan', 'AntrianController@download_laporan')->name('download.laporan');
+    Route::post('/download-laporan-pertanggal', 'AntrianController@download_laporan_pertanggal')->name('download.laporanPertanggal');
+    Route::get('/antrian-pasien', 'AntrianController@antrian_pasien')->name('antrian-pasien.index');
     Route::post('/account-profile', 'AccountController@account_profile')->name('accountProfile.store');
 });
 Route::get('/pendaftaran', 'ClientPageController@pendaftaran')->name('pendaftaran');
