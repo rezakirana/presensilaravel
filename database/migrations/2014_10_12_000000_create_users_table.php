@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', ['admin','dokter','pasien']);
+            $table->enum('type', ['admin','dokter','pasien','pimpinan']);
             $table->string('username')->unique();
             $table->string('password');
             $table->softDeletes('deleted_at', 0)->nullable();

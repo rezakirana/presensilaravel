@@ -139,6 +139,12 @@ class ClientPageController extends Controller
 
             return json_encode(array('data' => $data));
         }
+        if (!Auth::user()->pasien) {
+            $data['type'] = 'warning';
+            $data['message'] = 'maaf, data pasien belum diisikan!';
+
+            return json_encode(array('data' => $data));
+        }
         $pasienId = Auth::user()->pasien->id;
         $checkAntrian = Antrian::where([
                                     'tanggal_daftar' => $request->tglAntrian,
@@ -152,6 +158,12 @@ class ClientPageController extends Controller
                                                 'jadwal_id' => $scheduleId,
                                                 'pasien_id' => $pasienId
                                             ])->count();
+                if ($checkAntrian >= 40) {
+                    $data['type'] = 'warning';
+                    $data['message'] = 'maaf, pendaftaran periksa pada hari '.$request->labelHari.', '.$request->hariAngka.' '.$request->bulan.' '.$request->tahun.' sudah penuh!';
+    
+                    return json_encode(array('data' => $data));
+                }
                 if ($checkAntrian2) {
                     $data['type'] = 'warning';
                     $data['message'] = 'maaf, anda sudah terdaftar periksa pada hari '.$request->labelHari.', '.$request->hariAngka.' '.$request->bulan.' '.$request->tahun;
@@ -161,9 +173,9 @@ class ClientPageController extends Controller
                 $antrian->jadwal_id = $scheduleId;
                 $antrian->pasien_id = $pasienId;
                 $antrian->no_antrian = ($checkAntrian + 1);
-                $jamDaftar = $checkAntrian*15;
-                $jamDatangAwal = ($checkAntrian-1)*15;
-                $jamDatangAkhir = $checkAntrian*15;
+                $jamDaftar = $checkAntrian*10;
+                $jamDatangAwal = ($checkAntrian-1)*10;
+                $jamDatangAkhir = $checkAntrian*10;
                 $jam = intdiv($jamDaftar,60);
                 $sisa = fmod($jamDaftar,60);
                 $jamAntrian = null;
@@ -221,6 +233,12 @@ class ClientPageController extends Controller
             }
         } else {
             if ($checkAntrian) {
+                if ($checkAntrian >= 40) {
+                    $data['type'] = 'warning';
+                    $data['message'] = 'maaf, pendaftaran periksa pada hari '.$request->labelHari.', '.$request->hariAngka.' '.$request->bulan.' '.$request->tahun.' sudah penuh!';
+    
+                    return json_encode(array('data' => $data));
+                }
                 $checkAntrian2 = Antrian::where([
                                                 'tanggal_daftar' => $request->tglAntrian,
                                                 'jadwal_id' => $scheduleId,
@@ -235,9 +253,9 @@ class ClientPageController extends Controller
                 $antrian->jadwal_id = $scheduleId;
                 $antrian->pasien_id = $pasienId;
                 $antrian->no_antrian = ($checkAntrian + 1);
-                $jamDaftar = $checkAntrian*15;
-                $jamDatangAwal = ($checkAntrian-1)*15;
-                $jamDatangAkhir = $checkAntrian*15;
+                $jamDaftar = $checkAntrian*10;
+                $jamDatangAwal = ($checkAntrian-1)*10;
+                $jamDatangAkhir = $checkAntrian*10;
                 $jam = intdiv($jamDaftar,60);
                 $sisa = fmod($jamDaftar,60);
                 $jamAntrian = null;
@@ -268,7 +286,7 @@ class ClientPageController extends Controller
                 $antrian->jadwal_id = $scheduleId;
                 $antrian->pasien_id = $pasienId;
                 $antrian->no_antrian = 1;
-                $jamDatang = '08:00-08:15';
+                $jamDatang = '08:00-08:10';
             }
         }
         $antrian->jam_daftar = $jamDatang;

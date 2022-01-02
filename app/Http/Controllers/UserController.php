@@ -50,7 +50,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'type' => 'required|in:admin,dokter,pasien',
+            'type' => 'required|in:admin,dokter,pasien,pimpinan',
             'username' => 'required|string|unique:users,username',
             'password' => 'required|min:6'
         ]);
@@ -92,7 +92,6 @@ class UserController extends Controller
             return redirect()->route('')->with('danger', 'User tidak ditemukan!');
         }
         $this->data['user'] = $user;
-        $this->data['roles'] = Role::where('role', '!=', 'admin')->get(['id', 'role']);
 
         return view('user.edit', $this->data);
     }
@@ -107,18 +106,20 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request,[
-            'role_id' => 'required|integer|exists:roles,id',
-            'email' => 'required|email|unique:users,email,'.$id
+            'type' => 'required|in:admin,dokter,pasien,pimpinan',
+            'username' => 'required|string|unique:users,username,'.$id,
+            'password' => 'nullable|min:6'
         ]);
 
         $user = User::findOrFail($id);
         if (!$user) {
             return redirect()->back('danger', 'User tidak ditemukan!');
         }
-
-        $user->role_id = $request->role_id;
-        $user->email = $request->email;
-        $user->is_active = $request->is_active;
+        $user->type = $request->type;
+        $user->username = $request->username;
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
         $user->save();;
 
         return redirect()->route('users.edit',$id)->with('success', 'User telah berhasil diupdate!');

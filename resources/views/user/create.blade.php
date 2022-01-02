@@ -31,6 +31,7 @@
                         <select name="type" id="type" class="form-control" required>
                            <option value="">--Pilih Role--</option>
                            <option value="admin">Admin</option>
+                           <option value="pimpinan">Pimpinan</option>
                            <option value="dokter">Dokter</option>
                            <option value="pasien">Pasien</option>
                         </select>

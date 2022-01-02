@@ -59,7 +59,7 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPendidikanTerakhir">TTL</label>
+                        <label for="exampleInputPendidikanTerakhir">Tanggal Lahir</label>
                         <div class="input-group date col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <input type="text" class="form-control pull-right" id="datepicker" name="ttl" required>
                         </div>
