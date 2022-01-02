@@ -21,7 +21,7 @@ class AntrianController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $today = \Carbon\Carbon::today();
+        $today = \Carbon\Carbon::today()->toDateString();
         if ($user->type == 'admin') {
             $data = Poli::all();
             foreach ($data as $key => $value) {
@@ -38,6 +38,7 @@ class AntrianController extends Controller
             }
         }elseif ($user->type == 'dokter') {           
             $dt = \Carbon\Carbon::now();
+            $today = $dt->toDateString();
             $day = $dt->format('l');
             $dayLabel = null;
             if ($day == 'Sunday') {
@@ -74,7 +75,7 @@ class AntrianController extends Controller
                             ->join('dokter','dokter.id','=','jadwal.dokter_id')
                             ->join('poli','poli.id','=','dokter.poli_id')
                             ->where('poli.id',$value->id)
-                            ->whereDate('antrian.tanggal_daftar',$dt)
+                            ->whereDate('antrian.tanggal_daftar',$today)
                             ->select([
                                 'antrian.id as jmlAntrian'
                                 ])
@@ -102,6 +103,31 @@ class AntrianController extends Controller
         $this->data['data'] = $data;
         
         return view ('antrian.index',$this->data);
+    }
+
+    public function antrian_besok($id)
+    {
+        $user = Auth::user();
+        $besok = \Carbon\Carbon::today()->addDay(1);
+        $poli = Poli::findOrFail($id);
+        $data = Antrian::join('jadwal','jadwal.id','=','antrian.jadwal_id')
+                        ->join('pasien','pasien.id','=','antrian.pasien_id')
+                        ->join('dokter','dokter.id','=','jadwal.dokter_id')
+                        ->join('poli','poli.id','=','dokter.poli_id')
+                        ->where('poli.id',$poli->id)
+                        ->whereDate('antrian.tanggal_daftar',$besok->toDateString())
+                        ->select([
+                            'antrian.id',
+                            'pasien.nama',
+                            'dokter.nama_dokter',
+                            'antrian.no_antrian',
+                            'antrian.jam_daftar',
+                            ])
+                        ->get();
+        $this->data['poli'] = $poli;
+        $this->data['data'] = $data;
+        $this->data['besok'] = $besok->format('d/m/Y');
+        return view('antrian.besok', $this->data);
     }
 
     public function laporan()
@@ -204,7 +230,7 @@ class AntrianController extends Controller
      */
     public function create()
     {
-        //
+        $poli = Poli::all();
     }
 
     /**

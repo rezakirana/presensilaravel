@@ -29,6 +29,7 @@
                             <th>POLI</th>
                             <th>GAMBAR</th>
                             <th>JUMLAH ANTRIAN</th>
+                            <th>DATA ANTRIAN BESOK</th>
                         </tr>
                     @elseif(auth()->user()->type == 'dokter')
                         <tr>
@@ -36,6 +37,7 @@
                             <th>POLI</th>
                             <th>GAMBAR</th>
                             <th>JUMLAH ANTRIAN</th>
+                            <th>DATA ANTRIAN BESOK</th>
                         </tr>
                     @else
                         <tr>
@@ -63,9 +65,10 @@
                                         @endif
                                     </td>
                                     <td>{{ $item->jmlAntrian }}</td>
+                                    <td><a href="{{ route('antrianBesok',$item->id) }}">Antrian Hari Berikutnya</a></td>
                                 </tr>
                             @endforeach
-                        @elseif(auth()->user()->type == 'admin')
+                        @elseif(auth()->user()->type == 'dokter')
                             @foreach ($data as $key => $item)
                                 <tr>
                                     <td>{{ ($key+1) }}</td>
@@ -78,6 +81,7 @@
                                         @endif
                                     </td>
                                     <td>{{ $item->jmlAntrian }}</td>
+                                    <td><a href="{{ route('antrianBesok',$item->id) }}">Antrian Hari Berikutnya</a></td>
                                 </tr>
                             @endforeach
                         @else
@@ -97,4 +101,11 @@
     </div>
 </section>
 @include ('includes.scripts')
+@if (Auth::user()->type == 'admin')
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#data-admin_length").append('<a  href="{{ route('antrian.create') }}"> <button type="button" class="btn btn-outline-primary ml-3">Tambah</button></a>');
+        });
+    </script>
+@endif
 @endsection
