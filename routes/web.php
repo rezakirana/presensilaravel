@@ -36,6 +36,8 @@ Route::group(['middleware' => 'auth'], function()
     Route::get('/download-laporan', 'AntrianController@download_laporan')->name('download.laporan');
     Route::post('/download-laporan-pertanggal', 'AntrianController@download_laporan_pertanggal')->name('download.laporanPertanggal');
     Route::get('/antrian-pasien', 'AntrianController@antrian_pasien')->name('antrian-pasien.index');
+    Route::get('/tambah-antrian-pasien/{id}', 'AntrianController@tambah_antrian_pasien')->name('tambahAntrian');
+    Route::post('/save-antrian', 'AntrianController@tambah_antrian_pasien_save')->name('tambahAntrian.store');
     Route::post('/account-profile', 'AccountController@account_profile')->name('accountProfile.store');
 });
 Route::get('/pendaftaran', 'ClientPageController@pendaftaran')->name('pendaftaran');
