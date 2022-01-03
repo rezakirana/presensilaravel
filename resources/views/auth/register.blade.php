@@ -108,7 +108,7 @@
                         <div class="custom-control custom-checkbox small">
                           <label style="float:right;">
                               @if (Route::has('login'))
-                                  <a href="{{ route('login') }}">Already have an account ?Login!</a>
+                                  <a href="{{ route('login') }}">Sudah punya akun ?Masuk!</a>
                               @endif
                           </label>
                         </div>

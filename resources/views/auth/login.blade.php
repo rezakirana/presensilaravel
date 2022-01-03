@@ -60,7 +60,7 @@
                     <div class="form-group">
                       <div class="custom-control custom-checkbox small">
                         <input type="checkbox" class="custom-control-input" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                        <label class="custom-control-label" for="remember">Remember Me</label>
+                        <label class="custom-control-label" for="remember">Ingat Saya</label>
                         {{-- <label style="float:right;">
                             @if (Route::has('password.update'))
                                 <a href="{{ route('password.update') }}">Forgot Password?</a>
@@ -71,7 +71,7 @@
                         </label>
                         <label style="float:right;">
                             @if (Route::has('register'))
-                                <a href="{{ route('register') }}">Don't have an account ?</a>
+                                <a href="{{ route('register') }}">Belum punya akun ?</a>
                             @endif
                         </label>
                       </div>
