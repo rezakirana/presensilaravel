@@ -294,7 +294,7 @@ class AntrianController extends Controller
             return back()->with('danger','Pasien sudah terdaftar!');
         }
         $dataAntrian = Antrian::where('jadwal_id',$request->jadwal_id)->whereDate('tanggal_daftar',$request->tanggal_daftar)->count();
-        if ($dataAntrian == 40) {
+        if ($dataAntrian == 30) {
             return back()->with('danger','Maaf pendaftaran sudah penuh!');
         }
         $antrianBaru = new Antrian();

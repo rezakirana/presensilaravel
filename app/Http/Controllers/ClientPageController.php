@@ -158,7 +158,7 @@ class ClientPageController extends Controller
                                                 'jadwal_id' => $scheduleId,
                                                 'pasien_id' => $pasienId
                                             ])->count();
-                if ($checkAntrian >= 40) {
+                if ($checkAntrian >= 30) {
                     $data['type'] = 'warning';
                     $data['message'] = 'maaf, pendaftaran periksa pada hari '.$request->labelHari.', '.$request->hariAngka.' '.$request->bulan.' '.$request->tahun.' sudah penuh!';
     
@@ -233,7 +233,7 @@ class ClientPageController extends Controller
             }
         } else {
             if ($checkAntrian) {
-                if ($checkAntrian >= 40) {
+                if ($checkAntrian >= 30) {
                     $data['type'] = 'warning';
                     $data['message'] = 'maaf, pendaftaran periksa pada hari '.$request->labelHari.', '.$request->hariAngka.' '.$request->bulan.' '.$request->tahun.' sudah penuh!';
     
