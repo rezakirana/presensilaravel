@@ -21,6 +21,7 @@
     <div class="card">
         @include ('includes.flash')
         <div class="card-body">
+            <h3>Antrian Hari Ini</h3>
             <table id="data-admin" class="table table-bordered table-striped">
                 <thead>
                     @if (auth()->user()->type == 'admin')
@@ -29,7 +30,7 @@
                             <th>POLI</th>
                             <th>GAMBAR</th>
                             <th>JUMLAH ANTRIAN</th>
-                            <th>DATA ANTRIAN BESOK</th>
+                            {{-- <th>DATA ANTRIAN BESOK</th> --}}
                         </tr>
                     @elseif(auth()->user()->type == 'dokter')
                         <tr>
@@ -37,7 +38,7 @@
                             <th>POLI</th>
                             <th>GAMBAR</th>
                             <th>JUMLAH ANTRIAN</th>
-                            <th>DATA ANTRIAN BESOK</th>
+                            {{-- <th>DATA ANTRIAN BESOK</th> --}}
                         </tr>
                     @else
                         <tr>
@@ -65,7 +66,7 @@
                                         @endif
                                     </td>
                                     <td>{{ $item->jmlAntrian }}</td>
-                                    <td><a href="{{ route('antrianBesok',$item->id) }}">Antrian Hari Berikutnya</a></td>
+                                    {{-- <td><a href="{{ route('antrianBesok',$item->id) }}">Antrian Hari Berikutnya</a></td> --}}
                                 </tr>
                             @endforeach
                         @elseif(auth()->user()->type == 'dokter')
@@ -81,7 +82,7 @@
                                         @endif
                                     </td>
                                     <td>{{ $item->jmlAntrian }}</td>
-                                    <td><a href="{{ route('antrianBesok',$item->id) }}">Antrian Hari Berikutnya</a></td>
+                                    {{-- <td><a href="{{ route('antrianBesok',$item->id) }}">Antrian Hari Berikutnya</a></td> --}}
                                 </tr>
                             @endforeach
                         @else
@@ -92,6 +93,47 @@
                                 <td>{{ $item->nama_dokter }}</td>
                                 <td>{{ $item->kodePoli }} {{ $item->no_antrian }}</td>
                                 <td>{{ $item->jam_daftar }}</td>
+                            @endforeach
+                        @endif
+                    @endif
+                </tbody>
+            </table>
+            <hr>
+            <h3>Antrian Hari Selanjutnya</h3>
+            <table id="data-admin" class="table table-bordered table-striped">
+                <thead>
+                    @if (auth()->user()->type == 'admin')
+                        <tr>
+                            <th width="40">NO</th>
+                            <th>POLI</th>
+                            <th>GAMBAR</th>
+                            <th>DATA ANTRIAN BESOK</th>
+                        </tr>
+                    @elseif(auth()->user()->type == 'dokter')
+                        <tr>
+                            <th width="40">NO</th>
+                            <th>POLI</th>
+                            <th>GAMBAR</th>
+                            <th>DATA ANTRIAN BESOK</th>
+                        </tr>
+                    @endif
+                </thead>
+                <tbody>
+                    @if (count($semuaPoli))
+                        @if (auth()->user()->type == 'admin' || auth()->user->type == 'dokter')
+                            @foreach ($semuaPoli as $key => $item)
+                                <tr>
+                                    <td>{{ ($key+1) }}</td>
+                                    <td>{{ $item->nama }} ({{ $item->kode }})</td>
+                                    <td>
+                                        @if ($item->gambar)
+                                            <img src="{{ asset('/img/poli/'.$item->gambar) }}" width="70px" height="70px" style="text-align: center;" alt="{{ $item->nama }}" />
+                                        @else
+                                            <img src="{{ asset('/img/default-image.png') }}" width="70px" height="70px" style="text-align: center;" alt="{{ $item->nama }}" />
+                                        @endif
+                                    </td>
+                                    <td><a href="{{ route('antrianBesok',$item->id) }}">Antrian Hari Berikutnya</a></td>
+                                </tr>
                             @endforeach
                         @endif
                     @endif

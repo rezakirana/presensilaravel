@@ -37,6 +37,7 @@ class AntrianController extends Controller
                         ->count();
                 $value->jmlAntrian = $data2;
             }
+            $semuaPoli = Poli::all();
         }elseif ($user->type == 'dokter') {           
             $dt = \Carbon\Carbon::now();
             $today = $dt->toDateString();
@@ -84,6 +85,11 @@ class AntrianController extends Controller
                     $value->jmlAntrian = $data2;
                 }
             }
+            $semuaPoli = Poli::join('dokter','dokter.poli_id','=','poli.id')
+                                ->where('dokter.id',$user->dokter->id)
+                                ->select([
+                                    'poli.*'
+                                ])->get();
         }else {
             $dt = \Carbon\Carbon::now();
             $data = Antrian::join('pasien','pasien.id','=','antrian.pasien_id')
@@ -102,6 +108,7 @@ class AntrianController extends Controller
                             ])->get();
         }
         $this->data['data'] = $data;
+        $this->data['semuaPoli'] = $semuaPoli;
         
         return view ('antrian.index',$this->data);
     }
