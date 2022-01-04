@@ -363,7 +363,7 @@ class AntrianController extends Controller
                 $sisa = fmod($jamDaftar,60);
                 $jamAntrian = '08'.':'.$sisa;
             }
-            $tmpJamDaftar = Carbon::now()->format('H:i');
+            $tmpJamDaftar = \Carbon\Carbon::now()->format('H:i');
             $harusnya = strtotime($jamAntrian);
             $tapiDaftarnya = strtotime($tmpJamDaftar);
             
