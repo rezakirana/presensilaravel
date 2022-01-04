@@ -120,7 +120,7 @@
                 </thead>
                 <tbody>
                     @if (count($semuaPoli))
-                        @if (auth()->user()->type == 'admin' || auth()->user->type == 'dokter')
+                        @if (auth()->user()->type == 'admin' || auth()->user()->type == 'dokter')
                             @foreach ($semuaPoli as $key => $item)
                                 <tr>
                                     <td>{{ ($key+1) }}</td>
