@@ -134,8 +134,51 @@ class AntrianController extends Controller
                         ->get();
         $this->data['poli'] = $poli;
         $this->data['data'] = $data;
-        $this->data['besok'] = $besok->format('d/m/Y');
+        $this->data['besok'] = $besok->format('m/d/Y');
+
         return view('antrian.besok', $this->data);
+    }
+
+    public function get_data_antrian(Request $request)
+    {
+        $user = Auth::user();
+        $tgl = explode('/',$request->tgl);
+        $tanggal = $tgl[2].'-'.$tgl[0].'-'.$tgl[1];
+        $poli = Poli::findOrFail($request->poliId);
+        $data = Antrian::join('jadwal','jadwal.id','=','antrian.jadwal_id')
+                        ->join('pasien','pasien.id','=','antrian.pasien_id')
+                        ->join('dokter','dokter.id','=','jadwal.dokter_id')
+                        ->join('poli','poli.id','=','dokter.poli_id')
+                        ->where('poli.id',$request->poliId)
+                        ->whereDate('antrian.tanggal_daftar',date($tanggal))
+                        ->select([
+                            'antrian.id',
+                            'pasien.nama',
+                            'dokter.nama_dokter',
+                            'antrian.no_antrian',
+                            'antrian.jam_daftar',
+                            ])
+                        ->get();
+        $dataRender = null;
+        if (count($data)) {
+            foreach ($data as $key => $item) {
+                $dataRender = $dataRender.'<tr>
+                    <td>'.($key+1).'</td>
+                    <td>'.$item->nama.'</td>
+                    <td>'.$item->jam_daftar.'</td>
+                    <td>'.$poli->kode.' '.$item->no_antrian.'</td>
+                    <td>'.$poli->nama.'</td>
+                    <td>'.$item->nama_dokter.'</td>
+                </tr>';
+            }
+        }else {
+            $dataRender = '<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty">No data available in table</td></tr>';
+        }
+        
+        return json_encode(array(
+                    'data' => $dataRender
+                ));
+
     }
 
     public function laporan()
