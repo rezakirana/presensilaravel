@@ -59,7 +59,9 @@ class HomeController extends Controller
             $this->data['pasien'] = count($pasien);
         }else {
             $dokter = Dokter::count();
+            $pasien = Pasien::count();
             $this->data['dokter'] = $dokter;
+            $this->data['pasien'] = $pasien;
         }
         $this->data['poli'] = $poli;
         $this->data['user'] = $user;
