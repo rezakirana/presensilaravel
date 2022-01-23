@@ -130,35 +130,17 @@
     </div>
   </div>
   @include ('includes.scripts')
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script> --}}
-  <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
       $(function () {
           $('#datepicker').datepicker({
           autoclose: true
           })
       });
-
-      // $(document).ready(function(){
-      //     $( '.nikValidation' ).mask('000.000.000', {reverse: true});
-      // })
-      // $(".nikValidation").validate({
-      //   rules: {
-      //     amount: {
-      //       required: true,
-      //       digits: true
-      //     }
-      //   }
-      // });
-      //bind to the `keyup` event for all `input` element(s)
-$('#nikValidation').on('keyup', function () {
-
-//replace the value of this input by only the digits in it's value
-//note that this method works even if the user pastes a block of text into the input
-this.value = this.value.replace(/[^0-9]/gi, '');
-});​
+      $('#nikValidation').on('keyup', function () {
+        this.value = this.value.replace(/[^0-9]/gi, '')
+      });
   </script>
   @endsection

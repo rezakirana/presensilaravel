@@ -30,7 +30,6 @@
                             <th>POLI</th>
                             <th>GAMBAR</th>
                             <th>JUMLAH ANTRIAN</th>
-                            {{-- <th>DATA ANTRIAN BESOK</th> --}}
                         </tr>
                     @elseif(auth()->user()->type == 'dokter')
                         <tr>
@@ -38,7 +37,6 @@
                             <th>POLI</th>
                             <th>GAMBAR</th>
                             <th>JUMLAH ANTRIAN</th>
-                            {{-- <th>DATA ANTRIAN BESOK</th> --}}
                         </tr>
                     @else
                         <tr>
@@ -65,8 +63,7 @@
                                             <img src="{{ asset('/img/default-image.png') }}" width="70px" height="70px" style="text-align: center;" alt="{{ $item->nama }}" />
                                         @endif
                                     </td>
-                                    <td>{{ $item->jmlAntrian }}</td>
-                                    {{-- <td><a href="{{ route('antrianBesok',$item->id) }}">Antrian Hari Berikutnya</a></td> --}}
+                                    <td><a href="{{ route('antrianDetail',$item->id) }}">{{ $item->jmlAntrian }}</a></td>
                                 </tr>
                             @endforeach
                         @elseif(auth()->user()->type == 'dokter')
@@ -81,8 +78,7 @@
                                             <img src="{{ asset('/img/default-image.png') }}" width="70px" height="70px" style="text-align: center;" alt="{{ $item->nama }}" />
                                         @endif
                                     </td>
-                                    <td>{{ $item->jmlAntrian }}</td>
-                                    {{-- <td><a href="{{ route('antrianBesok',$item->id) }}">Antrian Hari Berikutnya</a></td> --}}
+                                    <td><a href="{{ route('antrianDetail',$item->id) }}">{{ $item->jmlAntrian }}</a></td>
                                 </tr>
                             @endforeach
                         @else

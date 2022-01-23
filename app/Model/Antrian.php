@@ -8,7 +8,7 @@ class Antrian extends Model
 {
     protected $table = 'antrian';
     protected $fillable = [
-        'jadwal_id', 'pasien_id','tanggal_daftar','jam_daftar','no_antrian'
+        'jadwal_id', 'pasien_id','tanggal_daftar','jam_daftar','no_antrian', 'status'
     ];
 
     public function pasien()

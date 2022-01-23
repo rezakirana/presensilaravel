@@ -113,6 +113,33 @@ class AntrianController extends Controller
         return view ('antrian.index',$this->data);
     }
 
+    public function antrian_detail($id)
+    {
+        $user = Auth::user();
+        $today = \Carbon\Carbon::today();
+        $poli = Poli::findOrFail($id);
+        $data = Antrian::join('jadwal','jadwal.id','=','antrian.jadwal_id')
+                        ->join('pasien','pasien.id','=','antrian.pasien_id')
+                        ->join('dokter','dokter.id','=','jadwal.dokter_id')
+                        ->join('poli','poli.id','=','dokter.poli_id')
+                        ->where('poli.id',$poli->id)
+                        ->whereDate('antrian.tanggal_daftar',$today->toDateString())
+                        ->select([
+                            'antrian.id',
+                            'pasien.nama',
+                            'dokter.nama_dokter',
+                            'antrian.no_antrian',
+                            'antrian.jam_daftar',
+                            'antrian.status',
+                            ])
+                        ->get();
+        $this->data['poli'] = $poli;
+        $this->data['data'] = $data;
+        $this->data['today'] = $today->format('m/d/Y');
+
+        return view('antrian.sekarang', $this->data);
+    }
+
     public function antrian_besok($id)
     {
         $user = Auth::user();
@@ -130,6 +157,7 @@ class AntrianController extends Controller
                             'dokter.nama_dokter',
                             'antrian.no_antrian',
                             'antrian.jam_daftar',
+                            'antrian.status',
                             ])
                         ->get();
         $this->data['poli'] = $poli;
@@ -439,5 +467,19 @@ class AntrianController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function enable_antrian(Request $request)
+    {
+        $antrian = Antrian::where('id',$request->antrianId)->update(['status' => $request->status]);
+
+        return 1;
+    }
+    
+    public function disable_antrian(Request $request)
+    {
+        $antrian = Antrian::where('id',$request->antrianId)->update(['status' => $request->status]);
+        
+        return 1;
     }
 }

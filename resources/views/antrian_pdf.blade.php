@@ -24,8 +24,8 @@
 <body style="text-align: center;">
     <center>
         <h1>PUSKESMAS Karangnongko</h1>
-        <p>Jl. Klaten No. 26</p>
-        <p>KLATEN</p>
+        <p>Jl. Raya Klaten, Karangnonhko, Kec. Karangnongko,</p>
+        <p>Klaten, Jawa Tengah, Indonesia</p>
         <p>Telp.027494034</p>
         <hr>
         <h3>{{ $poli }}</h3>

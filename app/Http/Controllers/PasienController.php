@@ -16,7 +16,7 @@ class PasienController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {        
         $user = Auth::user();
         if ($user->type == 'admin') {
             $this->data['pasiens'] = Pasien::all();

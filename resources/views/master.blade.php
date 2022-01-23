@@ -219,7 +219,7 @@
      @yield('content')
     <!--/ End Feautes -->
     <!-- Footer Area -->
-    <footer id="footer" class="footer ">
+    <footer id="footer" class="footer">
         <!-- Footer Top -->
         <div class="footer-top">
             <div class="container">

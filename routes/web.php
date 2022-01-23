@@ -39,6 +39,9 @@ Route::group(['middleware' => 'auth'], function()
     Route::get('/tambah-antrian-pasien/{id}', 'AntrianController@tambah_antrian_pasien')->name('tambahAntrian');
     Route::post('/save-antrian', 'AntrianController@tambah_antrian_pasien_save')->name('tambahAntrian.store');
     Route::get('/get-data-antrian', 'AntrianController@get_data_antrian')->name('get.dataAntrian');
+    Route::get('/enable-antrian', 'AntrianController@enable_antrian')->name('enabledAntrian');
+    Route::get('/disable-antrian', 'AntrianController@disable_antrian')->name('disabledAntrian');
+    Route::get('/antrian-detail/{id}', 'AntrianController@antrian_detail')->name('antrianDetail');
     Route::post('/account-profile', 'AccountController@account_profile')->name('accountProfile.store');
 });
 Route::get('/pendaftaran', 'ClientPageController@pendaftaran')->name('pendaftaran');
