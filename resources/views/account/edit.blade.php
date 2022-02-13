@@ -59,8 +59,8 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPendidikanTerakhir">Nomor Telphone</label>
-                        <input id="nik" type="number" class="form-control form-control-user @error('phone_number') is-invalid @enderror" name="phone_number" id="phoneValidation" value="{{ $guru->phone_number }}" required autocomplete="phone number" autofocus style="-webkit-appearance: none;margin: 0;">
-                        @error('nik')
+                        <input id="phone_number" type="number" class="form-control form-control-user @error('phone_number') is-invalid @enderror" name="phone_number" id="phoneValidation" value="{{ $guru->phone_number }}" required autocomplete="phone number" style="-webkit-appearance: none;margin: 0;">
+                        @error('phone_number')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>

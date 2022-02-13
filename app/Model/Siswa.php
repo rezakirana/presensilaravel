@@ -12,6 +12,8 @@ class Siswa extends Model
         'email', 'nama_ortu', 'alamat', 'phone_number'
     ];
 
+    protected $dates = ['tgl_lahir'];
+    
     public function kelas()
     {
         return $this->belongsTo('App\Model\Kelas', 'kelas_id');
