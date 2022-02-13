@@ -14,6 +14,8 @@ class KelasController extends Controller
      */
     public function index()
     {
+        $this->data['kelas'] = Kelas::all();
+
         return view('kelas.index', $this->data);
     }
 
@@ -35,7 +37,14 @@ class KelasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'kode_kelas' => 'required|unique:kelas,kode_kelas',
+            'nama_kelas' => 'required|string'
+        ]);
+
+        Kelas::create($request->except('_token'));
+
+        return redirect()->route('kelas.index')->with('success', 'Data kelas berhasil ditambahkan!');
     }
 
     /**
@@ -57,6 +66,8 @@ class KelasController extends Controller
      */
     public function edit($id)
     {
+        $this->data['kelas'] = Kelas::findOrFail($id);
+
         return view('kelas.edit', $this->data);
     }
 
@@ -69,7 +80,14 @@ class KelasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'kode_kelas' => 'required|unique:kelas,kode_kelas,'.$id,
+            'nama_kelas' => 'required|string'
+        ]);
+
+        Kelas::where('id',$id)->update($request->except(['_token','_method']));
+
+        return redirect()->route('kelas.index')->with('success', 'Data kelas berhasil diupdate!');
     }
 
     /**
@@ -80,6 +98,8 @@ class KelasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Kelas::where('id', $id)->delete();
+
+        return redirect()->route('kelas.index')->with('success', 'Data kelas berhasil dihapus!');
     }
 }
