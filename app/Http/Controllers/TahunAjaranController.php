@@ -14,6 +14,8 @@ class TahunAjaranController extends Controller
      */
     public function index()
     {
+        $this->data['data'] = TahunAjaran::all();
+
         return view('tahun_ajaran.index', $this->data);
     }
 
@@ -35,7 +37,13 @@ class TahunAjaranController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'tahun_ajaran' => 'required|string'
+        ]);
+
+        TahunAjaran::create($request->except('_token'));
+
+        return redirect()->route('tahun-ajaran.index')->with('success', 'Data Tahun Ajaran berhasil ditambahkan!');
     }
 
     /**
@@ -57,6 +65,8 @@ class TahunAjaranController extends Controller
      */
     public function edit($id)
     {
+        $this->data['data'] = TahunAjaran::findOrFail($id);
+
         return view('tahun_ajaran.edit', $this->data);
     }
 
@@ -69,7 +79,13 @@ class TahunAjaranController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'tahun_ajaran' => 'required|string'
+        ]);
+
+        TahunAjaran::where('id',$id)->update($request->except(['_token','_method']));
+
+        return redirect()->route('tahun-ajaran.index')->with('success', 'Data Tahun Ajaran berhasil diupdate!');
     }
 
     /**
@@ -80,6 +96,8 @@ class TahunAjaranController extends Controller
      */
     public function destroy($id)
     {
-        //
+        TahunAjaran::where('id', $id)->delete();
+
+        return redirect()->route('tahun-ajaran.index')->with('success', 'Data Tahun Ajaran berhasil dihapus!');
     }
 }

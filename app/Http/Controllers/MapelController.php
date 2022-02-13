@@ -14,6 +14,8 @@ class MapelController extends Controller
      */
     public function index()
     {
+        $this->data['mapel'] = Mapel::all();
+
         return view('mapel.index', $this->data);
     }
 
@@ -35,7 +37,14 @@ class MapelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'kode_mapel' => 'required|unique:mapel,kode_mapel',
+            'nama_mapel' => 'required|string'
+        ]);
+
+        Mapel::create($request->except('_token'));
+
+        return redirect()->route('mapel.index')->with('success', 'Data mapel berhasil ditambahkan!');
     }
 
     /**
@@ -57,6 +66,8 @@ class MapelController extends Controller
      */
     public function edit($id)
     {
+        $this->data['mapel'] = Mapel::findOrFail($id);
+
         return view('mapel.edit', $this->data);
     }
 
@@ -69,7 +80,14 @@ class MapelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'kode_mapel' => 'required|unique:mapel,kode_mapel,'.$id,
+            'nama_mapel' => 'required|string'
+        ]);
+
+        Mapel::where('id',$id)->update($request->except(['_token','_method']));
+
+        return redirect()->route('mapel.index')->with('success', 'Data mapel berhasil diupdate!');
     }
 
     /**
@@ -80,6 +98,8 @@ class MapelController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Mapel::where('id', $id)->delete();
+
+        return redirect()->route('mapel.index')->with('success', 'Data mapel berhasil dihapus!');
     }
 }
