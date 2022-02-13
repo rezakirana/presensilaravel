@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\Dokter;
+use App\Model\TahunAjaran;
 
-class DokterController extends Controller
+class TahunAjaranController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class DokterController extends Controller
      */
     public function index()
     {
-        //
+        return view('tahun_ajaran.index', $this->data);
     }
 
     /**
@@ -24,7 +24,7 @@ class DokterController extends Controller
      */
     public function create()
     {
-        //
+        return view('tahun_ajaran.create');
     }
 
     /**
@@ -46,7 +46,7 @@ class DokterController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('tahun_ajaran.show', $this->data);
     }
 
     /**
@@ -57,7 +57,7 @@ class DokterController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('tahun_ajaran.edit', $this->data);
     }
 
     /**

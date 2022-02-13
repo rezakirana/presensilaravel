@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\Antrian;
+use App\Model\Presensi;
 
-class AntrianController extends Controller
+class PresensiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class AntrianController extends Controller
      */
     public function index()
     {
-        //
+        return view('presensi.index', $this->data);
     }
 
     /**
@@ -24,7 +24,7 @@ class AntrianController extends Controller
      */
     public function create()
     {
-        //
+        return view('presensi.create');
     }
 
     /**
@@ -46,7 +46,7 @@ class AntrianController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('presensi.show', $this->data);
     }
 
     /**
@@ -57,7 +57,7 @@ class AntrianController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('presensi.edit', $this->data);
     }
 
     /**

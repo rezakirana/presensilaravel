@@ -19,16 +19,19 @@
   <link href="{{ asset('css/bootstrap/bootstrap.css') }}" rel="stylesheet">
   <link rel="stylesheet" href="/plugins/datatables/dataTables.bootstrap4.css">
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
    <!-- Icon -->
    <link rel="icon" type="image/png" href="{{ asset('img/logo.png') }}"/>
    <script src="/vendor/jquery/jquery.min.js"></script>
    <!-- Animate CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css" integrity="sha512-/Ae8qSd9X8ajHk6Zty0m8yfnKJPlelk42HTJjOHDWs1Tjr41RfsSkceZ/8yyJGLkxALGMIYd5L2oGemy/x1PLg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
+  @yield('cssAdded')
 </head>
 
 <body id="page-top">
@@ -39,7 +42,7 @@
           <div class="sidebar-brand-icon">
               <img src="{{ asset('img/icon-logo.png') }}" alt="" width="50">
           </div>
-          <div class="sidebar-brand-text mx-2">Expert System</div>
+          <div class="sidebar-brand-text mx-2">Antrian Puskesmas</div>
       </a>
 
       <hr class="sidebar-divider my-0">
@@ -59,9 +62,7 @@
           <span>&nbsp; Manajemen Akun</span>
         </a>
       </li>    
-
-      <!-- Nav Item - Manajemen User -->
-      @if (Auth::user()->role->role == 'admin')
+      @if (Auth::user()->type == 'admin')
         <li class="nav-item  {{ \Str::is('users.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('users.index') }}">
           <a class="nav-link" href="{{ route('users.index') }}">
             <i class="fa fa-users"></i>
@@ -80,29 +81,91 @@
               border: 0;
               font-weight: 900;"></i>
               </span>
-          <div id="collapseKriteria" class="collapse {{ \Str::is('gejala.*', Route::currentRouteName()) ? 'show' : '' }} {{ \Str::is('penyakit.*', Route::currentRouteName()) ? 'show' : '' }}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+          <div id="collapseKriteria" class="collapse {{ \Str::is('poli.*', Route::currentRouteName()) ? 'show' : '' }} {{ \Str::is('dokter.*', Route::currentRouteName()) ? 'show' : '' }} {{ \Str::is('pasien.*', Route::currentRouteName()) ? 'show' : '' }}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
               <h6 class="collapse-header">Manajemen Data :</h6>
-              <a class="collapse-item {{ \Str::is('gejala.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('gejala.index') }}">Gejala</a>
-              <a class="collapse-item {{ \Str::is('penyakit.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('penyakit.index') }}">Penyakit</a>
+              <a class="collapse-item {{ \Str::is('poli.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('poli.index') }}">Poli</a>
+              <a class="collapse-item {{ \Str::is('dokter.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('dokter.index') }}">Dokter</a>
+              <a class="collapse-item {{ \Str::is('pasien.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('pasien.index') }}">Pasien</a>
               </div>
           </div>
         </li>
-      @endif
-      @if (Auth::user()->role->role == 'admin' || Auth::user()->role->role == 'pakar')
-        <li class="nav-item  {{ \Str::is('rules.*', Route::currentRouteName()) ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('rules.index') }}">
-            <i class="far fa-user"></i>
-            <span>&nbsp; Manajemen Rules</span>
+        <li class="nav-item  {{ \Str::is('jadwal.*', Route::currentRouteName()) ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('jadwal.index') }}">
+            <i class="far fa-calendar-alt"></i>
+            <span>&nbsp; Jadwal Praktik</span>
           </a>
         </li> 
-      @endif
-      <li class="nav-item {{ \Str::is('konsultasi.*', Route::currentRouteName()) ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('konsultasi.index') }}">
-          <i class="fa fa-user-check"></i>
-          <span>&nbsp; Konsultasi Penyakit</span>
+        <li class="nav-item  {{ \Str::is('antrian.*', Route::currentRouteName()) ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('antrian.index') }}">
+            <i class="fa fa-list"></i>
+            <span>&nbsp; Antrian Periksa</span>
+          </a>
+        </li> 
+        <li class="nav-item  {{ \Str::is('laporan.*', Route::currentRouteName()) ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('laporan') }}">
+            <i class="fa fa-file-pdf"></i>
+            <span>&nbsp; Laporan Harian</span>
+          </a>
+        </li> 
+        <li class="nav-item  {{ \Str::is('laporan-pertanggal.*', Route::currentRouteName()) ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('laporan-pertanggal') }}">
+            <i class="fa fa-file-pdf"></i>
+            <span>&nbsp; Laporan Per Tanggal</span>
+          </a>
+        </li> 
+      @elseif (Auth::user()->type == 'dokter')
+        <li class="nav-item  {{ \Str::is('jadwal.*', Route::currentRouteName()) ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('jadwal.index') }}">
+            <i class="far fa-calendar-alt"></i>
+            <span>&nbsp; Jadwal Praktik</span>
+          </a>
+        </li> 
+        <li class="nav-item  {{ \Str::is('pasien.*', Route::currentRouteName()) ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('pasien.index') }}">
+            <i class="fa fa-users"></i>
+            <span>&nbsp; Pasien</span>
+          </a>
+        </li> 
+        <li class="nav-item  {{ \Str::is('antrian.*', Route::currentRouteName()) ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('antrian.index') }}">
+            <i class="fa fa-list"></i>
+            <span>&nbsp; Antrian Periksa</span>
+          </a>
+        </li>
+      @elseif (Auth::user()->type == 'pasien')
+      <li class="nav-item  {{ \Str::is('dokter.*', Route::currentRouteName()) ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('dokter.index') }}">
+          <i class="fa fa-stethoscope"></i>
+          <span>&nbsp; Dokter</span>
         </a>
       </li>
+      <li class="nav-item  {{ \Str::is('jadwal.*', Route::currentRouteName()) ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('jadwal.index') }}">
+          <i class="far fa-calendar-alt"></i>
+          <span>&nbsp; Jadwal Praktik</span>
+        </a>
+      </li>
+      <li class="nav-item  {{ \Str::is('antrian-pasien.*', Route::currentRouteName()) ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('antrian-pasien.index') }}">
+          <i class="far fa-calendar-alt"></i>
+          <span>&nbsp; Antrian</span>
+        </a>
+      </li>
+      @else
+      <li class="nav-item  {{ \Str::is('laporan.*', Route::currentRouteName()) ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('laporan') }}">
+          <i class="fa fa-file-pdf"></i>
+          <span>&nbsp; Laporan Harian</span>
+        </a>
+      </li> 
+      <li class="nav-item  {{ \Str::is('laporan-pertanggal.*', Route::currentRouteName()) ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('laporan-pertanggal') }}">
+          <i class="fa fa-file-pdf"></i>
+          <span>&nbsp; Laporan Per Tanggal</span>
+        </a>
+      </li>
+      @endif
     </ul>
     <!-- Sidebar -->
 
@@ -127,6 +190,10 @@
               </a>
               <!-- Dropdown - User -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="{{ url('/') }}">
+                  <i class="fas fa-home fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Home
+                </a>
                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
@@ -152,7 +219,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Sistem Pakar 2021</span>
+            <span>Copyright &copy; Sistem Antrian Puskesmas 2021</span>
           </div>
         </div>
       </footer>
@@ -186,7 +253,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
-  <script src="/js/sb-admin-2.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.4/js/sb-admin-2.min.js" integrity="sha512-+QnjQxxaOpoJ+AAeNgvVatHiUWEDbvHja9l46BHhmzvP0blLTXC4LsvwDVeNhGgqqGQYBQLFhdKFyjzPX6HGmw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   @yield('script')
 
 </body>

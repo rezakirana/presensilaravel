@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\Pasien;
+use App\Model\Kelas;
 
-class PasienController extends Controller
+class KelasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class PasienController extends Controller
      */
     public function index()
     {
-        //
+        return view('kelas.index', $this->data);
     }
 
     /**
@@ -24,7 +24,7 @@ class PasienController extends Controller
      */
     public function create()
     {
-        //
+        return view('kelas.create');
     }
 
     /**
@@ -46,7 +46,7 @@ class PasienController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('kelas.show', $this->data);
     }
 
     /**
@@ -57,7 +57,7 @@ class PasienController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('kelas.edit', $this->data);
     }
 
     /**

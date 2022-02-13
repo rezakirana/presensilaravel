@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\Poli;
+use App\Model\Mapel;
 
-class PoliController extends Controller
+class MapelController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class PoliController extends Controller
      */
     public function index()
     {
-        //
+        return view('mapel.index', $this->data);
     }
 
     /**
@@ -24,7 +24,7 @@ class PoliController extends Controller
      */
     public function create()
     {
-        //
+        return view('mapel.create');
     }
 
     /**
@@ -46,7 +46,7 @@ class PoliController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('mapel.show', $this->data);
     }
 
     /**
@@ -57,7 +57,7 @@ class PoliController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('mapel.edit', $this->data);
     }
 
     /**

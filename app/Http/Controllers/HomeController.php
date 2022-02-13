@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Model\Gejala;
-use App\Model\Penyakit;
-use App\Model\Konsultasi;
+use App\Model\Pasien;
+use App\Model\Dokter;
+use App\Model\Poli;
+use App\Model\Antrian;
 
 class HomeController extends Controller
 {
@@ -23,7 +24,7 @@ class HomeController extends Controller
      * Show the application dashboard.
      *
      * @return \Illuminate\Contracts\Support\Renderable
-     */
+     */    
     public function index()
     {
         if (Auth::check()) {
@@ -33,18 +34,8 @@ class HomeController extends Controller
     }
 
     public function dashboard()
-    {
-        if (Auth::user()->role->role != 'user') {
-            $this->data['gejala'] = Gejala::count();
-            $this->data['penyakit'] = Penyakit::count();
-            $this->data['konsultasi'] = Konsultasi::count();
-        }else {
-            $this->data['gejala'] = Gejala::count();
-            $this->data['penyakit'] = Penyakit::count();
-            $this->data['konsultasi'] = Konsultasi::where('user_id', Auth::id())->count();
-        }
-
-        return view('dashboard', $this->data);
+    {        
+        return view('admin.dashboard');
     }
 
     public function not_found()

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\Jadwal;
+use App\Model\Siswa;
 
-class JadwalController extends Controller
+class SiswaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class JadwalController extends Controller
      */
     public function index()
     {
-        return view('jadwal.index', $this->data);
+        return view('siswa.index', $this->data);
     }
 
     /**
@@ -24,7 +24,7 @@ class JadwalController extends Controller
      */
     public function create()
     {
-        return view('jadwal.create');
+        return view('siswa.create');
     }
 
     /**
@@ -46,7 +46,7 @@ class JadwalController extends Controller
      */
     public function show($id)
     {
-        return view('jadwal.show', $this->data);
+        return view('siswa.show', $this->data);
     }
 
     /**
@@ -57,7 +57,7 @@ class JadwalController extends Controller
      */
     public function edit($id)
     {
-        return view('jadwal.edit', $this->data);
+        return view('siswa.edit', $this->data);
     }
 
     /**

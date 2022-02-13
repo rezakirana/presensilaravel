@@ -8,16 +8,31 @@ class Jadwal extends Model
 {
     protected $table = 'jadwal';
     protected $fillable = [
-        'dokter_id', 'hari','jam_praktik'
+        'kelas_id', 'mapel_id', 'guru_id', 'tahun_ajaran_id', 'hari', 'jam_pelajaran'
     ];
 
-    public function dokter()
+    public function kelas()
     {
-        return $this->belongsTo('App\Model\Dokter', 'dokter_id');
+        return $this->belongsTo('App\Model\Kelas', 'kelas_id');
     }
 
-    public function antrians()
+    public function mapel()
     {
-        return $this->hasMany('App\Model\Antrian', 'jadwal_id');
+        return $this->belongsTo('App\Model\Mapel', 'mapel_id');
+    }
+
+    public function guru()
+    {
+        return $this->belongsTo('App\Model\Account', 'guru_id');
+    }
+
+    public function tahun_ajaran()
+    {
+        return $this->belongsTo('App\Model\TahunAjaran', 'tahun_ajaran_id');
+    }
+
+    public function presensis()
+    {
+        return $this->hasMany('App\Model\Presensi', 'jadwal_id');
     }
 }

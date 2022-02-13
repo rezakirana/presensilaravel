@@ -27,10 +27,8 @@
                 <thead>
                     <tr>
                     <th width="40">NO</th>
-                    <th>NAMA</th>
-                    <th>EMAIL</th>
+                    <th>USERNAME</th>
                     <th>ROLE</th>
-                    <th>STATUS</th>
                     <th width="80">AKSI</th>
                     </tr>
                 </thead>
@@ -38,16 +36,8 @@
                     @foreach($users as $user)
                     <tr>
                         <td class="text-center">{{$loop->iteration}}</td>
-                        <td>{{$user->name}}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>{{ $user->role->role }}</td>
-                        <td>
-                            @if ($user->is_active)
-                                <span class="badge badge-success" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-check"></i> Active</span>    
-                            @else
-                                <span class="badge badge-danger" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-times"></i> Deactive</span>    
-                            @endif
-                        </td>
+                        <td>{{ $user->username }}</td>
+                        <td>{{ ucwords($user->type) }}</td>
                         <td class="text-center">
                             <a href="{{ route('users.edit', $user->id) }}">
                                 <button class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-edit"></i></button>

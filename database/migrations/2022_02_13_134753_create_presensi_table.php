@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAntrianTable extends Migration
+class CreatePresensiTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreateAntrianTable extends Migration
      */
     public function up()
     {
-        Schema::create('antrian', function (Blueprint $table) {
+        Schema::create('presensi', function (Blueprint $table) {
             $table->id();
             $table->foreignId('jadwal_id');
             $table->foreign('jadwal_id')->references('id')->on('jadwal')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('pasien_id');
-            $table->foreign('pasien_id')->references('id')->on('pasien')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('no_antrian');
-            $table->date('tanggal_daftar');
-            $table->string('jam_daftar');
+            $table->date('tanggal');
+            $table->string('materi_pertemuan');
+            $table->text('silabus');
+            $table->text('data');
             $table->timestamps();
         });
     }
@@ -33,6 +32,6 @@ class CreateAntrianTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('antrian');
+        Schema::dropIfExists('presensi');
     }
 }
