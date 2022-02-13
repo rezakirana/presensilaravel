@@ -24,4 +24,10 @@ Route::group(['middleware' => 'auth'], function()
     Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
     Route::resource('users', 'UserController');
     Route::resource('account', 'AccountController');
+    Route::resource('kelas', 'KelasController');
+    Route::resource('siswa', 'SiswaController');
+    Route::resource('mapel', 'MapelController');
+    Route::resource('tahun-ajaran', 'TahunAjaranController');
+    Route::resource('jadwal', 'JadwalController');
+    Route::resource('presensi', 'PresensiController');
 });
