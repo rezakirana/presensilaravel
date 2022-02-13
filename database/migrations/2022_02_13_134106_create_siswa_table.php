@@ -24,8 +24,7 @@ class CreateSiswaTable extends Migration
             $table->string('nama_ortu')->nullable();
             $table->text('alamat')->nullable();
             $table->string('phone_number',15)->nullable();
-            $table->foreignId('kelas_id');
-            $table->foreign('kelas_id')->references('id')->on('kelas')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('kelas_id')->nullable();            
             $table->timestamps();
         });
     }

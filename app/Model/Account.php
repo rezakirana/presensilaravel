@@ -12,6 +12,8 @@ class Account extends Model
         'gender', 'phone_number', 'email', 'alamat', 'pendidikan'
     ];
 
+    protected $dates = ['tgl_lahir'];
+
     public function user()
     {
         return $this->belongsTo('App\User', 'user_id');

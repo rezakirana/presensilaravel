@@ -9,7 +9,7 @@
     </div>
     <div class="row">
         <div class="col-xl-4 col-md-4 mb-4">
-            <a href="{{ route('poli.index') }}" style="text-decoration:none;">
+            <a href="#" style="text-decoration:none;">
                 <div class="card border-left-success shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
@@ -26,7 +26,7 @@
             </a>
         </div>
         <div class="col-xl-4 col-md-4 mb-4">
-            <a href="{{ route('dokter.index') }}" style="text-decoration:none;">
+            <a href="#" style="text-decoration:none;">
                 <div class="card border-left-danger shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
@@ -43,7 +43,7 @@
             </a>
         </div>
         <div class="col-xl-4 col-md-4 mb-4">
-            <a href="{{ route('pasien.index') }}" style="text-decoration:none;">
+            <a href="#" style="text-decoration:none;">
                 <div class="card border-left-info shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">

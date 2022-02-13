@@ -1,61 +1,71 @@
 @extends('layouts/main-admin')
 
-@section('title', 'Dashboard Admin')
+@section('title', 'Guru')
 
 @section('container')
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h2 class="m-0 text-dark">Manajemen Account</h2>
+                <h2 class="m-0 text-dark">GURU</h2>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item active">Change Profile</li>
+                <li class="breadcrumb-item active">Guru</li>
                 </ol>
             </div>
         </div>
     </div>
 </div>
 
-@if (Auth::user()->type == 'admin')
-    <section class="container-fluid">
-        <div class="card">
-            @include ('includes.flash')
-            <div class="card-body">
-                <form role="form" method="post" action="{{ route('account.store') }}">
-                    @csrf
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Current Password</label>
-                            <input type="password" class="form-control" name="currentPassword" id="exampleInputPassword1" placeholder="Current Password" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">New Password</label>
-                            <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="New Password" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Password Confirmation</label>
-                            <input type="password" class="form-control" name="password_confirmation" id="exampleInputPassword1" placeholder="Password Confirmation" required>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                    </div>
-                </form>
-            </div>
+<section class="container-fluid">
+    <div class="card">
+        @include ('includes.flash')
+        <div class="card-body">
+            <table id="data-admin" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                    <th width="40">NO</th>
+                    <th>NIP</th>
+                    <th>NAMA</th>
+                    <th>JENIS KELAMIN</th>
+                    <th>TTL</th>
+                    <th width="120">AKSI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($data as $guru)
+                    <tr>
+                        <td class="text-center">{{$loop->iteration}}</td>
+                        <td>{{ $guru->nip }}</td>
+                        <td>{{ $guru->nama }}</td>
+                        <td>{{ $guru->gender }}</td>
+                        <td>{{ $guru->tempat_lahir }}, {{ $guru->tgl_lahir->isoFormat('D MMMM Y') }}</td>
+                        <td class="text-center">
+                            <a href="{{ route('guru.show', $guru->id) }}">
+                                <button class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fa fa-eye"></i></button>
+                            </a>
+                            <a href="{{ route('guru.edit', $guru->id) }}">
+                                <button class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-edit"></i></button>
+                            </a>
+                            <form id="delete-user-{{$guru->id}}" action="/guru/{{$guru->id}}" method="post" style="display: inline;">
+                                @method('DELETE')
+                                @csrf
+                                <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fa fa-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
-    </section>
-@endif
+    </div>
+</section>
 @include ('includes.scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-    $(function () {
-        //Date picker
-        $('#datepicker').datepicker({
-        autoclose: true
-        })
-    });
-</script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#data-admin_length").append('<a  href="{{ route('guru.create') }}"> <button type="button" class="btn btn-outline-primary ml-3">Tambah</button></a>');
+        });
+    </script>
 @endsection

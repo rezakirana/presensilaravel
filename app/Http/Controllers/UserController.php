@@ -50,7 +50,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'type' => 'required|in:admin,dokter,pasien,pimpinan',
+            'type' => 'required|in:admin,guru',
             'username' => 'required|string|unique:users,username',
             'password' => 'required|min:6'
         ]);
@@ -60,10 +60,10 @@ class UserController extends Controller
         $user->username = $request->username;
         $user->password = Hash::make($request->password);
         $user->save();
-        if ($request->type == 'dokter') {
-            return redirect()->route('dokter.create')->with('success', 'User berhasil ditambahkan, lengkapi data dokter!');
-        }elseif ($request->type == 'pasien') {
-            return redirect()->route('pasien.create')->with('success', 'User berhasil ditambahkan, lengkapi data pasien!');
+        if ($request->type == 'guru') {
+            $data = User::findOrFail($user->id);
+            session()->put('dataUser',$data);
+            return redirect()->route('guru.create')->with('success', 'User berhasil ditambahkan, lengkapi data guru!');
         }
         return redirect()->route('users.index')->with('success', 'User berhasil ditambahkan');
     }

@@ -34,15 +34,9 @@
                            <option value="admin" @if ($user->type == 'admin')
                                selected
                            @endif>Admin</option>
-                           <option value="pimpinan" @if ($user->type == 'pimpinan')
+                           <option value="guru" @if ($user->type == 'guru')
                                selected
-                           @endif>Pimpinan</option>
-                           <option value="dokter" @if ($user->type == 'dokter')
-                               selected
-                           @endif>Dokter</option>
-                           <option value="pasien" @if ($user->type == 'pasien')
-                               selected
-                           @endif>Pasien</option>
+                           @endif>Guru</option>                           
                         </select>
                     </div>
                     <div class="form-group">

@@ -60,20 +60,15 @@
                     <div class="form-group">
                       <div class="custom-control custom-checkbox small">
                         <input type="checkbox" class="custom-control-input" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                        <label class="custom-control-label" for="remember">Ingat Saya</label>
-                        {{-- <label style="float:right;">
-                            @if (Route::has('password.update'))
-                                <a href="{{ route('password.update') }}">Forgot Password?</a>
-                            @endif
-                        </label> --}}
+                        <label class="custom-control-label" for="remember">Ingat Saya</label>                    
                         <label for="">
                              &nbsp;
                         </label>
-                        <label style="float:right;">
+                        {{-- <label style="float:right;">
                             @if (Route::has('register'))
                                 <a href="{{ route('register') }}">Belum punya akun ?</a>
                             @endif
-                        </label>
+                        </label> --}}
                       </div>
                     </div>
                     <button class="btn btn-primary btn-user btn-block" type="submit">
@@ -82,7 +77,7 @@
                     <hr>
                   </form>
                   <div class="text-center">
-                    <span class="small">Copyright &copy; Sistem Antrian Puskesmas 2021</span>
+                    <span class="small">Copyright &copy; Sistem Presensi MA 2022</span>
                   </div>
                 </div>
               </div>

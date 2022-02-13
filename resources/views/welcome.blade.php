@@ -1,27 +1,90 @@
-@extends('master')
-@section('content')
-    <section class="Feautes section" style="background-color: white; background-image: linear-gradient(white, #99ffbb);"><hr class="line1">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title">
-                        <img src="https://faktapers.id/wp-content/uploads/2020/05/amikom.jpg"  alt="Selamat Datang Di Website Puskesmas Kecamatan Senen">
-                        <h2>SELAMAT DATANG DI WEBSITE RESMI PUSKESMAS KECAMATAN AMIKOM</h2>
-                        <!-- <img src="img/section-img.png" alt="#"> -->
-                        <p class="tengah" style="color:#000;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.
-                            Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.
-                            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.
-                            Aenean nec lorem. In porttitor. Donec laoreet nonummy augue.
-                            Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.
-                            Fusce aliquet pede non pede. Suspendisse dapibus lorem pellentesque magna. Integer nulla.
-                            Donec blandit feugiat ligula. Donec hendrerit, felis et imperdiet euismod, purus ipsum pretium metus, in lacinia nulla nisl eget sapien. Donec ut est in lectus consequat consequat.
-                            Etiam eget dui. Aliquam erat volutpat. Sed at lorem in nunc porta tristique.
-                            Proin nec augue. Quisque aliquam tempor magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                            Nunc ac magna. Maecenas odio dolor, vulputate vel, auctor ac, accumsan id, felis. Pellentesque cursus sagittis felis.
-                        <span style="color:#000;">ANDA SEHAT, KAMI PUAS!</span></p>
+@extends('layouts/main-auth')
+
+@section('title', 'Login - Sistem Antrian Puskesmas')
+
+@section('container')
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col-xl-10 col-lg-12 col-md-9">
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-0">
+            <div class="row align-items-center">
+              <div class="col-lg-6 d-none d-lg-block" style="padding-left: 50px;">
+                <div class="text-center">
+                  <br>
+                    <h1 class="h2 text-gray-900 mb-4 font-weight-bold animate__animated animate__fadeInDown animate__delay-1s">Welcome Back!</h1>
+                  </div>
+                <img src="img/landing.svg" class="bg-login-image animate__animated animate__backInLeft" alt="">
+              </div>
+              <div class="col-lg-6">
+                <div class="p-5">
+                  @if(Session::has('message'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      {{ Session::get('message') }}
+                        <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
                     </div>
+                  @endif
+                  @if ($errors->any())
+                  <div class="alert alert-danger">
+                      @foreach ($errors->all() as $error)
+                          <ul>
+                              <li>{{ $error }}</li>
+                          </ul>
+                      @endforeach
+                  </div>
+                  @endif
+                  @if ($message = Session::get('danger'))
+                    <div class="alert alert-danger">{{$message }}</div>
+                  @endif
+                  <h5 class="header-title" style="text-align: center;margin-bottom:10px;padding-bottom:10px;">Login Panel</h5>
+                  <form class="user" method="POST" action="{{ route('login') }}">
+                    @csrf
+                    <div class="form-group">
+                    <input id="username" type="text" class="form-control form-control-user @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" placeholder="Enter Username" required autocomplete="username" autofocus>
+                    @error('username')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                    </div>
+                    <div class="form-group">
+                    <input id="password" type="password" class="form-control form-control-user @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Enter Password">
+                    @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                    </div>
+                    <div class="form-group">
+                      <div class="custom-control custom-checkbox small">
+                        <input type="checkbox" class="custom-control-input" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                        <label class="custom-control-label" for="remember">Ingat Saya</label>                    
+                        <label for="">
+                             &nbsp;
+                        </label>
+                        {{-- <label style="float:right;">
+                            @if (Route::has('register'))
+                                <a href="{{ route('register') }}">Belum punya akun ?</a>
+                            @endif
+                        </label> --}}
+                      </div>
+                    </div>
+                    <button class="btn btn-primary btn-user btn-block" type="submit">
+                      Login
+                    </button>
+                    <hr>
+                  </form>
+                  <div class="text-center">
+                    <span class="small">Copyright &copy; Sistem Presensi MA 2022</span>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
 @endsection
