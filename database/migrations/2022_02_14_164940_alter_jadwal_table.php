@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterKelasTable extends Migration
+class AlterJadwalTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AlterKelasTable extends Migration
      */
     public function up()
     {
-        Schema::table('kelas', function (Blueprint $table) {
+        Schema::table('jadwal', function (Blueprint $table) {
             $table->string('icon')->nullable();
         });
     }
@@ -25,7 +25,7 @@ class AlterKelasTable extends Migration
      */
     public function down()
     {
-        Schema::table('kelas', function (Blueprint $table) {
+        Schema::table('jadwal', function (Blueprint $table) {
             $table->dropColumn('icon');
         });
     }

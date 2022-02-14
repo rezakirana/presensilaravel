@@ -23,7 +23,7 @@
     <div class="card">
         @include ('includes.flash')
         <div class="card-body">
-            <form role="form" method="post" action="{{ route('jadwal.update',$jadwal->id) }}">
+            <form role="form" method="post" action="{{ route('jadwal.update',$jadwal->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('put')
                 <div class="card-body">
@@ -98,7 +98,18 @@
                     <div class="form-group">
                         <label for="exampleInputPassword1">Jam Pelajaran</label>
                         <input type="text" class="form-control" name="jam_pelajaran" id="jam_pelajaran" value="{{ $jadwal->jam_pelajaran }}" required>
-                    </div>                    
+                    </div>   
+                    <div class="form-group">
+                        @if ($jadwal->icon)
+                            <img src="{{ asset('/img/jadwal/'.$jadwal->icon) }}" id="imgCurrent" width="100px" height="100px" style="text-align: center;" />
+                        @else
+                            <img src="{{ asset('/img/default-image.png') }}" id="imgCurrent" width="100px" height="100px" style="text-align: center;" />
+                        @endif                    
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Icon</label>
+                        <input type="file" class="form-control" name="icon" id="inputImage">
+                    </div>                 
                     <div class="card-body">
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
@@ -108,4 +119,24 @@
     </div>
 </section>
 @include ('includes.scripts')
+<script>
+    function getURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function(e) {
+            $('#imgCurrent').attr('src', e.target.result);
+            }
+            
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+    }
+
+    $('#inputImage').on('change',function(e){
+        // get url image
+        getURL(this);
+        // get file name
+        var fileName = e.target.files[0].name;
+    });
+</script>
 @endsection

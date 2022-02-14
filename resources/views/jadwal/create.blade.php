@@ -23,7 +23,7 @@
     <div class="card">
         @include ('includes.flash')
         <div class="card-body">
-            <form role="form" method="post" action="{{ route('jadwal.store') }}">
+            <form role="form" method="post" action="{{ route('jadwal.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
@@ -77,6 +77,13 @@
                     <div class="form-group">
                         <label for="exampleInputPassword1">Jam Pelajaran</label>
                         <input type="text" class="form-control" name="jam_pelajaran" id="jam_pelajaran" placeholder="ex: 07.00 - 08.40 WIB" required>
+                    </div>
+                    <div class="form-group">
+                        <img src="{{ asset('/img/default-image.png') }}" id="imgCurrent" width="100px" height="100px" style="text-align: center;" />
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Icon</label>
+                        <input type="file" class="form-control" name="icon" id="inputImage">
                     </div>                    
                     <div class="card-body">
                         <button type="submit" class="btn btn-primary">Simpan</button>
@@ -87,4 +94,24 @@
     </div>
 </section>
 @include ('includes.scripts')
+<script>
+    function getURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function(e) {
+            $('#imgCurrent').attr('src', e.target.result);
+            }
+            
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+    }
+
+    $('#inputImage').on('change',function(e){
+        // get url image
+        getURL(this);
+        // get file name
+        var fileName = e.target.files[0].name;
+    });
+</script>
 @endsection

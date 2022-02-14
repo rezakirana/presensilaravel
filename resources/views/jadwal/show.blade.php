@@ -26,6 +26,16 @@
             <div class="card-body">
                 <table class="table">
                     <tr>
+                        <td>ICON</td>
+                        <td>
+                            @if ($jadwal->icon)
+                                <img src="{{ asset('/img/jadwal/'.$jadwal->icon) }}" id="imgCurrent" width="120px" height="120px" style="text-align: center;" />
+                            @else
+                                <img src="{{ asset('/img/default-image.png') }}" id="imgCurrent" width="120px" height="120px" style="text-align: center;" />
+                            @endif    
+                        </td>
+                    </tr>
+                    <tr>
                         <td>TAHUN AJARAN</td>
                         <td>: {{ $jadwal->tahun_ajaran->tahun_ajaran }} ({{ $jadwal->semester->semester }})</td>
                     </tr>
