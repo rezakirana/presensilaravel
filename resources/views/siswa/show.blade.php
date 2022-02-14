@@ -30,6 +30,10 @@
                         <td>: {{ $siswa->nis }}</td>
                     </tr>
                     <tr>
+                        <td>TAHUN MASUK</td>
+                        <td>: {{ $siswa->tahun_masuk }}</td>
+                    </tr>
+                    <tr>
                         <td>NAMA</td>
                         <td>: {{ $siswa->nama }}</td>
                     </tr>

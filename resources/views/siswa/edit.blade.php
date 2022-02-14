@@ -44,6 +44,10 @@
                         <input type="text" class="form-control" name="nis" id="nis" value="{{ $siswa->nis }}" required>
                     </div>
                     <div class="form-group">
+                        <label for="exampleInputPassword1">TAHUN MASUK</label>
+                        <input type="text" class="form-control" name="tahun_masuk" id="tahun_masuk" value="{{ $siswa->tahun_masuk }}" required>
+                    </div>
+                    <div class="form-group">
                         <label for="exampleInputPassword1">Nama</label>
                         <input type="text" class="form-control" name="nama" id="nama" value="{{ $siswa->nama }}" required>
                     </div>

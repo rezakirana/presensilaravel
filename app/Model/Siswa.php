@@ -9,11 +9,11 @@ class Siswa extends Model
     protected $table = 'siswa';
     protected $fillable = [
         'kelas_id', 'nis', 'nama', 'gender', 'tgl_lahir', 'tempat_lahir',
-        'email', 'nama_ortu', 'alamat', 'phone_number'
+        'email', 'nama_ortu', 'alamat', 'phone_number','tahun_masuk'
     ];
 
     protected $dates = ['tgl_lahir'];
-    
+
     public function kelas()
     {
         return $this->belongsTo('App\Model\Kelas', 'kelas_id');

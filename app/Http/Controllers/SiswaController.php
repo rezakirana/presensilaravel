@@ -48,6 +48,7 @@ class SiswaController extends Controller
             'phone_number' => 'required',                
             'alamat' => 'required',                
             'nama_ortu' => 'required',                
+            'tahun_masuk' => 'required',                
             'email' => 'required|unique:guru,email',                
             'gender' => 'required|in:laki-laki,perempuan',
             'kelas_id' => 'required|exists:kelas,id'
@@ -106,7 +107,8 @@ class SiswaController extends Controller
             'tgl_lahir' => 'required',                
             'phone_number' => 'required',                
             'alamat' => 'required',                
-            'nama_ortu' => 'required',                
+            'nama_ortu' => 'required',  
+            'tahun_masuk' => 'required',                              
             'email' => 'required|unique:guru,email,'.$id,                
             'gender' => 'required|in:laki-laki,perempuan',
             'kelas_id' => 'required|exists:kelas,id'

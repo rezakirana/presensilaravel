@@ -55,6 +55,8 @@ class KelasController extends Controller
      */
     public function show($id)
     {
+        $this->data['kelas'] = Kelas::findOrFail($id);
+        
         return view('kelas.show', $this->data);
     }
 

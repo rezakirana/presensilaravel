@@ -29,7 +29,7 @@
                     <th width="40">NO</th>
                     <th>KODE KELAS</th>
                     <th>NAMA KELAS</th>
-                    <th width="80">AKSI</th>
+                    <th width="120">AKSI</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,6 +39,9 @@
                         <td>{{ $item->kode_kelas }}</td>
                         <td>{{ $item->nama_kelas }}</td>
                         <td class="text-center">
+                            <a href="{{ route('kelas.show', $item->id) }}">
+                                <button class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fa fa-eye"></i></button>
+                            </a>
                             <a href="{{ route('kelas.edit', $item->id) }}">
                                 <button class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-edit"></i></button>
                             </a>

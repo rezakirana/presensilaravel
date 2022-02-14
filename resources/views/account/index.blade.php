@@ -44,7 +44,7 @@
                         <td>{{ $guru->tempat_lahir }}, {{ $guru->tgl_lahir->isoFormat('D MMMM Y') }}</td>
                         <td class="text-center">
                             <a href="{{ route('guru.show', $guru->id) }}">
-                                <button class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fa fa-eye"></i></button>
+                                <button class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fa fa-eye"></i></button>
                             </a>
                             <a href="{{ route('guru.edit', $guru->id) }}">
                                 <button class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-edit"></i></button>

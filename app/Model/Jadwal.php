@@ -8,7 +8,7 @@ class Jadwal extends Model
 {
     protected $table = 'jadwal';
     protected $fillable = [
-        'kelas_id', 'mapel_id', 'guru_id', 'tahun_ajaran_id', 'hari', 'jam_pelajaran'
+        'kelas_id', 'mapel_id', 'guru_id', 'tahun_ajaran_id', 'hari', 'jam_pelajaran', 'semester_id'
     ];
 
     public function kelas()
@@ -34,5 +34,10 @@ class Jadwal extends Model
     public function presensis()
     {
         return $this->hasMany('App\Model\Presensi', 'jadwal_id');
+    }
+
+    public function semester()
+    {
+        return $this->belongsTo('App\Model\Semester', 'semester_id');
     }
 }

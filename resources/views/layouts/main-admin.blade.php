@@ -81,14 +81,15 @@
               border: 0;
               font-weight: 900;"></i>
               </span>
-          <div id="collapseKriteria" class="collapse {{ \Str::is('guru.*', Route::currentRouteName()) ? 'show' : '' }} {{ \Str::is('kelas.*', Route::currentRouteName()) ? 'show' : '' }} {{ \Str::is('siswa.*', Route::currentRouteName()) ? 'show' : '' }} {{ \Str::is('mapel.*', Route::currentRouteName()) ? 'show' : '' }} {{ \Str::is('tahun-ajaran.*', Route::currentRouteName()) ? 'show' : '' }}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+          <div id="collapseKriteria" class="collapse {{ \Str::is('guru.*', Route::currentRouteName()) ? 'show' : '' }} {{ \Str::is('semester.*', Route::currentRouteName()) ? 'show' : '' }} {{ \Str::is('kelas.*', Route::currentRouteName()) ? 'show' : '' }} {{ \Str::is('siswa.*', Route::currentRouteName()) ? 'show' : '' }} {{ \Str::is('mapel.*', Route::currentRouteName()) ? 'show' : '' }} {{ \Str::is('tahun-ajaran.*', Route::currentRouteName()) ? 'show' : '' }}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
               <h6 class="collapse-header">Manajemen Data :</h6>
-              <a class="collapse-item {{ \Str::is('guru.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('guru.index') }}">Guru</a>
-              <a class="collapse-item {{ \Str::is('kelas.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('kelas.index') }}">Kelas</a>
-              <a class="collapse-item {{ \Str::is('siswa.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('siswa.index') }}">Siswa</a>
-              <a class="collapse-item {{ \Str::is('mapel.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('mapel.index') }}">Mapel</a>
-              <a class="collapse-item {{ \Str::is('tahun-ajaran.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('tahun-ajaran.index') }}">Tahun Ajaran</a>              
+              <a class="collapse-item {{ \Str::is('tahun-ajaran.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('tahun-ajaran.index') }}"><i class="fas fa-calendar"></i> Tahun Ajaran</a>
+              <a class="collapse-item {{ \Str::is('semester.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('semester.index') }}"><i class="fas fa-calendar"></i> Semester</a>
+              <a class="collapse-item {{ \Str::is('guru.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('guru.index') }}"><i class="fas fa-users"></i> Guru</a>
+              <a class="collapse-item {{ \Str::is('kelas.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('kelas.index') }}"><i class="fas fa-landmark"></i> Kelas</a>
+              <a class="collapse-item {{ \Str::is('siswa.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('siswa.index') }}"><i class="fas fa-users"></i> Siswa</a>
+              <a class="collapse-item {{ \Str::is('mapel.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('mapel.index') }}"><i class="fas fa-clipboard-check"></i> Mapel</a>                            
               </div>
           </div>
         </li>
@@ -111,56 +112,24 @@
           </a>
         </li>  --}}
       @elseif (Auth::user()->type == 'guru')
-        {{-- <li class="nav-item  {{ \Str::is('jadwal.*', Route::currentRouteName()) ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('jadwal.index') }}">
-            <i class="far fa-calendar-alt"></i>
-            <span>&nbsp; Jadwal Praktik</span>
-          </a>
-        </li> 
-        <li class="nav-item  {{ \Str::is('pasien.*', Route::currentRouteName()) ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('pasien.index') }}">
-            <i class="fa fa-users"></i>
-            <span>&nbsp; Pasien</span>
-          </a>
-        </li> 
-        <li class="nav-item  {{ \Str::is('antrian.*', Route::currentRouteName()) ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('antrian.index') }}">
-            <i class="fa fa-list"></i>
-            <span>&nbsp; Antrian Periksa</span>
+        <li class="nav-item  {{ \Str::is('kelas.*', Route::currentRouteName()) ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('kelas.index') }}">
+            <i class="fas fa-landmark"></i>
+            <span>&nbsp; Kelas Anda</span>
           </a>
         </li>
-      @elseif (Auth::user()->type == 'pasien')
-      <li class="nav-item  {{ \Str::is('dokter.*', Route::currentRouteName()) ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('dokter.index') }}">
-          <i class="fa fa-stethoscope"></i>
-          <span>&nbsp; Dokter</span>
-        </a>
-      </li>
-      <li class="nav-item  {{ \Str::is('jadwal.*', Route::currentRouteName()) ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('jadwal.index') }}">
-          <i class="far fa-calendar-alt"></i>
-          <span>&nbsp; Jadwal Praktik</span>
-        </a>
-      </li>
-      <li class="nav-item  {{ \Str::is('antrian-pasien.*', Route::currentRouteName()) ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('antrian-pasien.index') }}">
-          <i class="far fa-calendar-alt"></i>
-          <span>&nbsp; Antrian</span>
-        </a>
-      </li>
-      @else
-      <li class="nav-item  {{ \Str::is('laporan.*', Route::currentRouteName()) ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('laporan') }}">
-          <i class="fa fa-file-pdf"></i>
-          <span>&nbsp; Laporan Harian</span>
-        </a>
-      </li> 
-      <li class="nav-item  {{ \Str::is('laporan-pertanggal.*', Route::currentRouteName()) ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('laporan-pertanggal') }}">
-          <i class="fa fa-file-pdf"></i>
-          <span>&nbsp; Laporan Per Tanggal</span>
-        </a>
-      </li> --}}
+        <li class="nav-item  {{ \Str::is('presensi.*', Route::currentRouteName()) ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('presensi.index') }}">
+            <i class="fas fa-list"></i>
+            <span>&nbsp; Absensi</span>
+          </a>
+        </li>
+        <li class="nav-item  {{ \Str::is('rekap-presensi.*', Route::currentRouteName()) ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('rekap-presensi.index') }}">
+            <i class="fas fa-print"></i>
+            <span>&nbsp; Rekap Presensi</span>
+          </a>
+        </li>         
       @endif
     </ul>
     <!-- Sidebar -->

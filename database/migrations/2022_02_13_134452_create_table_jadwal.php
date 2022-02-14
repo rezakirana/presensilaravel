@@ -23,7 +23,7 @@ class CreateTableJadwal extends Migration
             $table->foreign('guru_id')->references('id')->on('guru')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('tahun_ajaran_id');
             $table->foreign('tahun_ajaran_id')->references('id')->on('tahun_ajaran')->onDelete('cascade')->onUpdate('cascade');
-            $table->enum('hari', ['seni','selasa', 'rabu', 'kamis', 'jumat', 'sabtu']);
+            $table->enum('hari', ['senin','selasa', 'rabu', 'kamis', 'jumat', 'sabtu']);
             $table->string('jam_pelajaran');
             $table->timestamps();
         });
