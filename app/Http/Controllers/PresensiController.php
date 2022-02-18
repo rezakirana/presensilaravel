@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Presensi;
+use App\Model\Jadwal;
 
 class PresensiController extends Controller
 {
@@ -14,6 +15,8 @@ class PresensiController extends Controller
      */
     public function index()
     {
+        $this->data['data'] = Jadwal::where('guru_id',auth()->user()->guru->id)->get();
+
         return view('presensi.index', $this->data);
     }
 

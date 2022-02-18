@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Kelas;
+use App\Model\Jadwal;
 
 class KelasController extends Controller
 {
@@ -14,7 +15,18 @@ class KelasController extends Controller
      */
     public function index()
     {
-        $this->data['kelas'] = Kelas::all();
+        $user = auth()->user();
+        if ($user->type == 'admin') {
+            $this->data['kelas'] = Kelas::all();
+        } else {
+            $this->data['kelas'] = Jadwal::join('guru', 'guru.id', '=', 'jadwal.guru_id')
+                                            ->join('kelas', 'kelas.id', '=', 'jadwal.kelas_id')
+                                            ->where('jadwal.guru_id',$user->guru->id)
+                                            ->select([
+                                                'kelas.*'
+                                            ])->groupBy('kelas.id')
+                                            ->get();
+        }
 
         return view('kelas.index', $this->data);
     }

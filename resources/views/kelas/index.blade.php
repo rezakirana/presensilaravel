@@ -42,14 +42,16 @@
                             <a href="{{ route('kelas.show', $item->id) }}">
                                 <button class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fa fa-eye"></i></button>
                             </a>
-                            <a href="{{ route('kelas.edit', $item->id) }}">
-                                <button class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-edit"></i></button>
-                            </a>
-                            <form id="delete-user-{{$item->id}}" action="/kelas/{{$item->id}}" method="post" style="display: inline;">
-                                @method('DELETE')
-                                @csrf
-                                <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fa fa-trash"></i></button>
-                            </form>
+                            @if (auth()->user()->type == 'admin')
+                                <a href="{{ route('kelas.edit', $item->id) }}">
+                                    <button class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-edit"></i></button>
+                                </a>
+                                <form id="delete-user-{{$item->id}}" action="/kelas/{{$item->id}}" method="post" style="display: inline;">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fa fa-trash"></i></button>
+                                </form>
+                            @endif
                         </td>
                     </tr>
                     @endforeach
@@ -59,9 +61,11 @@
     </div>
 </section>
 @include ('includes.scripts')
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $("#data-admin_length").append('<a  href="{{ route('kelas.create') }}"> <button type="button" class="btn btn-outline-primary ml-3">Tambah</button></a>');
-        });
-    </script>
+    @if (auth()->user()->type == 'admin')
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#data-admin_length").append('<a  href="{{ route('kelas.create') }}"> <button type="button" class="btn btn-outline-primary ml-3">Tambah</button></a>');
+            });
+        </script>
+    @endif    
 @endsection
