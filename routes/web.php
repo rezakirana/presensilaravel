@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth'], function()
     Route::resource('jadwal', 'JadwalController');
     Route::resource('presensi', 'PresensiController');
     Route::get('/account', 'AccountController@account')->name('account.index');
+    Route::post('/account', 'AccountController@account_save')->name('account.store');
     Route::get('/semester', 'SemesterController@index')->name('semester.index');
     Route::get('/semester/{id}', 'SemesterController@change')->name('semester.change');
     Route::get('/rekap-presensi', 'PresensiController@rekap_list')->name('rekap-presensi.index');

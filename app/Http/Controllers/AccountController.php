@@ -202,4 +202,28 @@ class AccountController extends Controller
 
         return redirect()->route('guru.index')->with('success', 'Data guru berhasil dihapus!');
     }
+
+    public function account()
+    {
+        return view('account.account');
+    }
+
+    public function account_save(Request $request)
+    {
+        $this->validate($request,[
+            'currentPassword' => 'required',
+            'password' => 'required|string|min:6|confirmed'
+        ]);
+        
+        $user = Auth::user();
+        $cekPassword = Hash::check($request->currentPassword, $user->password);
+        if (!$cekPassword) {
+            return redirect()->route('account.index')->with('danger','Current password does not match!');
+        }
+        
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return redirect()->route('account.index')->with('success', 'Your password changed successfully!');
+    }
 }
