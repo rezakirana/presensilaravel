@@ -35,4 +35,6 @@ Route::group(['middleware' => 'auth'], function()
     Route::get('/semester', 'SemesterController@index')->name('semester.index');
     Route::get('/semester/{id}', 'SemesterController@change')->name('semester.change');
     Route::get('/rekap-presensi', 'PresensiController@rekap_list')->name('rekap-presensi.index');
+    Route::get('/tambah-presensi/{id}', 'PresensiController@add_presensi')->name('tambah.presensi');
+    Route::get('/lengkapi-presensi/{id}', 'PresensiController@lengkapi_presensi')->name('lengkapi.presensi');
 });

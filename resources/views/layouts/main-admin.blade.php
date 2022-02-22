@@ -121,7 +121,7 @@
         <li class="nav-item  {{ \Str::is('presensi.*', Route::currentRouteName()) ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('presensi.index') }}">
             <i class="fas fa-list"></i>
-            <span>&nbsp; Absensi</span>
+            <span>&nbsp; Presensi</span>
           </a>
         </li>
         <li class="nav-item  {{ \Str::is('rekap-presensi.*', Route::currentRouteName()) ? 'active' : '' }}">

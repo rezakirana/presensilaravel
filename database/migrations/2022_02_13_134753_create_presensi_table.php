@@ -18,6 +18,7 @@ class CreatePresensiTable extends Migration
             $table->foreignId('jadwal_id');
             $table->foreign('jadwal_id')->references('id')->on('jadwal')->onDelete('cascade')->onUpdate('cascade');
             $table->date('tanggal');
+            $table->string('pertemuan')->nullable();
             $table->string('materi_pertemuan');
             $table->text('silabus');
             $table->text('data');

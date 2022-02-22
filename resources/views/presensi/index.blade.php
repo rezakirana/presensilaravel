@@ -348,7 +348,7 @@
    font-size: 13px;
    margin-right: 20px;
    display: flex;
-   align-items: center;
+   align-items: flex-start;
 }
 
 .icons i {
@@ -451,7 +451,10 @@
         font-size: 20px;
         color: #fff;
     }
-
+    a {
+      color: inherit; /* blue colors for links too */
+      text-decoration: inherit; /* no underline */
+    }
 
 
 </style>
@@ -465,6 +468,7 @@
                         <ul>
                             @foreach ($data as $key => $item)
                                 <li>
+                                  <a href="{{ route('tambah.presensi',$item->id) }}">
                                     <div class="img-card iCard-style1" style="background-color: #f9f9f9;">
                                         <div class="card-content">
                                             <div class="card-image">
@@ -475,13 +479,20 @@
                                                 @endif                                            
                                             </div>
                                             <div class="card-text">
-                                            <h4 align="center"><b>title</b></h4>
-                                                <p align="justify">
-                                                {{-- {{ $title }} --}}
+                                            <h4 align="center"><b>{{ $item->kelas->nama_kelas }}</b></h4>
+                                                <p align="justify" style="margin-bottom: 5px !important;">
+                                                {{ $item->mapel->nama_mapel }}
+                                                </p>
+                                                <p align="justify" style="margin-bottom: 5px !important;">
+                                                {{ $item->hari }}
+                                                </p>
+                                                <p align="justify" style="margin-bottom: 5px !important;">
+                                                {{ $item->jam_pelajaran }}
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
+                                  </a>
                                 </li>
                             @endforeach                            
                         </ul>
