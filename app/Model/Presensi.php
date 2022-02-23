@@ -15,4 +15,6 @@ class Presensi extends Model
     {
         return $this->belongsTo('App\Model\Jadwal', 'jadwal_id');
     }
+
+    protected $dates = ['tanggal'];
 }

@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Model\Presensi;
 use App\Model\Jadwal;
 use App\Model\Kelas;
+use App\Model\Siswa;
 use Carbon\Carbon;
+use App\Mail\EmailWaliSiswa;
 
 class PresensiController extends Controller
 {
@@ -128,14 +130,55 @@ class PresensiController extends Controller
         ]);
         $presensi = Presensi::findOrFail($id);
         $data = [];
-        foreach ($request->id as $key => $id) {
+        foreach ($request->id as $key => $idSiswa) {
             $tmp = [];
-            $tmp['id'] = $id;
+            $tmp['id'] = $idSiswa;
             $tmp['nis'] = $request->nis[$key];
             $tmp['nama'] = $request->nama[$key];
             $status = 'siswa'.$key;
             $tmp['status'] = $request->$status;
             $tmp['keterangan'] = $request->keterangan[$key];
+            if ($request->$status == 'ijin') {
+                $siswa = Siswa::findOrFail($idSiswa);
+                $dataEmail = [
+                    'title' => 'Laporan Presensi Harian Siswa',                    
+                    'namaSiswa' => $siswa->nama,
+                    'gender' => $siswa->gender,
+                    'alamat' => $siswa->alamat,
+                    'kelas' => $siswa->kelas->nama_kelas,
+                    'namaWali' => $siswa->nama_ortu,
+                    'guru' => $presensi->jadwal->guru->nama,
+                    'mapel' => $presensi->jadwal->mapel->nama_mapel,
+                    'hari' => $presensi->jadwal->hari,
+                    'jamPelajaran' => $presensi->jadwal->jam_pelajaran,
+                    'semester' => $presensi->jadwal->semester->semester,
+                    'tahun_ajaran' => $presensi->jadwal->tahun_ajaran->tahun_ajaran,
+                    'status' => $request->$status,
+                    'tanggal' => $presensi->tanggal,
+                    'alasan' => $request->keterangan[$key]
+                ];               
+                \Mail::to($siswa->email)->send(new EmailWaliSiswa($dataEmail));
+            }elseif ($request->$status == 'alpha') {
+                $siswa = Siswa::findOrFail($idSiswa);
+                $dataEmail = [
+                    'title' => 'Laporan Presensi Harian Siswa',
+                    'namaSiswa' => $siswa->nama,
+                    'gender' => $siswa->gender,
+                    'alamat' => $siswa->alamat,
+                    'kelas' => $siswa->kelas->nama_kelas,
+                    'namaWali' => $siswa->nama_ortu,
+                    'guru' => $presensi->jadwal->guru->nama,
+                    'mapel' => $presensi->jadwal->mapel->nama_mapel,
+                    'hari' => $presensi->jadwal->hari,
+                    'jamPelajaran' => $presensi->jadwal->jam_pelajaran,
+                    'semester' => $presensi->jadwal->semester->semester,
+                    'tahun_ajaran' => $presensi->jadwal->tahun_ajaran->tahun_ajaran,
+                    'status' => $request->$status,
+                    'tanggal' => $presensi->tanggal,
+                    'alasan' => 'Tanpa Keterangan'
+                ];
+                \Mail::to($siswa->email)->send(new EmailWaliSiswa($dataEmail));
+            }
             array_push($data,$tmp);
         }
         $presensi->data = json_encode($data);

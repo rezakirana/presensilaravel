@@ -37,4 +37,5 @@ Route::group(['middleware' => 'auth'], function()
     Route::get('/rekap-presensi', 'PresensiController@rekap_list')->name('rekap-presensi.index');
     Route::get('/tambah-presensi/{id}', 'PresensiController@add_presensi')->name('tambah.presensi');
     Route::get('/lengkapi-presensi/{id}', 'PresensiController@lengkapi_presensi')->name('lengkapi.presensi');
+    Route::get('/kirim-email', 'PresensiController@kirim_email')->name('kirim.email');
 });
