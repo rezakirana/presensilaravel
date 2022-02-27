@@ -468,7 +468,7 @@
                         <ul>
                             @foreach ($data as $key => $item)
                                 <li>
-                                  <a href="{{ route('tambah.presensi',$item->id) }}">
+                                  <a href="{{ route('list.presensi',$item->id) }}">
                                     <div class="img-card iCard-style1" style="background-color: #f9f9f9;">
                                         <div class="card-content">
                                             <div class="card-image">

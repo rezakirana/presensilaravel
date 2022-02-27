@@ -24,6 +24,18 @@ class PresensiController extends Controller
         return view('presensi.index', $this->data);
     }
 
+    public function list_presensi($id)
+    {
+        $jadwal = Jadwal::findOrFail($id);
+        if (!$jadwal) {
+            return redirect()->route('presensi.index')->with('warning', 'Jadwal tidak ditemukan!');
+        }
+        $this->data['presensi'] = Presensi::where('jadwal_id',$jadwal->id)->orderBy('created_at','ASC')->get();
+        $this->data['jadwal'] = $jadwal;
+
+        return view('presensi.list',$this->data);
+    }
+
     public function add_presensi($id)
     {
         $jadwal = Jadwal::findOrFail($id);
@@ -90,6 +102,18 @@ class PresensiController extends Controller
         $this->data['data'] = $data;
 
         return view('presensi.detail', $this->data);
+    }
+
+    public function detail_presensi($id)
+    {
+        $presensi = Presensi::findOrFail($id);
+        if (!$presensi) {
+            return redirect()->route('list.presensi',$presensi->jadwal_id)->with('warning', 'Presensi tidak ditemukan!');
+        }
+        $presensi->data = json_decode($presensi->data);
+        $this->data['data'] = $presensi;
+
+        return view('presensi.detail_presensi',$this->data);
     }
     /**
      * Display the specified resource.
