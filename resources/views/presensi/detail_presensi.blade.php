@@ -127,6 +127,11 @@
                     @endforeach
                 @endif                
             </table>
+            <div class="row">
+                <div class="col-md-12" style="float:right;text-align:right;">
+                    <a href="{{ route('cetak.satuan',$data->id) }}" class="btn btn-outline-info ml-3"><i class="fa fa-print"></i> Cetak</a>
+                </div>
+            </div>
         </div>
     </div>
 </section>

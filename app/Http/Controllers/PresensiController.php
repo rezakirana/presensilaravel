@@ -9,6 +9,7 @@ use App\Model\Kelas;
 use App\Model\Siswa;
 use Carbon\Carbon;
 use App\Mail\EmailWaliSiswa;
+use PDF;
 
 class PresensiController extends Controller
 {
@@ -209,6 +210,25 @@ class PresensiController extends Controller
         $presensi->save();
 
         return redirect()->route('lengkapi.presensi',$id)->with('success', 'Presensi berhasil disimpan!');
+    }
+
+    public function cetak_semua($id)
+    {
+        $jadwal = Jadwal::findOrFail($id);
+
+    }
+
+    public function cetak_satuan($id)
+    {
+        $presensi = Presensi::findOrFail($id);
+        $presensi->data = json_decode($presensi->data);
+
+        $data = ['data' => $presensi];
+
+        $pdf = PDF::loadView('presensi.pdf_satuan', $data);
+
+        return $pdf->download('laporan_presensi.pdf');
+
     }
 
     /**
