@@ -20,14 +20,18 @@ class PresensiController extends Controller
      */
     public function index()
     {
-        $this->data['data'] = Jadwal::where('guru_id',auth()->user()->guru->id)->get();
+        if (auth()->user()->type == 'guru') {
+            $this->data['data'] = Jadwal::where('guru_id',auth()->user()->guru->id)->get();
+        } else {
+            $this->data['data'] = Jadwal::orderBy('created_at','DESC')->get();
+        }
 
         return view('presensi.index', $this->data);
     }
 
     public function list_presensi($id)
     {
-        $jadwal = Jadwal::findOrFail($id);
+        $jadwal = Jadwal::findOrFail($id);        
         if (!$jadwal) {
             return redirect()->route('presensi.index')->with('warning', 'Jadwal tidak ditemukan!');
         }
@@ -214,8 +218,12 @@ class PresensiController extends Controller
 
     public function cetak_semua($id)
     {
-        $jadwal = Jadwal::findOrFail($id);
+        $presensi = Presensi::where('jadwal_id',$id)->orderBy('created_at','ASC')->get();        
+        $data = ['data' => $presensi];
 
+        $pdf = PDF::loadView('presensi.pdf_semua',$data);
+
+        return $pdf->download('laporan_presensi.pdf');
     }
 
     public function cetak_satuan($id)

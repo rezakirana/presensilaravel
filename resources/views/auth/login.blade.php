@@ -71,7 +71,7 @@
                         </label> --}}
                       </div>
                     </div>
-                    <button class="btn btn-primary btn-user btn-block" type="submit">
+                    <button class="btn btn-success btn-user btn-block" type="submit">
                       Login
                     </button>
                     <hr>

@@ -14,7 +14,7 @@
                   <br>
                     <h1 class="h2 text-gray-900 mb-4 font-weight-bold animate__animated animate__fadeInDown animate__delay-1s">Welcome Back!</h1>
                   </div>
-                <img src="img/landing.svg" class="bg-login-image animate__animated animate__backInLeft" alt="">
+                <img src="{{ asset('img/landing.png') }}" class="bg-login-image animate__animated animate__backInLeft" alt="">
               </div>
               <div class="col-lg-6">
                 <div class="p-5">
@@ -71,13 +71,13 @@
                         </label> --}}
                       </div>
                     </div>
-                    <button class="btn btn-primary btn-user btn-block" type="submit">
+                    <button class="btn btn-success btn-user btn-block" type="submit">
                       Login
                     </button>
                     <hr>
                   </form>
                   <div class="text-center">
-                    <span class="small">Copyright &copy; Sistem Presensi MA 2022</span>
+                    <span class="small">Copyright &copy; Sistem Presensi MA</span>
                   </div>
                 </div>
               </div>

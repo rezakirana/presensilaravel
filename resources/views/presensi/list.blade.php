@@ -66,10 +66,28 @@
     </div>
 </section>
 @include ('includes.scripts')
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $("#data-admin_length").append('<a  href="{{ route('tambah.presensi',$jadwal->id) }}"> <button type="button" class="btn btn-outline-primary ml-3">Presensi baru</button></a>');
-            $("#data-admin_length").append('<a  href="{{ route('tambah.presensi',$jadwal->id) }}"> <button type="button" class="btn btn-outline-info ml-3"><i class="fa fa-print"></i> Cetak</button></a>');
-        });
-    </script>
+    @if (auth()->user()->type == 'guru')
+        @if (count($presensi))
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    $("#data-admin_length").append('<a  href="{{ route('tambah.presensi',$jadwal->id) }}"> <button type="button" class="btn btn-outline-primary ml-3">Presensi baru</button></a>');
+                    $("#data-admin_length").append('<a  href="{{ route('cetak.semua',$jadwal->id) }}"> <button type="button" class="btn btn-outline-info ml-3"><i class="fa fa-print"></i> Cetak</button></a>');
+                });
+            </script>
+        @else
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    $("#data-admin_length").append('<a  href="{{ route('tambah.presensi',$jadwal->id) }}"> <button type="button" class="btn btn-outline-primary ml-3">Presensi baru</button></a>');                
+                });
+            </script>
+        @endif 
+    @else
+        @if (count($presensi))
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    $("#data-admin_length").append('<a  href="{{ route('cetak.semua',$jadwal->id) }}"> <button type="button" class="btn btn-outline-info ml-3"><i class="fa fa-print"></i> Cetak</button></a>');
+                });
+            </script>
+        @endif 
+    @endif       
 @endsection

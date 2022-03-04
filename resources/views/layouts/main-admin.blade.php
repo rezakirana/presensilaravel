@@ -104,13 +104,7 @@
             <i class="fa fa-list"></i>
             <span>&nbsp; Rekap Presensi</span>
           </a>
-        </li>         
-        {{-- <li class="nav-item  {{ \Str::is('laporan-pertanggal.*', Route::currentRouteName()) ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('laporan-pertanggal') }}">
-            <i class="fa fa-file-pdf"></i>
-            <span>&nbsp; Laporan Per Tanggal</span>
-          </a>
-        </li>  --}}
+        </li>        
       @elseif (Auth::user()->type == 'guru')
         <li class="nav-item  {{ \Str::is('kelas.*', Route::currentRouteName()) ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('kelas.index') }}">
@@ -123,13 +117,7 @@
             <i class="fas fa-list"></i>
             <span>&nbsp; Presensi</span>
           </a>
-        </li>
-        <li class="nav-item  {{ \Str::is('rekap-presensi.*', Route::currentRouteName()) ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('rekap-presensi.index') }}">
-            <i class="fas fa-print"></i>
-            <span>&nbsp; Rekap Presensi</span>
-          </a>
-        </li>         
+        </li>                 
       @endif
     </ul>
     <!-- Sidebar -->
@@ -184,7 +172,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Sistem Presensi MA 2022</span>
+            <span>Copyright &copy; Sistem Presensi MA</span>
           </div>
         </div>
       </footer>
