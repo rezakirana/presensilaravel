@@ -7,6 +7,10 @@ use App\Model\Presensi;
 use App\Model\Jadwal;
 use App\Model\Kelas;
 use App\Model\Siswa;
+use App\Model\Semester;
+use App\Model\Account;
+use App\Model\Mapel;
+use App\Model\TahunAjaran;
 use Carbon\Carbon;
 use App\Mail\EmailWaliSiswa;
 use PDF;
@@ -21,11 +25,81 @@ class PresensiController extends Controller
     public function index()
     {
         if (auth()->user()->type == 'guru') {
-            $this->data['data'] = Jadwal::where('guru_id',auth()->user()->guru->id)->get();
+            $this->data['data'] = Jadwal::where('guru_id',auth()->user()->guru->id)->paginate(2);
         } else {
-            $this->data['data'] = Jadwal::orderBy('created_at','DESC')->get();
+            $this->data['data'] = Jadwal::orderBy('created_at','DESC')->paginate(2);
         }
 
+        return view('presensi.index', $this->data);
+    }
+
+    public function data_presensi(Request $request)
+    {
+        $this->data['semester'] = Semester::all();
+        $this->data['kelas'] = Kelas::all();
+        $this->data['mapel'] = Mapel::all();
+        $this->data['guru'] = Account::all();
+        $this->data['tahunAjaran'] = TahunAjaran::all();
+        if (auth()->user()->type == 'guru') {
+            $data = Jadwal::where('guru_id',auth()->user()->guru->id);
+        } else {
+            $data = Jadwal::orderBy('created_at','DESC');
+        }
+        if ($request->isMethod('post')) {            
+            if ($request->session()->has('data_tahun_ajaran')) {
+                $request->session()->forget('data_tahun_ajaran');
+            }
+            if ($request->session()->has('data_semester')) {
+                $request->session()->forget('data_semester');
+            }
+            if ($request->session()->has('data_mapel')) {
+                $request->session()->forget('data_mapel');
+            }
+            if ($request->session()->has('data_guru')) {
+                $request->session()->forget('data_guru');
+            }
+            if ($request->session()->has('data_kelas')) {
+                $request->session()->forget('data_kelas');
+            }
+            $request->session()->put('data_tahun_ajaran', $request->tahun_ajaran_id);
+            $request->session()->put('data_semester', $request->semester_id);
+            $request->session()->put('data_mapel', $request->mapel_id);
+            $request->session()->put('data_guru', $request->guru_id);
+            $request->session()->put('data_kelas', $request->kelas_id);
+            if ($request->tahun_ajaran_id) {
+                $data = $data->where('tahun_ajaran_id',$request->tahun_ajaran_id);
+            }
+            if ($request->semester_id) {
+                $data = $data->where('semester_id',$request->semester_id);
+            }
+            if ($request->mapel_id) {
+                $data = $data->where('mapel_id',$request->mapel_id);
+            }
+            if ($request->guru_id) {
+                $data = $data->where('guru_id',$request->guru_id);
+            }
+            if ($request->kelas_id) {
+                $data = $data->where('kelas_id',$request->kelas_id);
+            }
+        } else {
+            if (session()->get('tahun_ajaran')) {
+                $data = $data->where('tahun_ajaran_id',session()->get('tahun_ajaran'));
+            }
+            if (session()->get('data_semester')) {
+                $data = $data->where('semester_id',session()->get('data_semester'));
+            }            
+            if (session()->get('data_mapel')) {
+                $data = $data->where('mapel_id',session()->get('data_mapel'));
+            }            
+            if (session()->get('data_guru')) {
+                $data = $data->where('guru_id',session()->get('data_guru'));
+            }            
+            if (session()->get('data_kelas')) {
+                $data = $data->where('kelas_id',session()->get('data_kelas'));
+            }            
+        }
+        $this->data['data'] = $data->paginate(15);
+        
         return view('presensi.index', $this->data);
     }
 

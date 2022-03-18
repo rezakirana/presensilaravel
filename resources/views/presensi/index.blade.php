@@ -463,46 +463,142 @@
     <div class="card shadow mb-12">
         <!-- Card Body -->        
         <div class="card-body">
-              <div class="tabset">     
-                    <div class="card-category-2">
-                        <ul>
-                            @foreach ($data as $key => $item)
-                                <li>
-                                  <a href="{{ route('list.presensi',$item->id) }}">
-                                    <div class="img-card iCard-style1" style="background-color: #f9f9f9;">
-                                        <div class="card-content">
-                                            <div class="card-image">
-                                                @if ($item->icon)
-                                                    <img src="{{ asset('/img/jadwal/'.$item->icon) }}" id="imgCurrent" width="100%" style="text-align: center;" />
-                                                @else
-                                                    <img src="{{ asset('/img/default-image.png') }}" id="imgCurrent" width="100%" style="text-align: center;" />
-                                                @endif                                            
-                                            </div>
-                                            <div class="card-text">
-                                            <h4 align="center"><b>{{ $item->kelas->nama_kelas }}</b></h4>
-                                                <p align="justify" style="margin-bottom: 5px !important;">
-                                                {{ $item->mapel->nama_mapel }}
-                                                </p>
-                                                <p align="justify" style="margin-bottom: 5px !important;">
-                                                {{ $item->hari }}
-                                                </p>
-                                                <p align="justify" style="margin-bottom: 5px !important;">
-                                                {{ $item->jam_pelajaran }}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                  </a>
-                                </li>
-                            @endforeach                            
-                        </ul>
+            <div class="tabset">  
+              <form action="{{ route('presensi.data') }}" method="post">
+                @csrf
+                <div class="row">                
+                  <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="">Tahun Ajar</label>
+                        <select name="tahun_ajaran_id" id="" class="form-control">
+                          <option value="">-- Pilih Tahun Ajar --</option>
+                          @foreach ($tahunAjaran as $item)
+                              <option value="{{ $item->id }}" @if (session()->has('data_tahun_ajaran'))
+                                  @if (session()->get('data_tahun_ajaran') == $item->id)
+                                    selected=""
+                                  @endif
+                              @endif>{{ $item->tahun_ajaran }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                  </div>
+                  <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="">Semester</label>
+                        <select name="semester_id" id="" class="form-control">
+                          <option value="">-- Pilih Semester --</option>
+                          @foreach ($semester as $item)
+                              <option value="{{ $item->id }}" @if (session()->has('data_semester'))
+                                @if (session()->get('data_semester') == $item->id)
+                                  selected=""
+                                @endif
+                            @endif>{{ $item->semester }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                  </div>
+                  <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="">Kelas</label>
+                        <select name="kelas_id" id="" class="form-control">
+                          <option value="">-- Pilih Kelas --</option>
+                          @foreach ($kelas as $item)
+                              <option value="{{ $item->id }}" @if (session()->has('data_kelas'))
+                                @if (session()->get('data_kelas') == $item->id)
+                                  selected=""
+                                @endif
+                            @endif>{{ $item->kode_kelas }} - {{ $item->nama_kelas }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                  </div>
+                  <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="">Mata Pelajaran</label>
+                        <select name="mapel_id" id="" class="form-control">
+                          <option value="">-- Pilih Mata Pelajaran --</option>
+                          @foreach ($mapel as $item)
+                              <option value="{{ $item->id }}" @if (session()->has('data_mapel'))
+                                @if (session()->get('data_mapel') == $item->id)
+                                  selected=""
+                                @endif
+                            @endif>{{ $item->kode_mapel }} - {{ $item->nama_mapel }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                  </div>
+                  <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="">Guru Pengampu</label>
+                        <select name="guru_id" id="" class="form-control">
+                          <option value="">-- Pilih Guru Pengampu --</option>
+                          @foreach ($guru as $item)
+                              <option value="{{ $item->id }}" @if (session()->has('data_guru'))
+                                @if (session()->get('data_guru') == $item->id)
+                                  selected=""
+                                @endif
+                            @endif>{{ $item->nama }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                  </div>
+                  <div class="col-md-4">
+                      <div class="form-group" style="margin-top: 30px;">
+                        <button type="submit" class="btn btn-info">Filter Presensi</button>
+                      </div>
+                  </div>                                  
+                </div>  
+              </form>
+              <hr><br> 
+                  <div class="card-category-2">
+                    <h3>Data Presensi</h3>
+                    <br>
+                      <ul>
+                          @foreach ($data as $key => $item)
+                              <li>
+                                <a href="{{ route('list.presensi',$item->id) }}">
+                                  <div class="img-card iCard-style1" style="background-color: #f9f9f9;">
+                                      <div class="card-content">
+                                          <div class="card-image">
+                                              @if ($item->icon)
+                                                  <img src="{{ asset('/img/jadwal/'.$item->icon) }}" id="imgCurrent" width="100%" style="text-align: center;" />
+                                              @else
+                                                  <img src="{{ asset('/img/default-image.png') }}" id="imgCurrent" width="100%" style="text-align: center;" />
+                                              @endif                                            
+                                          </div>
+                                          <div class="card-text">
+                                          <h4 align="center"><b>{{ $item->kelas->nama_kelas }}</b></h4>
+                                              <p align="justify" style="margin-bottom: 5px !important;">
+                                              {{ $item->mapel->nama_mapel }}
+                                              </p>
+                                              <p align="justify" style="margin-bottom: 5px !important;">
+                                              {{ $item->hari }}
+                                              </p>
+                                              <p align="justify" style="margin-bottom: 5px !important;">
+                                              {{ $item->jam_pelajaran }}
+                                              </p>
+                                          </div>
+                                      </div>
+                                  </div>
+                                </a>
+                              </li>
+                          @endforeach                            
+                      </ul>
+                  </div>
+                  {{-- pagination --}}
+                  <div class="row">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                      <div>Menampilkan {{ $data->firstItem() }} sampai {{ $data->lastItem() }} dari total {{ $data->total() }} data</div>
                     </div>
-
-                </div>
-
+                    <div class="col-lg-7 col-md-7 col-sm-12 pull-right" style="text-align: right;float: right;">
+                      <div class="dataTables_paginate paging_simple_numbers" id="datatable_paginate" style="float: right;">
+                          {{ $data->links() }}
+                        </div>
+                    </div>
+                  </div>                    
+                  {{-- end pagination --}}
               </div>
-
-
+            </div>
         </div>
     </div>
 

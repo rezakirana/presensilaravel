@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth'], function()
     Route::resource('tahun-ajaran', 'TahunAjaranController');
     Route::resource('jadwal', 'JadwalController');
     Route::resource('presensi', 'PresensiController');
+    Route::match(array('GET','POST'),'/data-presensi', 'PresensiController@data_presensi')->name('presensi.data');
     Route::get('/account', 'AccountController@account')->name('account.index');
     Route::post('/account', 'AccountController@account_save')->name('account.store');
     Route::get('/semester', 'SemesterController@index')->name('semester.index');

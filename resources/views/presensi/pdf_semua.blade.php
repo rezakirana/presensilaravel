@@ -12,6 +12,9 @@
             border: none;
             outline: none;
         }
+        .page-break {
+            page-break-after: always;
+        }
     </style>
   </head>
   <body>
@@ -83,11 +86,13 @@
                                     -
                                 @endif                                
                             </td>
-                        </tr>
+                        </tr>                        
                     @endforeach
                 @endif                
-            </table>
-            <br>            
+            </table>            
+            @if (count($data) != ($key+1))
+                <div class="page-break"></div>
+            @endif            
           @endforeach
       @endif        
   </body>

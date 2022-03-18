@@ -99,8 +99,8 @@
             <span>&nbsp; Jadwal Pelajaran</span>
           </a>
         </li> 
-        <li class="nav-item  {{ \Str::is('presensi.*', Route::currentRouteName()) ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('presensi.index') }}">
+        <li class="nav-item  {{ \Str::is('presensi.*', Route::currentRouteName()) ? 'active' : '' }} {{ \Str::is('data-presensi.*', Route::currentRouteName()) ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('presensi.data') }}">
             <i class="fa fa-list"></i>
             <span>&nbsp; Rekap Presensi</span>
           </a>
@@ -112,8 +112,8 @@
             <span>&nbsp; Kelas Anda</span>
           </a>
         </li>
-        <li class="nav-item  {{ \Str::is('presensi.*', Route::currentRouteName()) ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('presensi.index') }}">
+        <li class="nav-item  {{ \Str::is('presensi.*', Route::currentRouteName()) ? 'active' : '' }} {{ \Str::is('data-presensi.*', Route::currentRouteName()) ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('presensi.data') }}">
             <i class="fas fa-list"></i>
             <span>&nbsp; Presensi</span>
           </a>
