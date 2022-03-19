@@ -49,7 +49,7 @@
                             @if ($item->is_active)
                                 <i class="fas fa-check-circle" style="color:green;"></i> Aktif
                             @else
-                            <i class="fas fa-times-circle" style="color:red;"></i> Tidak Aktif
+                                <i class="fas fa-times-circle" style="color:red;"></i> Tidak Aktif
                             @endif    
                         </td>                 
                         <td class="text-center">                            
