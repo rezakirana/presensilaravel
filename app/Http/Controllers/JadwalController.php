@@ -124,7 +124,8 @@ class JadwalController extends Controller
             'tahun_ajaran_id' => 'required|exists:tahun_ajaran,id',
             'mapel_id' => 'required|exists:mapel,id',
             'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'guru_id' => 'required|exists:guru,id'
+            'guru_id' => 'required|exists:guru,id',
+            'is_active' => 'required|boolean'
         ]);
         $semester = Semester::where('status',1)->first();
         $request->merge(['semester_id' => $semester->id]);        

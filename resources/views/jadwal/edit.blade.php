@@ -109,7 +109,18 @@
                     <div class="form-group">
                         <label for="exampleInputPassword1">Icon</label>
                         <input type="file" class="form-control" name="icon" id="inputImage">
-                    </div>                 
+                    </div>   
+                    <div class="form-group">
+                        <label for="">Status</label>    
+                        <select name="is_active" id="" class="form-control" required>
+                            <option value="0" @if ($jadwal->is_active == 0)
+                                selected
+                            @endif>Tidak Aktif</option>
+                            <option value="1" @if ($jadwal->is_active == 1)
+                                selected
+                            @endif>Aktif</option>
+                        </select>
+                    </div>              
                     <div class="card-body">
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>

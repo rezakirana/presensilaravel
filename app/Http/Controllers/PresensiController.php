@@ -41,9 +41,9 @@ class PresensiController extends Controller
         $this->data['guru'] = Account::all();
         $this->data['tahunAjaran'] = TahunAjaran::all();
         if (auth()->user()->type == 'guru') {
-            $data = Jadwal::where('guru_id',auth()->user()->guru->id);
+            $data = Jadwal::where('guru_id',auth()->user()->guru->id)->where('is_active',1);
         } else {
-            $data = Jadwal::orderBy('created_at','DESC');
+            $data = Jadwal::where('is_active',1)->orderBy('created_at','DESC');
         }
         if ($request->isMethod('post')) {            
             if ($request->session()->has('data_tahun_ajaran')) {

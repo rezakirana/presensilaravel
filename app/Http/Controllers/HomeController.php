@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Model\Pasien;
-use App\Model\Dokter;
-use App\Model\Poli;
-use App\Model\Antrian;
+use App\Model\Account;
+use App\Model\Kelas;
+use App\Model\Siswa;
+use App\Model\Jadwal;
+use App\Model\Mapel;
 
 class HomeController extends Controller
 {
@@ -27,7 +28,7 @@ class HomeController extends Controller
      */    
     public function index()
     {
-        if (Auth::check()) {
+        if (Auth::check()) {            
             return redirect()->route('dashboard');
         }
         return redirect()->route('login');
@@ -35,7 +36,19 @@ class HomeController extends Controller
 
     public function dashboard()
     {        
-        return view('admin.dashboard');
+        if (Auth::user()->type == 'admin') {
+            $this->data['jmlGuru'] = Account::count();
+            $this->data['jmlKelas'] = Kelas::count();
+            $this->data['jmlSiswa'] = Siswa::count();
+            $this->data['jmlMapel'] = Mapel::count();
+            $this->data['jmlJadwal'] = Jadwal::where('is_active',1)->count();
+        }else {
+            $this->data['jmlKelas'] = Jadwal::where('guru_id',Auth::user()->guru->id)->count();
+            $this->data['jmlJadwal'] = Jadwal::where('guru_id',Auth::user()->guru->id)
+                                                ->where('is_active',1)
+                                                ->count();                
+        }
+        return view('admin.dashboard',$this->data);
     }
 
     public function not_found()

@@ -29,7 +29,7 @@
                     @if (session()->has('dataUser'))
                         <h4>Data Guru</h4>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">NIP</label>
+                            <label for="exampleInputPassword1">NUPTK</label>
                             <input type="text" class="form-control" name="nip" id="nip" value="{{ session()->get('dataUser')->username }}" required readonly>
                         </div>
                         <div class="form-group">
@@ -87,7 +87,7 @@
                         <hr>
                         <h4>Data Guru</h4>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">NIP</label>
+                            <label for="exampleInputPassword1">NUPTK</label>
                             <input type="text" class="form-control" name="nip" id="nip" placeholder="NIP" required>
                         </div>
                         <div class="form-group">

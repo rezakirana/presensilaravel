@@ -27,7 +27,7 @@
                 <thead>
                     <tr>
                     <th width="40">NO</th>
-                    <th>NIP</th>
+                    <th>NUPTK</th>
                     <th>NAMA</th>
                     <th>JENIS KELAMIN</th>
                     <th>TTL</th>

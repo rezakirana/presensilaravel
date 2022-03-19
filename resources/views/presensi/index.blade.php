@@ -456,7 +456,12 @@
       text-decoration: inherit; /* no underline */
     }
 
-
+    .isDisabled {
+      color: currentColor;
+      cursor: not-allowed;
+      opacity: 0.5;
+      text-decoration: none;
+    }
 </style>
 
 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
@@ -556,7 +561,7 @@
                       <ul>
                           @foreach ($data as $key => $item)
                               <li>
-                                <a href="{{ route('list.presensi',$item->id) }}">
+                                <a href="{{ route('list.presensi',$item->id) }}" class="{{ !$item->is_active ? 'isDisabled' : '' }}">
                                   <div class="img-card iCard-style1" style="background-color: #f9f9f9;">
                                       <div class="card-content">
                                           <div class="card-image">

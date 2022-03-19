@@ -26,7 +26,7 @@
             <div class="card-body">
                 <table class="table">
                     <tr>
-                        <td>NIP</td>
+                        <td>NUPTK</td>
                         <td>: {{ $guru->nip }}</td>
                     </tr>
                     <tr>

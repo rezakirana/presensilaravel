@@ -29,7 +29,7 @@
                 <div class="card-body">
                     <h4>Data Guru</h4>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">NIP</label>
+                        <label for="exampleInputPassword1">NUPTK</label>
                         <input type="text" class="form-control" name="nip" id="nip" value="{{ $guru->nip }}" required>
                     </div>
                     <div class="form-group">
