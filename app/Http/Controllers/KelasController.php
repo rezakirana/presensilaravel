@@ -22,6 +22,7 @@ class KelasController extends Controller
             $this->data['kelas'] = Jadwal::join('guru', 'guru.id', '=', 'jadwal.guru_id')
                                             ->join('kelas', 'kelas.id', '=', 'jadwal.kelas_id')
                                             ->where('jadwal.guru_id',$user->guru->id)
+                                            ->where('jadwal.is_active',1)
                                             ->select([
                                                 'kelas.*'
                                             ])->groupBy('kelas.id')
