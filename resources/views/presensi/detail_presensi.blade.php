@@ -149,16 +149,16 @@
         event.preventDefault();
         let id = $(this).data('id');
         let idInput = "keterangan-"+id;
-        document.getElementById(idInput).style.display = "none";
-        document.getElementById(idInput).value = "";
+        document.getElementById(idInput).style.display = "block";
+        document.getElementById(idInput).focus();
     });
     
     $(document).on('change','.labelAlpha',function(){
         event.preventDefault();
         let id = $(this).data('id');
         let idInput = "keterangan-"+id;
-        document.getElementById(idInput).style.display = "none";
-        document.getElementById(idInput).value = "";
+        document.getElementById(idInput).style.display = "block";
+        document.getElementById(idInput).focus();
     });
     
     $(document).on('change','.labelIjin',function(){

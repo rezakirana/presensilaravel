@@ -1530,6 +1530,10 @@
                 "php",
                 "phpspreadsheet"
             ],
+            "support": {
+                "issues": "https://github.com/Maatwebsite/Laravel-Excel/issues",
+                "source": "https://github.com/Maatwebsite/Laravel-Excel/tree/3.1.30"
+            },
             "funding": [
                 {
                     "url": "https://laravel-excel.com/commercial-support",

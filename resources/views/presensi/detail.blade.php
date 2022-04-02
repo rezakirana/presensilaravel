@@ -104,7 +104,7 @@
                             </td>
                             <td style="width: 30%;">
                                 @if ($item->keterangan)
-                                    <input type="text" class="form-control" name="keterangan[]" id="keterangan-{{ $item->id }}" value="{{ $item->keterangan }}" style="display:block;">
+                                    <input type="text" class="form-control" name="keterangan[]" id="keterangan-{{ $item->id }}" value="{{ $item->keterangan }}" style="display:block;" required>
                                 @else
                                     <input type="text" class="form-control" name="keterangan[]" id="keterangan-{{ $item->id }}" style="display:none;">
                                 @endif                                
@@ -127,6 +127,7 @@
         let id = $(this).data('id');
         let idInput = "keterangan-"+id;
         document.getElementById(idInput).style.display = "none";
+        document.getElementById(idInput).required = false;
         document.getElementById(idInput).value = "";
     });
     
@@ -134,16 +135,18 @@
         event.preventDefault();
         let id = $(this).data('id');
         let idInput = "keterangan-"+id;
-        document.getElementById(idInput).style.display = "none";
-        document.getElementById(idInput).value = "";
+        document.getElementById(idInput).style.display = "block";
+        document.getElementById(idInput).required = true;
+        document.getElementById(idInput).focus();
     });
     
     $(document).on('change','.labelAlpha',function(){
         event.preventDefault();
         let id = $(this).data('id');
         let idInput = "keterangan-"+id;
-        document.getElementById(idInput).style.display = "none";
-        document.getElementById(idInput).value = "";
+        document.getElementById(idInput).style.display = "block";
+        document.getElementById(idInput).required = true;
+        document.getElementById(idInput).focus();
     });
     
     $(document).on('change','.labelIjin',function(){
@@ -151,6 +154,7 @@
         let id = $(this).data('id');
         let idInput = "keterangan-"+id;
         document.getElementById(idInput).style.display = "block";
+        document.getElementById(idInput).required = true;
         document.getElementById(idInput).focus();
     });
 

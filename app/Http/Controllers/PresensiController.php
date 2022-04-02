@@ -14,6 +14,8 @@ use App\Model\TahunAjaran;
 use Carbon\Carbon;
 use App\Mail\EmailWaliSiswa;
 use PDF;
+use App\Exports\PresensiSingleExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PresensiController extends Controller
 {

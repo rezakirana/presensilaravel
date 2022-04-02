@@ -42,7 +42,28 @@
                 <input type="hidden" name="jadwal_id" value="{{ $jadwal->id }}">
                 <div class="form-group">
                     <label for="exampleInputPassword1">Pertemuan Ke-</label>
-                    <input type="text" class="form-control" name="pertemuan" id="pertemuan" placeholder="ex : Pertemuan 1" required>
+                    <select name="pertemuan" id="pertemuan" class="form-control" required>
+                        <option value="Pertemuan 1">Pertemuan 1</option>
+                        <option value="Pertemuan 2">Pertemuan 2</option>
+                        <option value="Pertemuan 3">Pertemuan 3</option>
+                        <option value="Pertemuan 4">Pertemuan 4</option>
+                        <option value="Pertemuan 5">Pertemuan 5</option>
+                        <option value="Pertemuan 6">Pertemuan 6</option>
+                        <option value="Pertemuan 7">Pertemuan 7</option>
+                        <option value="Pertemuan 8">Pertemuan 8</option>
+                        <option value="Pertemuan 9">Pertemuan 9</option>
+                        <option value="Pertemuan 10">Pertemuan 10</option>
+                        <option value="Pertemuan 11">Pertemuan 11</option>
+                        <option value="Pertemuan 12">Pertemuan 12</option>
+                        <option value="Pertemuan 13">Pertemuan 13</option>
+                        <option value="Pertemuan 14">Pertemuan 14</option>
+                        <option value="Pertemuan 15">Pertemuan 15</option>
+                        <option value="Pertemuan 16">Pertemuan 16</option>
+                        <option value="Pertemuan 17">Pertemuan 17</option>
+                        <option value="Pertemuan 18">Pertemuan 18</option>
+                        <option value="Pertemuan 19">Pertemuan 19</option>
+                        <option value="Pertemuan 20">Pertemuan 20</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Materi Pertemuan</label>
