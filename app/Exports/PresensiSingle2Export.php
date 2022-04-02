@@ -12,7 +12,7 @@ use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\RegistersEventListeners;
 
-class PresensiSingleExport implements WithEvents
+class PresensiSingle2Export implements WithEvents
 {
     use Exportable, RegistersEventListeners;
     protected $presensi;
@@ -67,7 +67,7 @@ class PresensiSingleExport implements WithEvents
                 ];
                 $end = null;
                 $dataPresensi = $this->presensi;
-                
+                $dataPresensi->data = json_decode($dataPresensi->data);
                 $event->sheet->setCellValue('A1', $dataPresensi->pertemuan);
                 $event->sheet->setCellValue(
                                 'A2',
@@ -151,6 +151,7 @@ class PresensiSingleExport implements WithEvents
                             ->getStartColor()->setARGB('FFFFFF00');
                 $event->sheet->verticalAlign('A12:A1000' , \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
                 $event->sheet->horizontalAlign('A12:A1000' , \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);                                              
+                $event->sheet->getDelegate()->getColumnDimension('E')->setWidth(30);
             }
         ];
     }

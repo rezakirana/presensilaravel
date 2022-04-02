@@ -129,6 +129,7 @@
             </table>
             <div class="row">
                 <div class="col-md-12" style="float:right;text-align:right;">
+                    <a href="{{ route('export.satuan',$data->id) }}" class="btn btn-outline-info ml-3"><i class="fas fa-print"></i> Export</a>
                     <a href="{{ route('cetak.satuan',$data->id) }}" class="btn btn-outline-info ml-3"><i class="fa fa-print"></i> Cetak</a>
                 </div>
             </div>

@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use App\Mail\EmailWaliSiswa;
 use PDF;
 use App\Exports\PresensiSingleExport;
+use App\Exports\PresensiAllExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class PresensiController extends Controller
@@ -235,6 +236,7 @@ class PresensiController extends Controller
         ]);
         $presensi = Presensi::findOrFail($id);
         $data = [];
+        $dataStatus = ['ijin','sakit','alpha'];
         foreach ($request->id as $key => $idSiswa) {
             $tmp = [];
             $tmp['id'] = $idSiswa;
@@ -243,7 +245,7 @@ class PresensiController extends Controller
             $status = 'siswa'.$key;
             $tmp['status'] = $request->$status;
             $tmp['keterangan'] = $request->keterangan[$key];
-            if ($request->$status == 'ijin') {
+            if (in_array($request->$status, $dataStatus)) {
                 $siswa = Siswa::findOrFail($idSiswa);
                 $dataEmail = [
                     'title' => 'Laporan Presensi Harian Siswa',                    
@@ -262,26 +264,6 @@ class PresensiController extends Controller
                     'tanggal' => $presensi->tanggal,
                     'alasan' => $request->keterangan[$key]
                 ];               
-                \Mail::to($siswa->email)->send(new EmailWaliSiswa($dataEmail));
-            }elseif ($request->$status == 'alpha') {
-                $siswa = Siswa::findOrFail($idSiswa);
-                $dataEmail = [
-                    'title' => 'Laporan Presensi Harian Siswa',
-                    'namaSiswa' => $siswa->nama,
-                    'gender' => $siswa->gender,
-                    'alamat' => $siswa->alamat,
-                    'kelas' => $siswa->kelas->nama_kelas,
-                    'namaWali' => $siswa->nama_ortu,
-                    'guru' => $presensi->jadwal->guru->nama,
-                    'mapel' => $presensi->jadwal->mapel->nama_mapel,
-                    'hari' => $presensi->jadwal->hari,
-                    'jamPelajaran' => $presensi->jadwal->jam_pelajaran,
-                    'semester' => $presensi->jadwal->semester->semester,
-                    'tahun_ajaran' => $presensi->jadwal->tahun_ajaran->tahun_ajaran,
-                    'status' => $request->$status,
-                    'tanggal' => $presensi->tanggal,
-                    'alasan' => 'Tanpa Keterangan'
-                ];
                 \Mail::to($siswa->email)->send(new EmailWaliSiswa($dataEmail));
             }
             array_push($data,$tmp);
@@ -302,6 +284,18 @@ class PresensiController extends Controller
         return $pdf->download('laporan_presensi.pdf');
     }
 
+    public function export_semua($id)
+    {
+        $presensi = Presensi::where('jadwal_id',$id)->orderBy('created_at','ASC')->get();  
+        $nama = 'no_data.xlsx';
+        
+        if (count($presensi)) {
+            $nama = $presensi[0]->jadwal->mapel->nama_mapel.'-'.$presensi[0]->jadwal->kelas->nama_kelas.'.xlsx';
+        }        
+
+        return Excel::download(new PresensiAllExport($presensi), $nama); 
+    }
+
     public function cetak_satuan($id)
     {
         $presensi = Presensi::findOrFail($id);
@@ -312,7 +306,15 @@ class PresensiController extends Controller
         $pdf = PDF::loadView('presensi.pdf_satuan', $data);
 
         return $pdf->download('laporan_presensi.pdf');
+    }
 
+    public function export_satuan($id)
+    {
+        $presensi = Presensi::with('jadwal')->where('id',$id)->first();
+        $presensi->data = json_decode($presensi->data);
+        $nama = $presensi->jadwal->mapel->nama_mapel.'-'.$presensi->jadwal->kelas->nama_kelas.'.xlsx';
+
+        return Excel::download(new PresensiSingleExport($presensi), $nama);        
     }
 
     /**
