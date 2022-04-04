@@ -49,7 +49,7 @@ class SiswaController extends Controller
             'alamat' => 'required',                
             'nama_ortu' => 'required',                
             'tahun_masuk' => 'required',                
-            'email' => 'required|unique:guru,email',                
+            'email' => 'required|unique:siswa,email',                
             'gender' => 'required|in:laki-laki,perempuan',
             'kelas_id' => 'required|exists:kelas,id'
         ]);
@@ -109,7 +109,7 @@ class SiswaController extends Controller
             'alamat' => 'required',                
             'nama_ortu' => 'required',  
             'tahun_masuk' => 'required',                              
-            'email' => 'required|unique:guru,email,'.$id,                
+            'email' => 'required|unique:siswa,email,'.$id,                
             'gender' => 'required|in:laki-laki,perempuan',
             'kelas_id' => 'required|exists:kelas,id'
         ]);
