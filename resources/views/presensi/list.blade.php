@@ -43,16 +43,27 @@
                     <th>PERTEMUAN</th>
                     <th>MATERI PERTEMUAN</th>
                     <th>TANGGAL</th>
+                    <th>SISWA HADIR</th>
                     <th width="120">AKSI</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($presensi as $item)
+                    @php
+                        $dataPresensi = json_decode($item->data);
+                        $jmlHadir = 0;
+                        foreach($dataPresensi as $key => $status){
+                            if($status->status == 'hadir'){
+                                $jmlHadir++;
+                            }
+                        }
+                    @endphp
                     <tr>
                         <td class="text-center">{{$loop->iteration}}</td>
                         <td>{{ $item->pertemuan }}</td>
                         <td>{{ $item->materi_pertemuan }}</td>
                         <td>{{ $item->tanggal->isoFormat('D MMMM Y') }}</td>
+                        <td>{{ $jmlHadir }} siswa</td>
                         <td class="text-center">
                             <a href="{{ route('presensi.detail', $item->id) }}">
                                 <button class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fa fa-eye"></i></button>

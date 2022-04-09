@@ -113,6 +113,7 @@ class PresensiController extends Controller
             return redirect()->route('presensi.index')->with('warning', 'Jadwal tidak ditemukan!');
         }
         $this->data['presensi'] = Presensi::where('jadwal_id',$jadwal->id)->orderBy('created_at','ASC')->get();
+        // dd(json_decode($this->data['presensi'][1]->data));
         $this->data['jadwal'] = $jadwal;
 
         return view('presensi.list',$this->data);
@@ -236,7 +237,7 @@ class PresensiController extends Controller
         ]);
         $presensi = Presensi::findOrFail($id);
         $data = [];
-        $dataStatus = ['ijin','sakit','alpha'];
+        $dataStatus = ['ijin','sakit','alpha', 'izin'];
         foreach ($request->id as $key => $idSiswa) {
             $tmp = [];
             $tmp['id'] = $idSiswa;

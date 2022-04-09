@@ -79,7 +79,7 @@
                             </td>
                             <td style="width: 30%;">
                                 <div class="form-group">
-                                    @if ($item->status)
+                                    @if ($item->nis)
                                         <label class="radio-inline" style="cursor: pointer;">
                                             <input type="radio" name="siswa{{ $key }}" class="labelHadir" data-id="{{ $item->id }}" value="hadir" @if ($item->status == 'hadir')
                                                 checked=""
@@ -91,9 +91,9 @@
                                                 @else disabled @endif style="cursor: pointer;"> Sakit
                                         </label>
                                         <label class="radio-inline" style="cursor: pointer;">
-                                            <input type="radio" name="siswa{{ $key }}" class="labelIjin" data-id="{{ $item->id }}" value="ijin" @if ($item->status == 'ijin')
+                                            <input type="radio" name="siswa{{ $key }}" class="labelIjin" data-id="{{ $item->id }}" value="izin" @if ($item->status == 'ijin' || $item->status == 'izin')
                                                 checked=""
-                                                @else disabled @endif style="cursor: pointer;"> Ijin
+                                                @else disabled @endif style="cursor: pointer;"> Izin
                                         </label>
                                         <label class="radio-inline" style="cursor: pointer;">
                                             <input type="radio" name="siswa{{ $key }}" class="labelAlpha" data-id="{{ $item->id }}" value="alpha" @if ($item->status == 'alpha')
@@ -108,7 +108,7 @@
                                             <input type="radio" name="siswa{{ $key }}" class="labelSakit" data-id="{{ $item->id }}" value="sakit" style="cursor: pointer;" disabled> Sakit
                                         </label>
                                         <label class="radio-inline" style="cursor: pointer;">
-                                            <input type="radio" name="siswa{{ $key }}" class="labelIjin" data-id="{{ $item->id }}" value="ijin" style="cursor: pointer;" disabled> Ijin
+                                            <input type="radio" name="siswa{{ $key }}" class="labelIjin" data-id="{{ $item->id }}" value="izin" style="cursor: pointer;" disabled> Izin
                                         </label>
                                         <label class="radio-inline" style="cursor: pointer;">
                                             <input type="radio" name="siswa{{ $key }}" class="labelAlpha" data-id="{{ $item->id }}" value="alpha" style="cursor: pointer;" disabled> Alpha
