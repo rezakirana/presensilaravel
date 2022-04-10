@@ -277,9 +277,38 @@ class PresensiController extends Controller
 
     public function cetak_semua($id)
     {
-        $presensi = Presensi::where('jadwal_id',$id)->orderBy('created_at','ASC')->get();        
-        $data = ['data' => $presensi];
-
+        $presensi = Presensi::where('jadwal_id',$id)->orderBy('created_at','ASC')->get();                
+        $getNamaSiswa = [];
+        if (count($presensi)) {
+            foreach (json_decode($presensi[0]->data) as $kunci => $nilai) {
+                $tmpArray = [];
+                $tmpArray['nis'] = $nilai->nis;
+                $tmpArray['nama'] = $nilai->nama;
+                $tmpArray['hadir'] = 0;
+                $tmpArray['izin'] = 0;
+                $tmpArray['sakit'] = 0;
+                $tmpArray['alpha'] = 0;
+                array_push($getNamaSiswa,$tmpArray);
+            }
+            foreach ($presensi as $key => $value) {
+                foreach (json_decode($value->data) as $key2 => $value2) {
+                    if ($value2->status == 'hadir') {
+                        $getNamaSiswa[$key2]['hadir'] = (int)$getNamaSiswa[$key2]['hadir'] + 1;
+                    }elseif ($value2->status == 'ijin' || $value->status == 'izin') {
+                        $getNamaSiswa[$key2]['izin'] = (int)$getNamaSiswa[$key2]['izin'] + 1;
+                    }elseif ($value2->status == 'sakit') {
+                        $getNamaSiswa[$key2]['sakit'] = (int)$getNamaSiswa[$key2]['sakit'] + 1;
+                    }else {
+                        $getNamaSiswa[$key2]['alpha'] = (int)$getNamaSiswa[$key2]['alpha'] + 1;
+                    }
+                }            
+            }
+        }
+        
+        $data = [
+                'data' => $presensi,
+                'getNamaSiswa' => $getNamaSiswa
+            ];
         $pdf = PDF::loadView('presensi.pdf_semua',$data);
 
         return $pdf->download('laporan_presensi.pdf');
@@ -289,12 +318,35 @@ class PresensiController extends Controller
     {
         $presensi = Presensi::where('jadwal_id',$id)->orderBy('created_at','ASC')->get();  
         $nama = 'no_data.xlsx';
-        
+        $getNamaSiswa = [];
         if (count($presensi)) {
-            $nama = $presensi[0]->jadwal->mapel->nama_mapel.'-'.$presensi[0]->jadwal->kelas->nama_kelas.'.xlsx';
+            $nama = $presensi[0]->jadwal->mapel->nama_mapel.'-'.$presensi[0]->jadwal->kelas->nama_kelas.'.xlsx';                    
+            foreach (json_decode($presensi[0]->data) as $kunci => $nilai) {
+                $tmpArray = [];
+                $tmpArray['nis'] = $nilai->nis;
+                $tmpArray['nama'] = $nilai->nama;
+                $tmpArray['hadir'] = 0;
+                $tmpArray['izin'] = 0;
+                $tmpArray['sakit'] = 0;
+                $tmpArray['alpha'] = 0;
+                array_push($getNamaSiswa,$tmpArray);
+            }
+            foreach ($presensi as $key => $value) {
+                foreach (json_decode($value->data) as $key2 => $value2) {
+                    if ($value2->status == 'hadir') {
+                        $getNamaSiswa[$key2]['hadir'] = (int)$getNamaSiswa[$key2]['hadir'] + 1;
+                    }elseif ($value2->status == 'ijin' || $value->status == 'izin') {
+                        $getNamaSiswa[$key2]['izin'] = (int)$getNamaSiswa[$key2]['izin'] + 1;
+                    }elseif ($value2->status == 'sakit') {
+                        $getNamaSiswa[$key2]['sakit'] = (int)$getNamaSiswa[$key2]['sakit'] + 1;
+                    }else {
+                        $getNamaSiswa[$key2]['alpha'] = (int)$getNamaSiswa[$key2]['alpha'] + 1;
+                    }
+                }            
+            }
         }        
 
-        return Excel::download(new PresensiAllExport($presensi), $nama); 
+        return Excel::download(new PresensiAllExport($presensi,$getNamaSiswa), $nama); 
     }
 
     public function cetak_satuan($id)

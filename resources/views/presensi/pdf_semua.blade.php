@@ -15,6 +15,12 @@
         .page-break {
             page-break-after: always;
         }
+        .table {
+            border-spacing: 20px;
+        }
+        .td {
+            padding: 10px;
+        }
     </style>
   </head>
   <body>
@@ -90,10 +96,36 @@
                     @endforeach
                 @endif                
             </table>            
-            @if (count($data) != ($key+1))
+            {{-- @if (count($data) != ($key+1)) --}}
                 <div class="page-break"></div>
-            @endif            
+            {{-- @endif             --}}
           @endforeach
+          <table border="1" class="table">
+            <thead>dataSiswa
+                <tr>
+                    <td class="td" style="text-align:center;font-weight:bold;">NO</td>
+                    <td class="td" style="text-align:center;font-weight:bold;">NIS</td>
+                    <td class="td" style="text-align:center;font-weight:bold;">NAMA</td>
+                    <td class="td" style="text-align:center;font-weight:bold;">HADIR</td>
+                    <td class="td" style="text-align:center;font-weight:bold;">IZIN</td>
+                    <td class="td" style="text-align:center;font-weight:bold;">SAKIT</td>
+                    <td class="td" style="text-align:center;font-weight:bold;">ALPHA</td>
+                </tr>                
+            </thead>
+            <tbody>                
+                @foreach ($getNamaSiswa as $kunci => $ket)
+                    <tr>
+                        <td class="td">{{ ($kunci+1) }}</td>
+                        <td class="td">{{ $ket['nis'] }}</td>
+                        <td class="td">{{ $ket['nama'] }}</td>
+                        <td class="td" style="text-align:center;">{{ $ket['hadir'] }} kali</td>
+                        <td class="td" style="text-align:center;">{{ $ket['izin'] }} kali</td>
+                        <td class="td" style="text-align:center;">{{ $ket['sakit'] }} kali</td>
+                        <td class="td" style="text-align:center;">{{ $ket['alpha'] }} kali</td>
+                    </tr>
+                @endforeach
+            </tbody>
+          </table>
       @endif        
   </body>
 </html>
