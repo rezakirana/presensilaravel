@@ -245,27 +245,27 @@ class PresensiController extends Controller
             $status = 'siswa'.$key;
             $tmp['status'] = $request->$status;
             $tmp['keterangan'] = $request->keterangan[$key];
-            if (in_array($request->$status, $dataStatus)) {
-                $siswa = Siswa::findOrFail($idSiswa);
-                $dataEmail = [
-                    'title' => 'Laporan Presensi Harian Siswa',                    
-                    'namaSiswa' => $siswa->nama,
-                    'gender' => $siswa->gender,
-                    'alamat' => $siswa->alamat,
-                    'kelas' => $siswa->kelas->nama_kelas,
-                    'namaWali' => $siswa->nama_ortu,
-                    'guru' => $presensi->jadwal->guru->nama,
-                    'mapel' => $presensi->jadwal->mapel->nama_mapel,
-                    'hari' => $presensi->jadwal->hari,
-                    'jamPelajaran' => $presensi->jadwal->jam_pelajaran,
-                    'semester' => $presensi->jadwal->semester->semester,
-                    'tahun_ajaran' => $presensi->jadwal->tahun_ajaran->tahun_ajaran,
-                    'status' => $request->$status,
-                    'tanggal' => $presensi->tanggal,
-                    'alasan' => $request->keterangan[$key]
-                ];               
-                \Mail::to($siswa->email)->send(new EmailWaliSiswa($dataEmail));
-            }
+            // if (in_array($request->$status, $dataStatus)) {
+            //     $siswa = Siswa::findOrFail($idSiswa);
+            //     $dataEmail = [
+            //         'title' => 'Laporan Presensi Harian Siswa',                    
+            //         'namaSiswa' => $siswa->nama,
+            //         'gender' => $siswa->gender,
+            //         'alamat' => $siswa->alamat,
+            //         'kelas' => $siswa->kelas->nama_kelas,
+            //         'namaWali' => $siswa->nama_ortu,
+            //         'guru' => $presensi->jadwal->guru->nama,
+            //         'mapel' => $presensi->jadwal->mapel->nama_mapel,
+            //         'hari' => $presensi->jadwal->hari,
+            //         'jamPelajaran' => $presensi->jadwal->jam_pelajaran,
+            //         'semester' => $presensi->jadwal->semester->semester,
+            //         'tahun_ajaran' => $presensi->jadwal->tahun_ajaran->tahun_ajaran,
+            //         'status' => $request->$status,
+            //         'tanggal' => $presensi->tanggal,
+            //         'alasan' => $request->keterangan[$key]
+            //     ];               
+            //     \Mail::to($siswa->email)->send(new EmailWaliSiswa($dataEmail));
+            // }
             array_push($data,$tmp);
         }
         $presensi->data = json_encode($data);
@@ -291,15 +291,43 @@ class PresensiController extends Controller
             }
             foreach ($presensi as $key => $value) {
                 foreach (json_decode($value->data) as $key2 => $value2) {
-                    if ($value2->status == 'hadir') {
-                        $getNamaSiswa[$key2]['hadir'] = (int)$getNamaSiswa[$key2]['hadir'] + 1;
-                    }elseif ($value2->status == 'ijin' || $value->status == 'izin') {
-                        $getNamaSiswa[$key2]['izin'] = (int)$getNamaSiswa[$key2]['izin'] + 1;
-                    }elseif ($value2->status == 'sakit') {
-                        $getNamaSiswa[$key2]['sakit'] = (int)$getNamaSiswa[$key2]['sakit'] + 1;
+                    // new
+                    if (array_key_exists($key2, $getNamaSiswa)) {
+                        if ($value2->status == 'hadir') {
+                            $getNamaSiswa[$key2]['hadir'] = (int)$getNamaSiswa[$key2]['hadir'] + 1;
+                        }elseif ($value2->status == 'ijin' || $value->status == 'izin') {
+                            $getNamaSiswa[$key2]['izin'] = (int)$getNamaSiswa[$key2]['izin'] + 1;
+                        }elseif ($value2->status == 'sakit') {
+                            $getNamaSiswa[$key2]['sakit'] = (int)$getNamaSiswa[$key2]['sakit'] + 1;
+                        }else {
+                            $getNamaSiswa[$key2]['alpha'] = (int)$getNamaSiswa[$key2]['alpha'] + 1;
+                        }                                                    
                     }else {
-                        $getNamaSiswa[$key2]['alpha'] = (int)$getNamaSiswa[$key2]['alpha'] + 1;
+                        $getNamaSiswa[$key2]['nis'] = $value2->nis;
+                        $getNamaSiswa[$key2]['nama'] = $value2->nama;
+                        if ($value2->status == 'hadir') {
+                            $getNamaSiswa[$key2]['hadir'] = 0 + 1;
+                            $getNamaSiswa[$key2]['izin'] = 0;
+                            $getNamaSiswa[$key2]['sakit'] = 0;
+                            $getNamaSiswa[$key2]['alpha'] = 0;
+                        }elseif ($value2->status == 'ijin' || $value->status == 'izin') {
+                            $getNamaSiswa[$key2]['izin'] = 0 + 1;
+                            $getNamaSiswa[$key2]['hadir'] = 0;
+                            $getNamaSiswa[$key2]['sakit'] = 0;
+                            $getNamaSiswa[$key2]['alpha'] = 0;
+                        }elseif ($value2->status == 'sakit') {
+                            $getNamaSiswa[$key2]['sakit'] = 0 + 1;
+                            $getNamaSiswa[$key2]['izin'] = 0;
+                            $getNamaSiswa[$key2]['hadir'] = 0;
+                            $getNamaSiswa[$key2]['alpha'] = 0;
+                        }else {
+                            $getNamaSiswa[$key2]['alpha'] = 0 + 1;
+                            $getNamaSiswa[$key2]['izin'] = 0;
+                            $getNamaSiswa[$key2]['sakit'] = 0;
+                            $getNamaSiswa[$key2]['hadir'] = 0;
+                        }
                     }
+                    // end
                 }            
             }
         }
@@ -332,19 +360,47 @@ class PresensiController extends Controller
             }
             foreach ($presensi as $key => $value) {
                 foreach (json_decode($value->data) as $key2 => $value2) {
-                    if ($value2->status == 'hadir') {
-                        $getNamaSiswa[$key2]['hadir'] = (int)$getNamaSiswa[$key2]['hadir'] + 1;
-                    }elseif ($value2->status == 'ijin' || $value->status == 'izin') {
-                        $getNamaSiswa[$key2]['izin'] = (int)$getNamaSiswa[$key2]['izin'] + 1;
-                    }elseif ($value2->status == 'sakit') {
-                        $getNamaSiswa[$key2]['sakit'] = (int)$getNamaSiswa[$key2]['sakit'] + 1;
+                    // new
+                    if (array_key_exists($key2, $getNamaSiswa)) {
+                        if ($value2->status == 'hadir') {
+                            $getNamaSiswa[$key2]['hadir'] = (int)$getNamaSiswa[$key2]['hadir'] + 1;
+                        }elseif ($value2->status == 'ijin' || $value->status == 'izin') {
+                            $getNamaSiswa[$key2]['izin'] = (int)$getNamaSiswa[$key2]['izin'] + 1;
+                        }elseif ($value2->status == 'sakit') {
+                            $getNamaSiswa[$key2]['sakit'] = (int)$getNamaSiswa[$key2]['sakit'] + 1;
+                        }else {
+                            $getNamaSiswa[$key2]['alpha'] = (int)$getNamaSiswa[$key2]['alpha'] + 1;
+                        }                                                    
                     }else {
-                        $getNamaSiswa[$key2]['alpha'] = (int)$getNamaSiswa[$key2]['alpha'] + 1;
+                        $getNamaSiswa[$key2]['nis'] = $value2->nis;
+                        $getNamaSiswa[$key2]['nama'] = $value2->nama;
+                        if ($value2->status == 'hadir') {
+                            $getNamaSiswa[$key2]['hadir'] = 0 + 1;
+                            $getNamaSiswa[$key2]['izin'] = 0;
+                            $getNamaSiswa[$key2]['sakit'] = 0;
+                            $getNamaSiswa[$key2]['alpha'] = 0;
+                        }elseif ($value2->status == 'ijin' || $value->status == 'izin') {
+                            $getNamaSiswa[$key2]['izin'] = 0 + 1;
+                            $getNamaSiswa[$key2]['hadir'] = 0;
+                            $getNamaSiswa[$key2]['sakit'] = 0;
+                            $getNamaSiswa[$key2]['alpha'] = 0;
+                        }elseif ($value2->status == 'sakit') {
+                            $getNamaSiswa[$key2]['sakit'] = 0 + 1;
+                            $getNamaSiswa[$key2]['izin'] = 0;
+                            $getNamaSiswa[$key2]['hadir'] = 0;
+                            $getNamaSiswa[$key2]['alpha'] = 0;
+                        }else {
+                            $getNamaSiswa[$key2]['alpha'] = 0 + 1;
+                            $getNamaSiswa[$key2]['izin'] = 0;
+                            $getNamaSiswa[$key2]['sakit'] = 0;
+                            $getNamaSiswa[$key2]['hadir'] = 0;
+                        }
                     }
+                    // end
                 }            
             }
         }        
-
+        
         return Excel::download(new PresensiAllExport($presensi,$getNamaSiswa), $nama); 
     }
 
@@ -367,6 +423,71 @@ class PresensiController extends Controller
         $nama = $presensi->jadwal->mapel->nama_mapel.'-'.$presensi->jadwal->kelas->nama_kelas.'.xlsx';
 
         return Excel::download(new PresensiSingleExport($presensi), $nama);        
+    }
+
+    public function rekap_data_presensi($id)
+    {
+        $presensi = Presensi::where('jadwal_id',$id)->orderBy('created_at','ASC')->get();  
+        $getNamaSiswa = [];
+        if (count($presensi)) {
+            $nama = $presensi[0]->jadwal->mapel->nama_mapel.'-'.$presensi[0]->jadwal->kelas->nama_kelas.'.xlsx';                    
+            foreach (json_decode($presensi[0]->data) as $kunci => $nilai) {
+                $tmpArray = [];
+                $tmpArray['nis'] = $nilai->nis;
+                $tmpArray['nama'] = $nilai->nama;
+                $tmpArray['hadir'] = 0;
+                $tmpArray['izin'] = 0;
+                $tmpArray['sakit'] = 0;
+                $tmpArray['alpha'] = 0;
+                array_push($getNamaSiswa,$tmpArray);
+            }            
+            foreach ($presensi as $key => $value) {
+                foreach (json_decode($value->data) as $key2 => $value2) {
+                    // new
+                    if (array_key_exists($key2, $getNamaSiswa)) {
+                        if ($value2->status == 'hadir') {
+                            $getNamaSiswa[$key2]['hadir'] = (int)$getNamaSiswa[$key2]['hadir'] + 1;
+                        }elseif ($value2->status == 'ijin' || $value->status == 'izin') {
+                            $getNamaSiswa[$key2]['izin'] = (int)$getNamaSiswa[$key2]['izin'] + 1;
+                        }elseif ($value2->status == 'sakit') {
+                            $getNamaSiswa[$key2]['sakit'] = (int)$getNamaSiswa[$key2]['sakit'] + 1;
+                        }else {
+                            $getNamaSiswa[$key2]['alpha'] = (int)$getNamaSiswa[$key2]['alpha'] + 1;
+                        }                                                    
+                    }else {
+                        $getNamaSiswa[$key2]['nis'] = $value2->nis;
+                        $getNamaSiswa[$key2]['nama'] = $value2->nama;
+                        if ($value2->status == 'hadir') {
+                            $getNamaSiswa[$key2]['hadir'] = 0 + 1;
+                            $getNamaSiswa[$key2]['izin'] = 0;
+                            $getNamaSiswa[$key2]['sakit'] = 0;
+                            $getNamaSiswa[$key2]['alpha'] = 0;
+                        }elseif ($value2->status == 'ijin' || $value->status == 'izin') {
+                            $getNamaSiswa[$key2]['izin'] = 0 + 1;
+                            $getNamaSiswa[$key2]['hadir'] = 0;
+                            $getNamaSiswa[$key2]['sakit'] = 0;
+                            $getNamaSiswa[$key2]['alpha'] = 0;
+                        }elseif ($value2->status == 'sakit') {
+                            $getNamaSiswa[$key2]['sakit'] = 0 + 1;
+                            $getNamaSiswa[$key2]['izin'] = 0;
+                            $getNamaSiswa[$key2]['hadir'] = 0;
+                            $getNamaSiswa[$key2]['alpha'] = 0;
+                        }else {
+                            $getNamaSiswa[$key2]['alpha'] = 0 + 1;
+                            $getNamaSiswa[$key2]['izin'] = 0;
+                            $getNamaSiswa[$key2]['sakit'] = 0;
+                            $getNamaSiswa[$key2]['hadir'] = 0;
+                        }
+                    }
+                    // end
+                }            
+            }
+        }
+        $this->data['getNamaSiswa'] = $getNamaSiswa;
+        $this->data['presensi'] = $presensi;
+        $this->data['jadwal'] = Jadwal::findOrFail($id);
+
+        return view('presensi.rekap_data_presensi',$this->data);
     }
 
     /**
