@@ -113,7 +113,6 @@ class PresensiController extends Controller
             return redirect()->route('presensi.index')->with('warning', 'Jadwal tidak ditemukan!');
         }
         $this->data['presensi'] = Presensi::where('jadwal_id',$jadwal->id)->orderBy('created_at','ASC')->get();
-        // dd(json_decode($this->data['presensi'][1]->data));
         $this->data['jadwal'] = $jadwal;
 
         return view('presensi.list',$this->data);
@@ -378,6 +377,11 @@ class PresensiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $presensi = Presensi::findOrFail($id);
+        $idJadwal = $presensi->jadwal_id ;
+
+        Presensi::where('id', $id)->delete();
+
+        return redirect()->route('list.presensi',$idJadwal)->with('success', 'Data presensi berhasil dihapus!');
     }
 }

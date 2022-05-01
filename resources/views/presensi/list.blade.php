@@ -67,7 +67,14 @@
                         <td class="text-center">
                             <a href="{{ route('presensi.detail', $item->id) }}">
                                 <button class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fa fa-eye"></i></button>
-                            </a>                            
+                            </a>
+                            @if (auth()->user()->type == 'guru')
+                                <form id="delete-user-{{$item->id}}" action="/presensi/{{$item->id}}" method="post" style="display: inline;">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fa fa-trash"></i></button>
+                                </form>
+                            @endif                            
                         </td>
                     </tr>
                     @endforeach
