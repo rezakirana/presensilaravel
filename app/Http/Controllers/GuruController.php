@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\Model\Account;
 
-class AccountController extends Controller
+class GuruController extends Controller
 {
     /**
      * Display a listing of the resource.

@@ -3,18 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
-use App\Model\Role;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     function __construct() {
         $this->middleware(function ($request, $next) {
-            if (Auth::user()->type != 'admin') {
-                return redirect()->route('notFound');
-            }
+            // validation
             return $next($request);
         });
     }
@@ -26,9 +21,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $this->data['users'] = User::where('id', '!=', Auth::id())->get();
-
-        return view('user.index', $this->data);
+        // 
     }
 
     /**
@@ -38,7 +31,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.create');
+        // 
     }
 
     /**
@@ -49,23 +42,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'type' => 'required|in:admin,guru',
-            'username' => 'required|string|unique:users,username',
-            'password' => 'required|min:6'
-        ]);
-
-        $user = new User();
-        $user->type = $request->type;
-        $user->username = $request->username;
-        $user->password = Hash::make($request->password);
-        $user->save();
-        if ($request->type == 'guru') {
-            $data = User::findOrFail($user->id);
-            session()->put('dataUser',$data);
-            return redirect()->route('guru.create')->with('success', 'User berhasil ditambahkan, lengkapi data guru!');
-        }
-        return redirect()->route('users.index')->with('success', 'User berhasil ditambahkan');
+        // 
     }
 
     /**
@@ -87,13 +64,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::findOrFail($id);
-        if (!$user) {
-            return redirect()->route('')->with('danger', 'User tidak ditemukan!');
-        }
-        $this->data['user'] = $user;
-
-        return view('user.edit', $this->data);
+        // 
     }
 
     /**
@@ -105,24 +76,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
-            'type' => 'required|in:admin,dokter,pasien,pimpinan',
-            'username' => 'required|string|unique:users,username,'.$id,
-            'password' => 'nullable|min:6'
-        ]);
-
-        $user = User::findOrFail($id);
-        if (!$user) {
-            return redirect()->back('danger', 'User tidak ditemukan!');
-        }
-        $user->type = $request->type;
-        $user->username = $request->username;
-        if ($request->password) {
-            $user->password = Hash::make($request->password);
-        }
-        $user->save();;
-
-        return redirect()->route('users.edit',$id)->with('success', 'User telah berhasil diupdate!');
+        // 
     }
 
     /**
@@ -133,8 +87,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        User::where('id', $id)->delete();
-
-        return redirect()->route('users.index')->with('success', 'Berhasil menghapus data');
+        // 
     }
 }

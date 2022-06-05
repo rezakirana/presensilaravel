@@ -33,23 +33,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($mapel as $item)
-                    <tr>
-                        <td class="text-center">{{$loop->iteration}}</td>
-                        <td>{{ $item->kode_mapel }}</td>
-                        <td>{{ $item->nama_mapel }}</td>
-                        <td class="text-center">
-                            <a href="{{ route('mapel.edit', $item->id) }}">
-                                <button class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-edit"></i></button>
-                            </a>
-                            <form id="delete-user-{{$item->id}}" action="/mapel/{{$item->id}}" method="post" style="display: inline;">
-                                @method('DELETE')
-                                @csrf
-                                <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fa fa-trash"></i></button>
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
+                    {{-- looping data mapel --}}
                 </tbody>
             </table>
         </div>

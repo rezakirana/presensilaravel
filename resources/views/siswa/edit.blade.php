@@ -23,7 +23,7 @@
     <div class="card">
         @include ('includes.flash')
         <div class="card-body">
-            <form role="form" method="post" action="{{ route('siswa.update',$siswa->id) }}">
+            <form role="form" method="post" action="#">
                 @csrf
                 @method('put')
                 <div class="card-body">
@@ -31,50 +31,43 @@
                     <div class="form-group">
                         <label for="exampleInputJK">Kelas</label>
                         <select class="form-control" name="kelas_id" id="kelas_id" required>
-                            <option value="">Pilih kelas</option>
-                            @foreach ($kelas as $item)
-                                <option value="{{ $item->id }}" @if ($siswa->kelas_id == $item->id)
-                                    selected
-                                @endif>{{ $item->nama_kelas }}</option>
-                            @endforeach
+                            <option value="">kelas 1</option>
+                            <option value="">kelas 2</option>
+                            <option value="">kelas 3</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">NIS</label>
-                        <input type="text" class="form-control" name="nis" id="nis" value="{{ $siswa->nis }}" required>
+                        <input type="text" class="form-control" name="nis" id="nis" value="#" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">TAHUN MASUK</label>
-                        <input type="text" class="form-control" name="tahun_masuk" id="tahun_masuk" value="{{ $siswa->tahun_masuk }}" required>
+                        <input type="text" class="form-control" name="tahun_masuk" id="tahun_masuk" value="#" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Nama</label>
-                        <input type="text" class="form-control" name="nama" id="nama" value="{{ $siswa->nama }}" required>
+                        <input type="text" class="form-control" name="nama" id="nama" value="#" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Tempat Lahir</label>
-                        <input type="text" class="form-control" name="tempat_lahir" id="tempat_lahir" value="{{ $siswa->tempat_lahir }}" required>
+                        <input type="text" class="form-control" name="tempat_lahir" id="tempat_lahir" value="#" required>
                     </div>                    
                     <div class="form-group">
                         <label for="exampleInputPendidikanTerakhir">Tanggal Lahir</label>
                         <div class="input-group date col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <input type="text" class="form-control pull-right" id="datepicker" name="tgl_lahir" value="{{ $siswa->ttl }}" required>
+                            <input type="text" class="form-control pull-right" id="datepicker" name="tgl_lahir" value="#" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputJK">Jenis Kelamin</label>
                         <select class="form-control" name="gender" id="gender" required>
-                            <option value="laki-laki" @if ($siswa->gender == 'laki-laki')
-                                selected
-                            @endif>Laki-Laki</option>
-                            <option value="perempuan" @if ($siswa->gender == 'perempuan')
-                                selected
-                            @endif>Perempuan</option>
+                            <option value="laki-laki">Laki-Laki</option>
+                            <option value="perempuan">Perempuan</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPendidikanTerakhir">Nomor Telphone</label>
-                        <input id="phone_number" type="number" class="form-control form-control-user @error('phone_number') is-invalid @enderror" name="phone_number" id="phoneValidation" value="{{ $siswa->phone_number }}" required style="-webkit-appearance: none;margin: 0;">
+                        <input id="phone_number" type="number" class="form-control form-control-user @error('phone_number') is-invalid @enderror" name="phone_number" id="phoneValidation" value="" required style="-webkit-appearance: none;margin: 0;">
                         @error('phone_number')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -83,15 +76,15 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Email</label>
-                        <input type="email" class="form-control" name="email" id="email" value="{{ $siswa->email }}" required>
+                        <input type="email" class="form-control" name="email" id="email" value="#" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Nama Orang Tua</label>
-                        <input type="text" class="form-control" name="nama_ortu" id="nama_ortu" value="{{ $siswa->nama_ortu }}" required>
+                        <input type="text" class="form-control" name="nama_ortu" id="nama_ortu" value="#" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Alamat</label>
-                        <textarea name="alamat" class="form-control" id="alamat" cols="30" rows="10" required>{{ $siswa->alamat }}</textarea>
+                        <textarea name="alamat" class="form-control" id="alamat" cols="30" rows="10" required>#</textarea>
                     </div>
                     <div class="card-body">
                         <button type="submit" class="btn btn-primary">Simpan</button>

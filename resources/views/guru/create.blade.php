@@ -1,18 +1,18 @@
 @extends('layouts/main-admin')
 
-@section('title', 'Tambah Siswa')
+@section('title', 'Tambah Guru')
 
 @section('container')
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h2 class="m-0 text-dark">SISWA</h2>
+                <h2 class="m-0 text-dark">GURU</h2>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item active">Tambah Siswa</li>
+                <li class="breadcrumb-item active">Tambah Guru</li>
                 </ol>
             </div>
         </div>
@@ -23,25 +23,20 @@
     <div class="card">
         @include ('includes.flash')
         <div class="card-body">
-            <form role="form" method="post" action="{{ route('siswa.store') }}">
+            <form role="form" method="post" action="{{ route('guru.store') }}">
                 @csrf
                 <div class="card-body">
-                    <h4>Data Siswa</h4>
                     <div class="form-group">
-                        <label for="exampleInputJK">Kelas</label>
-                        <select class="form-control" name="kelas_id" id="kelas_id" required>
-                            <option value="">kelas 1</option>                            
-                            <option value="">kelas 2</option>                            
-                            <option value="">kelas 3</option>                            
+                        <label for="exampleInputPassword1">User ID</label>
+                        <select class="form-control" name="users_id" id="users_id" required>
+                            <option value="">User 1</option>
+                            <option value="">User 2</option>
+                            <option value="">User 3</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">NIS</label>
-                        <input type="text" class="form-control" name="nis" id="nis" placeholder="nis" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">TAHUN MASUK</label>
-                        <input type="text" class="form-control" name="tahun_masuk" id="tahun_masuk" placeholder="tahun masuk" required>
+                        <label for="exampleInputPassword1">NUPTK</label>
+                        <input type="text" class="form-control" name="nip" id="nip" placeholder="NIP" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Nama</label>
@@ -59,14 +54,14 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputJK">Jenis Kelamin</label>
-                        <select class="form-control" name="gender" id="gender" required>
+                        <select class="form-control" name="gender" id="gender">
                             <option value="laki-laki">Laki-Laki</option>
                             <option value="perempuan">Perempuan</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPendidikanTerakhir">Nomor Telphone</label>
-                        <input id="phone_number" type="number" class="form-control form-control-user @error('phone_number') is-invalid @enderror" name="phone_number" id="phoneValidation" placeholder="nomor telphone" required autocomplete="phone number" style="-webkit-appearance: none;margin: 0;">
+                        <input id="phone_number" type="number" class="form-control form-control-user @error('phone_number') is-invalid @enderror" name="phone_number" id="phoneValidation" value="{{ old('phone_number') }}" placeholder="Nomor Telphone" required autocomplete="nik" style="-webkit-appearance: none;margin: 0;">
                         @error('phone_number')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -75,11 +70,11 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Email</label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="email" required>
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Nama Orang Tua</label>
-                        <input type="text" class="form-control" name="nama_ortu" id="nama_ortu" placeholder="nama orang tua" required>
+                        <label for="exampleInputPassword1">Pendidikan</label>
+                        <input type="text" class="form-control" name="pendidikan" id="pendidikan" placeholder="pendidikan" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Alamat</label>

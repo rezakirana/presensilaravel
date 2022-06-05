@@ -27,11 +27,11 @@
                 <table class="table">
                     <tr>
                         <td>KODE KELAS</td>
-                        <td>: {{ $kelas->kode_kelas }}</td>
+                        <td>: </td>
                     </tr>
                     <tr>
                         <td>NAMA KELAS</td>
-                        <td>: {{ $kelas->nama_kelas }}</td>
+                        <td>: </td>
                     </tr>                                       
                 </table>   
                 <hr>
@@ -46,14 +46,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($kelas->siswas as $key => $item)
-                            <tr>
-                                <td>{{ ($key+1) }}</td>
-                                <td>{{ $item->nis }}</td>
-                                <td>{{ $item->nama }}</td>
-                                <td>{{ $item->gender }}</td>
-                            </tr>
-                        @endforeach
+                        {{-- looping data siswa --}}
                     </tbody>
                 </table>
             </div>

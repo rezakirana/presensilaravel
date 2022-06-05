@@ -27,35 +27,35 @@
                 <table class="table">
                     <tr>
                         <td>NUPTK</td>
-                        <td>: {{ $guru->nip }}</td>
+                        <td>: </td>
                     </tr>
                     <tr>
                         <td>NAMA</td>
-                        <td>: {{ $guru->nama }}</td>
+                        <td>: </td>
                     </tr>
                     <tr>
                         <td>TTL</td>
-                        <td>: {{ $guru->tempat_lahir }}, {{ $guru->tgl_lahir->isoFormat('D MMMM Y') }}</td>
+                        <td>: </td>
                     </tr>
                     <tr>
                         <td>JENIS KELAMIN</td>
-                        <td>: {{ $guru->gender }}</td>
+                        <td>: </td>
                     </tr>
                     <tr>
                         <td>NOMOR TELPHONE</td>
-                        <td>: {{ $guru->phone_number }}</td>
+                        <td>: </td>
                     </tr>
                     <tr>
                         <td>EMAIL</td>
-                        <td>: {{ $guru->email }}</td>
+                        <td>: </td>
                     </tr>
                     <tr>
                         <td>PENDIDIKAN</td>
-                        <td>: {{ $guru->pendidikan }}</td>
+                        <td>: </td>
                     </tr>
                     <tr>
                         <td>ALAMAT</td>
-                        <td>: {{ $guru->alamat }}</td>
+                        <td>: </td>
                     </tr>
                 </table>        
             </div>

@@ -33,28 +33,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($kelas as $item)
-                    <tr>
-                        <td class="text-center">{{$loop->iteration}}</td>
-                        <td>{{ $item->kode_kelas }}</td>
-                        <td>{{ $item->nama_kelas }}</td>
-                        <td class="text-center">
-                            <a href="{{ route('kelas.show', $item->id) }}">
-                                <button class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fa fa-eye"></i></button>
-                            </a>
-                            @if (auth()->user()->type == 'admin')
-                                <a href="{{ route('kelas.edit', $item->id) }}">
-                                    <button class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-edit"></i></button>
-                                </a>
-                                <form id="delete-user-{{$item->id}}" action="/kelas/{{$item->id}}" method="post" style="display: inline;">
-                                    @method('DELETE')
-                                    @csrf
-                                    <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fa fa-trash"></i></button>
-                                </form>
-                            @endif
-                        </td>
-                    </tr>
-                    @endforeach
+                    {{-- looping --}}
                 </tbody>
             </table>
         </div>

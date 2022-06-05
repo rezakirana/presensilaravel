@@ -23,7 +23,7 @@
     <div class="card">
         @include ('includes.flash')
         <div class="card-body">
-            <form role="form" method="post" action="{{ route('users.update',$user->id) }}">
+            <form role="form" method="post" action="#">
                 @csrf
                 @method('put')
                 <div class="card-body">
@@ -31,17 +31,13 @@
                         <label for="exampleInputPassword1">Role User</label>
                         <select name="type" id="type" class="form-control" required>
                            <option value="">--Pilih Role--</option>
-                           <option value="admin" @if ($user->type == 'admin')
-                               selected
-                           @endif>Admin</option>
-                           <option value="guru" @if ($user->type == 'guru')
-                               selected
-                           @endif>Guru</option>                           
+                           <option value="admin">Admin</option>
+                           <option value="guru" >Guru</option>                           
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Username</label>
-                        <input type="text" class="form-control" name="username" id="username" placeholder="username" value="{{ $user->username }}" required>
+                        <input type="text" class="form-control" name="username" id="username" placeholder="username" value="masih kosong" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>
