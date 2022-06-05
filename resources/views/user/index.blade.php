@@ -33,23 +33,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($users as $user)
-                    <tr>
-                        <td class="text-center">{{$loop->iteration}}</td>
-                        <td>{{ $user->username }}</td>
-                        <td>{{ ucwords($user->type) }}</td>
-                        <td class="text-center">
-                            <a href="{{ route('users.edit', $user->id) }}">
-                                <button class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-edit"></i></button>
-                            </a>
-                            <form id="delete-user-{{$user->id}}" action="/users/{{$user->id}}" method="post" style="display: inline;">
-                                @method('DELETE')
-                                @csrf
-                                <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fa fa-trash"></i></button>
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
+                    {{-- looping --}}
                 </tbody>
             </table>
         </div>

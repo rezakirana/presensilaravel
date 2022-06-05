@@ -35,28 +35,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($data as $siswa)
-                    <tr>
-                        <td class="text-center">{{$loop->iteration}}</td>
-                        <td>{{ $siswa->nis }}</td>
-                        <td>{{ $siswa->nama }}</td>
-                        <td>{{ $siswa->gender }}</td>
-                        <td>{{ $siswa->tempat_lahir }}, {{ $siswa->tgl_lahir->isoFormat('D MMMM Y') }}</td>
-                        <td class="text-center">
-                            <a href="{{ route('siswa.show', $siswa->id) }}">
-                                <button class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fa fa-eye"></i></button>
-                            </a>
-                            <a href="{{ route('siswa.edit', $siswa->id) }}">
-                                <button class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-edit"></i></button>
-                            </a>
-                            <form id="delete-user-{{$siswa->id}}" action="/siswa/{{$siswa->id}}" method="post" style="display: inline;">
-                                @method('DELETE')
-                                @csrf
-                                <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fa fa-trash"></i></button>
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
+                    {{-- looping data siswa --}}
                 </tbody>
             </table>
         </div>

@@ -63,12 +63,7 @@
                         <label class="custom-control-label" for="remember">Ingat Saya</label>                    
                         <label for="">
                              &nbsp;
-                        </label>
-                        {{-- <label style="float:right;">
-                            @if (Route::has('register'))
-                                <a href="{{ route('register') }}">Belum punya akun ?</a>
-                            @endif
-                        </label> --}}
+                        </label>                        
                       </div>
                     </div>
                     <button class="btn btn-success btn-user btn-block" type="submit">

@@ -61,8 +61,7 @@
           <i class="far fa-user"></i>
           <span>&nbsp; Manajemen Akun</span>
         </a>
-      </li>    
-      @if (Auth::user()->type == 'admin')
+      </li>          
         <li class="nav-item  {{ \Str::is('users.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('users.index') }}">
           <a class="nav-link" href="{{ route('users.index') }}">
             <i class="fa fa-users"></i>
@@ -104,21 +103,7 @@
             <i class="fa fa-list"></i>
             <span>&nbsp; Rekap Presensi</span>
           </a>
-        </li>        
-      @elseif (Auth::user()->type == 'guru')
-        <li class="nav-item  {{ \Str::is('kelas.*', Route::currentRouteName()) ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('kelas.index') }}">
-            <i class="fas fa-landmark"></i>
-            <span>&nbsp; Kelas Anda</span>
-          </a>
-        </li>
-        <li class="nav-item  {{ \Str::is('presensi.*', Route::currentRouteName()) ? 'active' : '' }} {{ \Str::is('data-presensi.*', Route::currentRouteName()) ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('presensi.data') }}">
-            <i class="fas fa-list"></i>
-            <span>&nbsp; Presensi</span>
-          </a>
-        </li>                 
-      @endif
+        </li>              
     </ul>
     <!-- Sidebar -->
 
@@ -137,7 +122,7 @@
             <!-- Nav Item - User -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">User</span>
                 <img class="img-profile rounded-circle" src="{{ asset('img/avatar.jpg') }}">
                 <div style="padding-left:0.5rem;"><i class="fas fa-angle-down"></i></div>
               </a>

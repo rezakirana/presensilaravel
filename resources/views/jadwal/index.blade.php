@@ -27,46 +27,15 @@
                 <thead>
                     <tr>
                     <th width="40">NO</th>
-                    <th>TAHUN AJARAN</th>
                     <th>KELAS</th>
                     <th>MAPEL</th>
                     <th>GURU PENGAMPU</th>
                     <th>HARI</th>
-                    <th>STATUS</th>
                     <th width="120">AKSI</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($jadwal as $item)
-                    <tr>
-                        <td class="text-center">{{$loop->iteration}}</td>
-                        <td>{{ $item->tahun_ajaran->tahun_ajaran }} ({{ $item->semester->semester }})</td>
-                        <td>{{ $item->kelas->nama_kelas }}</td>
-                        <td>{{ $item->mapel->nama_mapel }}</td>
-                        <td>{{ $item->guru->nama }}</td>
-                        <td>{{ ucwords($item->hari) }}</td>       
-                        <td>
-                            @if ($item->is_active)
-                                <i class="fas fa-check-circle" style="color:green;"></i> Aktif
-                            @else
-                                <i class="fas fa-times-circle" style="color:red;"></i> Tidak Aktif
-                            @endif    
-                        </td>                 
-                        <td class="text-center">                            
-                            <a href="{{ route('jadwal.show', $item->id) }}">
-                                <button class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fa fa-eye"></i></button>
-                            </a>
-                            <a href="{{ route('jadwal.edit', $item->id) }}">
-                                <button class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Ubah"><i class="fa fa-edit"></i></button>
-                            </a>
-                            <form id="delete-user-{{$item->id}}" action="/jadwal/{{$item->id}}" method="post" style="display: inline;">
-                                @method('DELETE')
-                                @csrf
-                                <button class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Hapus"><i class="fa fa-trash"></i></button>
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
+                    {{-- looping data jadwal --}}
                 </tbody>
             </table>
         </div>

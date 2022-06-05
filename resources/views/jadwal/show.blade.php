@@ -24,51 +24,27 @@
         @include ('includes.flash')
         <div class="card-body">
             <div class="card-body">
-                <table class="table">
-                    <tr>
-                        <td>ICON</td>
-                        <td>
-                            @if ($jadwal->icon)
-                                <img src="{{ asset('/img/jadwal/'.$jadwal->icon) }}" id="imgCurrent" width="120px" height="120px" style="text-align: center;" />
-                            @else
-                                <img src="{{ asset('/img/default-image.png') }}" id="imgCurrent" width="120px" height="120px" style="text-align: center;" />
-                            @endif    
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>TAHUN AJARAN</td>
-                        <td>: {{ $jadwal->tahun_ajaran->tahun_ajaran }} ({{ $jadwal->semester->semester }})</td>
-                    </tr>
+                <table class="table">                    
                     <tr>
                         <td>KELAS</td>
-                        <td>: {{ $jadwal->kelas->nama_kelas }}</td>
+                        <td>: </td>
                     </tr>
                     <tr>
                         <td>GURU PENGAMPU</td>
-                        <td>: {{ $jadwal->guru->nama }}</td>
+                        <td>: </td>
                     </tr>
                     <tr>
                         <td>MATA PELAJARAN</td>
-                        <td>: {{ $jadwal->mapel->nama_mapel }}</td>
+                        <td>: </td>
                     </tr>
                     <tr>
                         <td>HARI</td>
-                        <td>: {{ ucwords($jadwal->hari) }}</td>
+                        <td>: </td>
                     </tr>
                     <tr>
                         <td>JAM PELAJARAN</td>
-                        <td>: {{ $jadwal->jam_pelajaran }}</td>
-                    </tr>                    
-                    <tr>
-                        <td>STATUS</td>
-                        <td>: 
-                            @if ($jadwal->is_active)
-                                <i class="fas fa-check-circle" style="color:green;"></i> Aktif 
-                            @else
-                                <i class="fas fa-times-circle" style="color:red;"></i> Tidak Aktif
-                            @endif
-                        </td>
-                    </tr>                    
+                        <td>: </td>
+                    </tr>                                                           
                 </table>   
                 <hr>
                 <h4>Data Siswa</h4>     
@@ -82,14 +58,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($jadwal->kelas->siswas as $key => $item)
-                            <tr>
-                                <td>{{ ($key+1) }}</td>
-                                <td>{{ $item->nis }}</td>
-                                <td>{{ $item->nama }}</td>
-                                <td>{{ $item->gender }}</td>
-                            </tr>
-                        @endforeach
+                        {{-- looping data siswa --}}
                     </tbody>
                 </table>
             </div>
