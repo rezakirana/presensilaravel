@@ -3,12 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\Jadwal;
-use App\Model\Kelas;
-use App\Model\Mapel;
-use App\Model\Account;
-use App\Model\TahunAjaran;
-use App\Model\Semester;
 use Illuminate\Support\Facades\File;
 
 class JadwalController extends Controller

@@ -80,11 +80,9 @@
               border: 0;
               font-weight: 900;"></i>
               </span>
-          <div id="collapseKriteria" class="collapse {{ \Str::is('guru.*', Route::currentRouteName()) ? 'show' : '' }} {{ \Str::is('semester.*', Route::currentRouteName()) ? 'show' : '' }} {{ \Str::is('kelas.*', Route::currentRouteName()) ? 'show' : '' }} {{ \Str::is('siswa.*', Route::currentRouteName()) ? 'show' : '' }} {{ \Str::is('mapel.*', Route::currentRouteName()) ? 'show' : '' }} {{ \Str::is('tahun-ajaran.*', Route::currentRouteName()) ? 'show' : '' }}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+          <div id="collapseKriteria" class="collapse {{ \Str::is('guru.*', Route::currentRouteName()) ? 'show' : '' }} {{ \Str::is('kelas.*', Route::currentRouteName()) ? 'show' : '' }} {{ \Str::is('siswa.*', Route::currentRouteName()) ? 'show' : '' }} {{ \Str::is('mapel.*', Route::currentRouteName()) ? 'show' : '' }}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
-              <h6 class="collapse-header">Manajemen Data :</h6>
-              <a class="collapse-item {{ \Str::is('tahun-ajaran.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('tahun-ajaran.index') }}"><i class="fas fa-calendar"></i> Tahun Ajaran</a>
-              <a class="collapse-item {{ \Str::is('semester.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('semester.index') }}"><i class="fas fa-calendar"></i> Semester</a>
+              <h6 class="collapse-header">Manajemen Data :</h6>              
               <a class="collapse-item {{ \Str::is('guru.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('guru.index') }}"><i class="fas fa-users"></i> Guru</a>
               <a class="collapse-item {{ \Str::is('kelas.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('kelas.index') }}"><i class="fas fa-landmark"></i> Kelas</a>
               <a class="collapse-item {{ \Str::is('siswa.*', Route::currentRouteName()) ? 'active' : '' }}" href="{{ route('siswa.index') }}"><i class="fas fa-users"></i> Siswa</a>
@@ -97,13 +95,7 @@
             <i class="far fa-calendar-alt"></i>
             <span>&nbsp; Jadwal Pelajaran</span>
           </a>
-        </li> 
-        <li class="nav-item  {{ \Str::is('presensi.*', Route::currentRouteName()) ? 'active' : '' }} {{ \Str::is('data-presensi.*', Route::currentRouteName()) ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('presensi.data') }}">
-            <i class="fa fa-list"></i>
-            <span>&nbsp; Rekap Presensi</span>
-          </a>
-        </li>              
+        </li>                     
     </ul>
     <!-- Sidebar -->
 

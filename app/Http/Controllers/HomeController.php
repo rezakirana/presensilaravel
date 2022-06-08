@@ -3,11 +3,6 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Model\Account;
-use App\Model\Kelas;
-use App\Model\Siswa;
-use App\Model\Jadwal;
-use App\Model\Mapel;
 
 class HomeController extends Controller
 {
