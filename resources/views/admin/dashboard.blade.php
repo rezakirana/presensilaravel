@@ -15,7 +15,7 @@
                         <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Jumlah Guru</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $jumlah_guru }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fa fa-users fa-2x text-gray-300"></i>
@@ -32,7 +32,7 @@
                         <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Jumlah Kelas</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $jumlah_kelas }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-landmark fa-2x text-gray-300"></i>
@@ -49,7 +49,7 @@
                         <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Jumlah Siswa</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $jumlah_siswa }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-users fa-2x text-gray-300"></i>
@@ -66,7 +66,7 @@
                         <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Jumlah Mata Pelajaran</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $jumlah_mapel }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-clipboard-check fa-2x text-gray-300"></i>
@@ -83,7 +83,7 @@
                         <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Jumlah Jadwal Aktif</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $jumlah_jadwal }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-calendar fa-2x text-gray-300"></i>

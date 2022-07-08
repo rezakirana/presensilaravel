@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
 {
@@ -19,27 +20,30 @@ class HomeController extends Controller
      */    
     public function index()
     {
-        if (Auth::check()) {            
+        if (session()->get('userLogged') != null) {            
             return redirect()->route('dashboard');
         }
         return redirect()->route('login');
     }
 
     public function dashboard()
-    {        
-        if (Auth::user()->type == 'admin') {
-            $this->data['jmlGuru'] = Account::count();
-            $this->data['jmlKelas'] = Kelas::count();
-            $this->data['jmlSiswa'] = Siswa::count();
-            $this->data['jmlMapel'] = Mapel::count();
-            $this->data['jmlJadwal'] = Jadwal::where('is_active',1)->count();
-        }else {
-            $this->data['jmlKelas'] = Jadwal::where('guru_id',Auth::user()->guru->id)->count();
-            $this->data['jmlJadwal'] = Jadwal::where('guru_id',Auth::user()->guru->id)
-                                                ->where('is_active',1)
-                                                ->count();                
-        }
-        return view('admin.dashboard',$this->data);
+    {       
+        $token = session()->get('tokenUser');
+        $response = Http::withToken($token)->get(env("REST_API_ENDPOINT").'/api/info');
+        
+        $dataResponse = json_decode($response);
+        // ini kasih if nanti
+
+        $data = $dataResponse;
+
+        // dd($data);
+        return view('admin.dashboard', [
+            'jumlah_mapel' => $data->mapel,
+            'jumlah_guru' => $data->guru,
+            'jumlah_kelas' => $data->kelas,
+            'jumlah_siswa' => $data->siswa,
+            'jumlah_jadwal' => $data->jadwal,
+        ]);
     }
 
     public function not_found()

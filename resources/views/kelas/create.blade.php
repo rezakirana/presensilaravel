@@ -21,7 +21,9 @@
 
 <section class="container-fluid">
     <div class="card">
-        @include ('includes.flash')
+        {{--
+            @include ('includes.flash')
+        --}}
         <div class="card-body">
             <form role="form" method="post" action="{{ route('kelas.store') }}">
                 @csrf                

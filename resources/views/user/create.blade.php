@@ -27,7 +27,7 @@
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Role User</label>
+                        <label for="exampleInputPassword1">Type User</label>
                         <select name="type" id="type" class="form-control" required>
                            <option value="">--Pilih Role--</option>
                            <option value="admin">Admin</option>

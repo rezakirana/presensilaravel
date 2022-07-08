@@ -21,7 +21,6 @@
 
 <section class="container-fluid">
     <div class="card">
-        @include ('includes.flash')
         <div class="card-body">
             <form role="form" method="post" action="{{ route('siswa.store') }}">
                 @csrf
@@ -30,31 +29,31 @@
                     <div class="form-group">
                         <label for="exampleInputJK">Kelas</label>
                         <select class="form-control" name="kelas_id" id="kelas_id" required>
-                            <option value="">kelas 1</option>                            
-                            <option value="">kelas 2</option>                            
-                            <option value="">kelas 3</option>                            
+                            @foreach ($dataKelas as $key => $kelas)
+                            <option value="{{ $kelas->id}}"> {{ $kelas->nama_kelas }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">NIS</label>
-                        <input type="text" class="form-control" name="nis" id="nis" placeholder="nis" required>
+                        <input type="text" class="form-control" name="nis"  value="{{ old('nis') }}"  id="nis" placeholder="nis" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">TAHUN MASUK</label>
-                        <input type="text" class="form-control" name="tahun_masuk" id="tahun_masuk" placeholder="tahun masuk" required>
+                        <input type="text" class="form-control datepicker" name="tahun_masuk"  value="{{ old('tahun_masuk') }}"  id="tahun_masuk" placeholder="tahun masuk" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Nama</label>
-                        <input type="text" class="form-control" name="nama" id="nama" placeholder="nama" required>
+                        <input type="text" class="form-control" name="nama" id="nama" placeholder="nama" value="{{ old('name') }}" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Tempat Lahir</label>
-                        <input type="text" class="form-control" name="tempat_lahir" id="tempat_lahir" placeholder="tempat lahir" required>
-                    </div>                    
+                        <input type="text" class="form-control " name="tempat_lahir" id="tempat_lahir"  value="{{ old('tempat_lahir') }}" placeholder="tempat lahir" required>
+                    </div>
                     <div class="form-group">
                         <label for="exampleInputPendidikanTerakhir">Tanggal Lahir</label>
                         <div class="input-group date col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <input type="text" class="form-control pull-right" id="datepicker" name="tgl_lahir" required>
+                            <input type="text" class="form-control pull-right datepicker" value="{{ old('tgl_lahir') }}" name="tgl_lahir" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -66,7 +65,7 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPendidikanTerakhir">Nomor Telphone</label>
-                        <input id="phone_number" type="number" class="form-control form-control-user @error('phone_number') is-invalid @enderror" name="phone_number" id="phoneValidation" placeholder="nomor telphone" required autocomplete="phone number" style="-webkit-appearance: none;margin: 0;">
+                        <input id="phone_number" type="number" class="form-control form-control-user @error('phone_number') is-invalid @enderror"  value="{{ old('phone_number') }}" name="phone_number" id="phoneValidation" placeholder="nomor telphone" required autocomplete="phone number" style="-webkit-appearance: none;margin: 0;">
                         @error('phone_number')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -75,15 +74,15 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Email</label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="email" required>
+                        <input type="email" class="form-control" name="email" id="email"  value="{{ old('email') }}"  required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Nama Orang Tua</label>
-                        <input type="text" class="form-control" name="nama_ortu" id="nama_ortu" placeholder="nama orang tua" required>
+                        <input type="text" class="form-control" name="nama_ortu" id="nama_ortu" value="{{ old('nama_ortu') }}"   required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Alamat</label>
-                        <textarea name="alamat" class="form-control" id="alamat" cols="30" rows="10" placeholder="alamat" required></textarea>
+                        <textarea name="alamat" class="form-control" id="alamat" cols="30" rows="10" value="{{ old('alamat') }}"  required></textarea>
                     </div>
                     <div class="card-body">
                         <button type="submit" class="btn btn-primary">Simpan</button>
@@ -100,7 +99,7 @@
 <script>
     $(function () {
         //Date picker
-        $('#datepicker').datepicker({
+        $('.datepicker').datepicker({
         autoclose: true
         })
     });

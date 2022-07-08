@@ -1,18 +1,18 @@
 @extends('layouts/main-admin')
 
-@section('title', 'Users')
+@section('title', 'Presensi')
 
 @section('container')
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h2 class="m-0 text-dark">USERS</h2>
+                <h2 class="m-0 text-dark">PRESENSI</h2>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item active">Users</li>
+                <li class="breadcrumb-item active">Presensi</li>
                 </ol>
             </div>
         </div>
@@ -26,32 +26,27 @@
                 <thead>
                     <tr>
                     <th width="40">NO</th>
-                    <th>USERNAME</th>
-                    <th>ROLE</th>
+                    <th>Tanggal</th>
+                    <th>Kelas</th>
+                    <th>Mapel</th>
                     <th width="80">AKSI</th>
                     </tr>
                 </thead>
                 <tbody>
                 
-                   @foreach ($users as $key => $user)
+                   @foreach ($dataPresensi as $key => $presensi)
                    <tr>
                         <td>{{ $loop->iteration}}</td>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->type }}</td>
+                        <td>{{ $presensi->tanggal }}</td>
+                        <td>{{ $presensi->kelas->nama_kelas }}</td>
+                        <td>{{ $presensi->mapel->nama_mapel }}</td>
                         <td class="text-center">
-                            <a href="{{ route('users.edit', $user->id)}}">
-                                <button class="btn btn secondary" data-toogle="tooltip" data-placement="top" title="Ubah">
-                                    <i class="fa fa-edit"></i>
+                            <a href="{{ route('presensi.show', $presensi->id)}}">
+                                <button class="btn btn-primary btn-sm" data-toogle="tooltip" data-placement="top" title="Detail">
+                                    Detail
                                 </button>
                             </a>
-                            <form id="delete-user-{{$user->id}}" action="/users/{{$user->id}}" method ="post"
-                            style="display: inline;">
-                            @method('DELETE')
-                            @csrf
-                            <button class="btn btn=danger" data-toogle="tooltip" data-placement="top" title="Hapus">
-                                <i class ="fa fa-trash"></i>
-                            </button>                       
-                        </form>
+                            
                         </td>
                    </tr>
                    @endforeach
@@ -66,7 +61,7 @@
 @include ('includes.scripts')
     <script type="text/javascript">
         $(document).ready(function(){
-            $("#data-admin_length").append('<a href="{{ route("users.create") }}"> <button type="button" class="btn btn-outline-primary ml-3">Tambah</button></a>');
+            $("#data-admin_length").append('<a href="{{ route("presensi.create") }}"> <button type="button" class="btn btn-outline-primary ml-3">Tambah</button></a>');
         });
     </script>
 @endsection

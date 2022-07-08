@@ -1,6 +1,6 @@
 @extends('layouts/main-auth')
 
-@section('title', 'Login - Sistem Antrian Puskesmas')
+@section('title', 'Login - Sistem Informasi Akademi')
 
 @section('container')
 <div class="container">
@@ -12,9 +12,9 @@
               <div class="col-lg-6 d-none d-lg-block" style="padding-left: 50px;">
                 <div class="text-center">
                   <br>
-                    <h1 class="h2 text-gray-900 mb-4 font-weight-bold animate__animated animate__fadeInDown animate__delay-1s">Welcome Back!</h1>
+                    <h1 class="h2 text-gray-900 mb-4 font-weight-bold animate__animated animate__fadeInDown animate__delay-1s">Login Presensi</h1>
                   </div>
-                <img src="img/landing.svg" class="bg-login-image animate__animated animate__backInLeft" alt="">
+                <img src="img/immigration.png" class="bg-login-image animate__animated animate__backInLeft" alt="">
               </div>
               <div class="col-lg-6">
                 <div class="p-5">

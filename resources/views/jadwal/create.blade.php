@@ -29,25 +29,25 @@
                     <div class="form-group">
                         <label for="exampleInputJK">Kelas</label>
                         <select class="form-control" name="kelas_id" id="kelas_id" required>
-                            <option value="">kelas 1</option>
-                            <option value="">kelas 2</option>
-                            <option value="">kelas 3</option>
+                           @foreach ($dataKelas as $key => $kelas)
+                           <option value ="{{ $kelas->id }}">{{ $kelas->nama_kelas }}</option>
+                           @endforeach
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputJK">Mata Pelajaran</label>
                         <select class="form-control" name="mapel_id" id="mapel_id" required>
-                            <option value="">mapel 1</option>
-                            <option value="">mapel 2</option>
-                            <option value="">mapel 3</option>
+                        @foreach ($dataMapel as $key => $mapel)
+                           <option value ="{{ $mapel->id }}">{{ $mapel->nama_mapel }}</option>
+                           @endforeach
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputJK">Guru Pengampu</label>
                         <select class="form-control" name="guru_id" id="guru_id" required>
-                            <option value="">guru 1</option>
-                            <option value="">guru 2</option>
-                            <option value="">guru 3</option>
+                        @foreach ($dataGuru as $key => $guru)
+                           <option value ="{{ $guru->id }}">{{ $guru->nama }}</option>
+                           @endforeach
                         </select>
                     </div>
                     <div class="form-group">

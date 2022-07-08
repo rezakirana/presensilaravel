@@ -21,9 +21,9 @@
 
 <section class="container-fluid">
     <div class="card">
-        @include ('includes.flash')
         <div class="card-body">
-            <form role="form" method="post" action="#">
+            <form role="form" method="post" action="{{ route('users.update', $user->id) }}" autocomplete="off">
+                <input type="hidden" name="id" value="{{ $user->id }}" />
                 @csrf
                 @method('put')
                 <div class="card-body">
@@ -31,13 +31,13 @@
                         <label for="exampleInputPassword1">Role User</label>
                         <select name="type" id="type" class="form-control" required>
                            <option value="">--Pilih Role--</option>
-                           <option value="admin">Admin</option>
-                           <option value="guru" >Guru</option>                           
+                           <option value="admin" {{ $user->type == 'admin' ? 'SELECTED' : '' }}>Admin</option>
+                           <option value="guru" {{ $user->type == 'guru' ? 'SELECTED' : '' }}>Guru</option>                           
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Username</label>
-                        <input type="text" class="form-control" name="username" id="username" placeholder="username" value="masih kosong" required>
+                        <input type="text" class="form-control" name="username" id="username" placeholder="username" value="{{ $user->name }}" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>

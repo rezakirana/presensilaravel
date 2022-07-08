@@ -31,12 +31,17 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
+  <style>
+    .bg-primary {
+      background-color: #597FCA !important;
+    }
+  </style>
   @yield('cssAdded')
 </head>
 
 <body id="page-top">
   <div id="wrapper">
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul class="navbar-nav bg-primary sidebar sidebar-dark accordion" id="accordionSidebar">
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url('/') }}">
           <div class="sidebar-brand-icon">
@@ -94,6 +99,12 @@
           <a class="nav-link" href="{{ route('jadwal.index') }}">
             <i class="far fa-calendar-alt"></i>
             <span>&nbsp; Jadwal Pelajaran</span>
+          </a>
+        </li>       
+        <li class="nav-item  {{ \Str::is('presensi.*', Route::currentRouteName()) ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('presensi.index') }}">
+            <i class="fas fa-book"></i>
+            <span>&nbsp;Presensi</span>
           </a>
         </li>                     
     </ul>

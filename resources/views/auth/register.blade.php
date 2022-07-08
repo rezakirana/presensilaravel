@@ -1,6 +1,6 @@
 @extends('layouts/main-auth')
 
-@section('title', 'Register - Sistem Antrian Puskesmas')
+@section('title', 'Register - Sistem Informasi Akademi')
 
 @section('container')
 <div class="container">
@@ -37,7 +37,7 @@
                   @if ($message = Session::get('danger'))
                     <div class="alert alert-danger">{{$message }}</div>
                   @endif
-                  <h5 class="header-title" style="text-align: center;margin-bottom:10px;padding-bottom:10px;">Sistem Antrian Puskesmas</h5>
+                  <h5 class="header-title" style="text-align: center;margin-bottom:10px;padding-bottom:10px;">Sistem Informasi Akademi</h5>
                   <form class="user" method="POST" action="{{ route('store.pasien') }}">
                     @csrf
                     <div class="form-group">
@@ -119,7 +119,7 @@
                     <hr>
                   </form>
                   <div class="text-center">
-                    <span class="small">Copyright &copy; Sistem Antrian Puskesmas 2021</span>
+                    <span class="small">Copyright &copy; Sistem Informasi Akademi 2021</span>
                   </div>
                 </div>
               </div>

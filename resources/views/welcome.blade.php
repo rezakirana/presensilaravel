@@ -1,6 +1,6 @@
 @extends('layouts/main-auth')
 
-@section('title', 'Login - Sistem Antrian Puskesmas')
+@section('title', 'Login - Sistem Informasi Akademi')
 
 @section('container')
 <div class="container">

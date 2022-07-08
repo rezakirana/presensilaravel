@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 
 class JadwalController extends Controller
 {
@@ -13,8 +13,22 @@ class JadwalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {               
-        // 
+    {
+        $testToken = session()->get('tokenUser');
+        $response = Http::withToken($testToken)
+            ->get(env("REST_API_ENDPOINT") . '/api/jadwal');
+
+        $dataResponse = json_decode($response);
+
+        $jadwals = [];
+        if ($dataResponse && $dataResponse->status) {
+            $jadwals = $dataResponse->data;
+        }
+
+        return view('jadwal.index', [
+            'jadwals' => $jadwals,
+        ]);
+
     }
 
     /**
@@ -24,7 +38,22 @@ class JadwalController extends Controller
      */
     public function create()
     {
-        // 
+        $responseKelas = Http::withToken(session()->get('tokenUser'))
+            ->get(env("REST_API_ENDPOINT") . '/api/kelas');
+        $responseMapel = Http::withToken(session()->get('tokenUser'))
+            ->get(env("REST_API_ENDPOINT") . '/api/mapel');
+        $responseGuru = Http::withToken(session()->get('tokenUser'))
+            ->get(env("REST_API_ENDPOINT") . '/api/guru');
+        $dataKelas = json_decode($responseKelas);
+        $dataMapel = json_decode($responseMapel);
+        $dataGuru = json_decode($responseGuru);
+
+        $this->data['dataKelas'] = $dataKelas->data;
+        $this->data['dataGuru'] = $dataGuru->data;
+        $this->data['dataMapel'] = $dataMapel->data;
+
+        return view('jadwal.create', $this->data);
+
     }
 
     /**
@@ -35,7 +64,20 @@ class JadwalController extends Controller
      */
     public function store(Request $request)
     {
-        // 
+        $response = Http::withToken(session()->get('tokenUser'))
+            ->post(
+                env("REST_API_ENDPOINT") . '/api/jadwal',
+                $request->except('_token')
+            );
+        $data = json_decode($response);
+
+        if ($data->status == true) {
+            return redirect()->route('jadwal.index')->with('success', 'Data jadwal berhasil ditambahkan');
+
+        } else {
+            return redirect()->route('jadwal.create')->with('validationErrors', $data->message);
+        }
+
     }
 
     /**
@@ -46,7 +88,7 @@ class JadwalController extends Controller
      */
     public function show($id)
     {
-        // 
+        //
     }
 
     /**
@@ -57,7 +99,30 @@ class JadwalController extends Controller
      */
     public function edit($id)
     {
-        // 
+        $jadwal = Http::withToken(session()->get('tokenUser'))->get(env("REST_API_ENDPOINT") . '/api/jadwal/' . $id);
+
+        $kelas = Http::withToken(session()->get('tokenUser'))->get(env("REST_API_ENDPOINT") . '/api/kelas/');
+        $mapel = Http::withToken(session()->get('tokenUser'))->get(env("REST_API_ENDPOINT") . '/api/mapel');
+        $guru = Http::withToken(session()->get('tokenUser'))->get(env("REST_API_ENDPOINT") . '/api/guru');
+
+        $dataJadwal = json_decode($jadwal);
+        // dd($dataJadwal->data);
+
+        $dataKelas = json_decode($kelas);
+        $dataMapel = json_decode($mapel);
+        $dataGuru = json_decode($guru);
+
+        if ($dataJadwal->status == true) {
+            return view('jadwal.edit', [
+                'dataJadwal' => $dataJadwal->data,
+                'dataKelas' => $dataKelas->data,
+                'dataMapel' => $dataMapel->data,
+                'dataGuru' => $dataGuru->data,
+            ]);
+
+        } else {
+            return redirect()->route('jadwal.index')->with('danger', 'Jadwal tidak ditemukan!');
+        }
     }
 
     /**
@@ -69,7 +134,17 @@ class JadwalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // 
+        // dd($request->all());
+        $response = Http::withToken(session('tokenUser'))
+            ->put(env("REST_API_ENDPOINT") . '/api/jadwal/' . $id, 
+                $request->all()
+            );
+        $data = json_decode($response);
+        if ($data->status == true) {
+            return redirect()->route('jadwal.index')->with('success', 'Data jadwal berhasil ditambahkan');
+        } else {
+            return redirect()->route('jadwal.create')->with('validationErrors', $data->message);
+        }
     }
 
     /**
@@ -80,6 +155,16 @@ class JadwalController extends Controller
      */
     public function destroy($id)
     {
-        // 
+        $response = Http::withToken(session('tokenUser'))
+            ->delete(
+                env("REST_API_ENDPOINT") . '/api/jadwal/' . $id);
+        $data = json_decode($response);
+
+        //dd($data);
+        if ($data->status == true) {
+            return redirect()->route('jadwal.index')->with('success', 'Data jadwal berhasil dihapus!');
+        } else {
+            return redirect()->route('jadwal.create')->with('validationErrors', $data->message);
+        }
     }
 }

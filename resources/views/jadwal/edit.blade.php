@@ -23,49 +23,50 @@
     <div class="card">
         @include ('includes.flash')
         <div class="card-body">
-            <form role="form" method="post" action="#" enctype="multipart/form-data">
+            <form role="form" method="post" action="{{ route('jadwal.update', $dataJadwal->id) }}" enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" name="id" value="{{ $dataJadwal->id }}" />
                 @method('put')
                 <div class="card-body">                    
                     <div class="form-group">
                         <label for="exampleInputJK">Kelas</label>
                         <select class="form-control" name="kelas_id" id="kelas_id" required>
-                            <option value="">kelas 1</option>
-                            <option value="">kelas 2</option>
-                            <option value="">kelas 3</option>
+                            @foreach ($dataKelas as $kelas)
+                                <option value="{{ $kelas->id }}" {{ $dataJadwal->kelas_id == $kelas->id ? 'SELECTED' : '' }}> {{ $kelas->nama_kelas }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputJK">Mata Pelajaran</label>
                         <select class="form-control" name="mapel_id" id="mapel_id" required>
-                            <option value="">mapel 1</option>
-                            <option value="">mapel 2</option>
-                            <option value="">mapel 3</option>
+                            @foreach ($dataMapel as $mapel)
+                                <option value="{{ $mapel->id }}" {{ $dataJadwal->mapel_id == $mapel->id ? 'SELECTED' : '' }}> {{ $mapel->nama_mapel }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputJK">Guru Pengampu</label>
                         <select class="form-control" name="guru_id" id="guru_id" required>
-                            <option value="">guru 1</option>
-                            <option value="">guru 2</option>
-                            <option value="">guru 3</option>
+                            @foreach ($dataGuru as $guru)
+                                <option value="{{ $guru->id }}" {{ $dataJadwal->guru_id == $guru->id ? 'SELECTED' : '' }}> {{ $guru->nama }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputJK">Hari</label>
                         <select class="form-control" name="hari" id="hari" required>
                             <option value="">Pilih Hari</option>
-                            <option value="senin">Senin</option>
-                            <option value="selasa">Selasa</option>
-                            <option value="rabu" >Rabu</option>
-                            <option value="kamis">Kamis</option>
-                            <option value="jumat">Jumat</option>
-                            <option value="sabtu">Sabtu</option>
+                            <option value="senin"  {{ $dataJadwal->hari =='senin' ? 'SELECTED' : '' }} >Senin</option>
+                            <option value="selasa" {{ $dataJadwal->hari =='selasa' ? 'SELECTED' : '' }}>Selasa</option>
+                            <option value="rabu" {{ $dataJadwal->hari =='rabu' ? 'SELECTED' : '' }}>Rabu</option>
+                            <option value="kamis" {{ $dataJadwal->hari =='kamis' ? 'SELECTED' : '' }}>Kamis</option>
+                            <option value="jumat" {{ $dataJadwal->hari =='jumat' ? 'SELECTED' : '' }}>Jumat</option>
+                            <option value="sabtu" {{ $dataJadwal->hari =='sabtu' ? 'SELECTED' : '' }}>Sabtu</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Jam Pelajaran</label>
-                        <input type="text" class="form-control" name="jam_pelajaran" id="jam_pelajaran" value="#" required>
+                        <input type="text" class="form-control" name="jam_pelajaran" id="jam_pelajaran" value="{{ $dataJadwal->jam_pelajaran ?? '-' }}" required>
                     </div>                                                         
                     <div class="card-body">
                         <button type="submit" class="btn btn-primary">Simpan</button>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class MapelController extends Controller
 {
@@ -13,7 +14,16 @@ class MapelController extends Controller
      */
     public function index()
     {
-        // 
+        $testToken = session()->get('tokenUser');
+        $response = Http::withToken($testToken)
+            ->get(env("REST_API_ENDPOINT") . '/api/mapel');
+
+        $dataResponse = json_decode($response);
+        $mapels = $dataResponse->data;
+
+        return view('mapel.index', [
+            'mapels' => $mapels,
+        ]);
     }
 
     /**
@@ -23,7 +33,7 @@ class MapelController extends Controller
      */
     public function create()
     {
-        // 
+        return view('mapel.create');
     }
 
     /**
@@ -34,7 +44,19 @@ class MapelController extends Controller
      */
     public function store(Request $request)
     {
-        // 
+        $response = Http::withToken(session('tokenUser'))
+            ->post(env("REST_API_ENDPOINT") . '/api/mapel', [
+                'kode_mapel' => $request->kode_mapel,
+                'nama_mapel' => $request->nama_mapel]);
+
+        $data = json_decode($response);
+        if ($data && $data->message == 'success') {
+            return redirect()->route('mapel.index')->with('success', 'Data mapel berhasil ditambahkan');
+        } else {
+            return redirect()->route('mapel.create')->with('validationErrors', ['message' => 'Data gagal disimpan']);
+        }
+
+        // return view('mapel.index', $this->data);
     }
 
     /**
@@ -45,7 +67,7 @@ class MapelController extends Controller
      */
     public function show($id)
     {
-        // 
+        //
     }
 
     /**
@@ -56,7 +78,20 @@ class MapelController extends Controller
      */
     public function edit($id)
     {
-        // 
+        $testToken = session()->get('tokenUser');
+        $response = Http::withToken($testToken)
+            ->get(env("REST_API_ENDPOINT") . '/api/mapel/'. $id); // masuk show berarti ya
+
+        $dataResponse = json_decode($response);
+
+        if ($dataResponse->status == true) {
+            return view('mapel.edit',[
+                'mapel' => $dataResponse->data
+            ]);
+        } else {
+            return redirect()->route('mapel.index')->with('danger', 'Mapel tidak ditemukan!');
+        }
+
     }
 
     /**
@@ -68,7 +103,17 @@ class MapelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // 
+        $response = Http::withToken(session('tokenUser'))
+            ->put(env("REST_API_ENDPOINT") . '/api/mapel/' . $id, [
+                'kode_mapel' => $request->kode_mapel,
+                'nama_mapel' => $request->nama_mapel]);
+        $data = json_decode($response);
+        if ($data->status == true) {
+            return redirect()->route('mapel.index')->with('success', 'Data mapel berhasil ditambahkan');
+        } else {
+            return redirect()->route('mapel.create')->with('validationErrors', $data->message);
+        }
+
     }
 
     /**
@@ -79,6 +124,16 @@ class MapelController extends Controller
      */
     public function destroy($id)
     {
-        // 
+        $response = Http::withToken(session('tokenUser'))
+            ->delete(
+                env("REST_API_ENDPOINT") . '/api/mapel/' . $id);
+        $data = json_decode($response);
+
+        //dd($data);
+        if ($data && $data->status == true) {
+            return redirect()->route('mapel.index')->with('success', 'Data mapel berhasil dihapus!');
+        } else {
+            return redirect()->route('mapel.create')->with('validationErrors', $data->message);
+        }
     }
 }

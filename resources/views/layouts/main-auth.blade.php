@@ -37,10 +37,14 @@
     input[type=number] {
       -moz-appearance: textfield;
     }
+    .bg-primary, .btn-success {
+      background-color: #597FCA !important;
+    }
     </style>
+
 </head>
 
-<body class="bg-gradient-primary">
+<body class="bg-primary">
   {{-- @include('sweetalert::alert') --}}
   @yield('container')
   

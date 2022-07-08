@@ -21,7 +21,9 @@
 
 <section class="container-fluid">
     <div class="card">
-        @include ('includes.flash')
+        {{--
+            @include ('includes.flash')
+        --}}
         <div class="card-body">
             <form role="form" method="post" action="{{ route('guru.store') }}">
                 @csrf
@@ -29,9 +31,9 @@
                     <div class="form-group">
                         <label for="exampleInputPassword1">User ID</label>
                         <select class="form-control" name="users_id" id="users_id" required>
-                            <option value="">User 1</option>
-                            <option value="">User 2</option>
-                            <option value="">User 3</option>
+                        @foreach ($users as $key => $user)
+                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">
